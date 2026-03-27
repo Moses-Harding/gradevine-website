@@ -17,7 +17,7 @@ import Layout from '../layouts/Layout.astro';
         <a href="#features">Features</a>
         <a href="#how-it-works">How It Works</a>
         <a href="#pricing">Pricing</a>
-        <a href="#" class="btn btn-small">Download</a>
+        <a href="#" class="btn btn-nav">Download</a>
       </div>
     </nav>
   </header>
@@ -62,8 +62,8 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <h3>AI Transcription</h3>
           <p>
-            Snap a photo of any handwritten assignment. GradeVine's AI reads and
-            digitizes student responses automatically.
+            Snap a photo or import a PDF. GradeVine's AI reads handwriting
+            and digitizes every student response automatically.
           </p>
         </div>
 
@@ -75,8 +75,22 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <h3>Keyword Matching</h3>
           <p>
-            Define answer keywords and let GradeVine highlight matches
-            instantly. Spend less time reading, more time teaching.
+            Define answer keywords per question and GradeVine highlights
+            matches instantly. Spend less time reading, more time teaching.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+              <path d="M7.5 8.5h0M12 11.5h0M16.5 8.5h0" stroke-width="3" stroke-linecap="round" />
+              <path d="M2 17l5-5 3 3 4-4 3 3 5-5" stroke-width="2" />
+            </svg>
+          </div>
+          <h3>Quick Feedback</h3>
+          <p>
+            Save common feedback phrases and apply them with a tap.
+            Give students detailed, consistent feedback in seconds.
           </p>
         </div>
 
@@ -91,7 +105,7 @@ import Layout from '../layouts/Layout.astro';
           <h3>Auto-Match Students</h3>
           <p>
             Scan a stack of papers and GradeVine automatically matches each
-            assignment to the right student. No manual sorting.
+            assignment to the right student. Import rosters or add students manually.
           </p>
         </div>
 
@@ -112,14 +126,28 @@ import Layout from '../layouts/Layout.astro';
         <div class="feature-card">
           <div class="feature-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
+              <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
+            </svg>
+          </div>
+          <h3>Flexible Grading Modes</h3>
+          <p>
+            Grade by question to compare answers across the class, or grade by
+            student to review one paper at a time. Your workflow, your choice.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
               <polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
             </svg>
           </div>
-          <h3>Google Drive Export</h3>
+          <h3>Export Anywhere</h3>
           <p>
-            Export graded assignments and reports directly to Google Drive.
-            Keep your records organized and accessible.
+            Export grades and feedback as PDF, CSV, or to Google Drive.
+            Share results with students, parents, or your records system.
           </p>
         </div>
 
@@ -176,30 +204,43 @@ import Layout from '../layouts/Layout.astro';
   <!-- Pricing -->
   <section id="pricing" class="pricing">
     <div class="container">
-      <h2>Simple pricing</h2>
-      <p class="pricing-subtitle">Start free. Upgrade when you're ready.</p>
-      <div class="pricing-grid">
-        <div class="pricing-card">
-          <h3>Free</h3>
-          <div class="price">$0</div>
-          <ul>
-            <li>Scan and transcribe assignments</li>
-            <li>Keyword matching</li>
-            <li>Student auto-matching</li>
-            <li>Limited AI credits</li>
-          </ul>
-        </div>
+      <h2>Simple, credit-based pricing</h2>
+      <p class="pricing-subtitle">Every feature is available on every plan. Credits power AI transcription.</p>
+      <div class="pricing-grid-paid">
         <div class="pricing-card featured">
           <div class="badge">Most Popular</div>
-          <h3>Premium</h3>
+          <h3>Standard</h3>
           <div class="price">$4.99<span>/mo</span></div>
+          <div class="credits">1,000 credits/month</div>
+          <p class="credits-note">Unused credits roll over. $49.99/year.</p>
           <ul>
-            <li>Everything in Free</li>
-            <li>Unlimited AI credits</li>
-            <li>Batch processing</li>
+            <li>All features included</li>
             <li>Google Drive export</li>
-            <li>Priority support</li>
+            <li>Rollover credits</li>
           </ul>
+        </div>
+        <div class="pricing-card">
+          <h3>Pro</h3>
+          <div class="price">$9.99<span>/mo</span></div>
+          <div class="credits">5,000 credits/month</div>
+          <p class="credits-note">Unused credits roll over. $99.99/year.</p>
+          <ul>
+            <li>Everything in Standard</li>
+            <li>5x the credits</li>
+            <li>Built for heavy workloads</li>
+          </ul>
+        </div>
+      </div>
+      <div class="free-divider">
+        <span>Or try GradeVine for free</span>
+      </div>
+      <div class="free-tier">
+        <div class="free-tier-content">
+          <div class="free-tier-info">
+            <h3>Free</h3>
+            <p>Get 30 credits every month — enough for about 1 assignment. All features included, no credit card required. Credits reset monthly.</p>
+          </div>
+          <a href="#" class="btn btn-free">Get Started Free</a>
         </div>
       </div>
     </div>
@@ -246,9 +287,12 @@ import Layout from '../layouts/Layout.astro';
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--color-gray-200);
+    background: linear-gradient(
+      135deg,
+      var(--color-purple-deep),
+      var(--color-purple)
+    );
+    box-shadow: 0 2px 12px rgba(80, 2, 247, 0.25);
   }
 
   .nav {
@@ -263,7 +307,7 @@ import Layout from '../layouts/Layout.astro';
   .logo-text {
     font-size: 1.25rem;
     font-weight: 700;
-    color: var(--color-green-800);
+    color: #fff;
   }
 
   .nav-links {
@@ -273,13 +317,13 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .nav-links a {
-    color: var(--color-gray-700);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 0.9rem;
     font-weight: 500;
   }
 
   .nav-links a:hover {
-    color: var(--color-green-700);
+    color: #fff;
     text-decoration: none;
   }
 
@@ -289,7 +333,7 @@ import Layout from '../layouts/Layout.astro';
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    border-radius: 12px;
+    border-radius: var(--radius-button);
     font-weight: 600;
     font-size: 1rem;
     text-decoration: none;
@@ -301,24 +345,27 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .btn-primary {
-    background: var(--color-green-800);
+    background: linear-gradient(135deg, var(--color-red), var(--color-coral));
     color: #fff;
+    box-shadow: 0 4px 12px rgba(255, 28, 54, 0.3);
   }
 
   .btn-primary:hover {
-    background: var(--color-green-900);
+    box-shadow: 0 6px 20px rgba(255, 28, 54, 0.4);
+    transform: translateY(-1px);
   }
 
-  .btn-small {
+  .btn-nav {
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
-    border-radius: 8px;
-    background: var(--color-green-800);
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.2);
     color: #fff !important;
+    border: 1px solid rgba(255, 255, 255, 0.3);
   }
 
-  .btn-small:hover {
-    background: var(--color-green-900);
+  .btn-nav:hover {
+    background: rgba(255, 255, 255, 0.3);
   }
 
   .apple-icon {
@@ -330,7 +377,11 @@ import Layout from '../layouts/Layout.astro';
   .hero {
     padding: 8rem 1.5rem 4rem;
     text-align: center;
-    background: linear-gradient(180deg, var(--color-green-50) 0%, #fff 100%);
+    background: linear-gradient(
+      180deg,
+      var(--color-purple-50) 0%,
+      #fff 100%
+    );
   }
 
   .hero-content {
@@ -347,7 +398,14 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .highlight {
-    color: var(--color-green-700);
+    background: linear-gradient(
+      135deg,
+      var(--color-purple-deep),
+      var(--color-purple)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 
   .hero-subtitle {
@@ -373,7 +431,7 @@ import Layout from '../layouts/Layout.astro';
     height: 580px;
     margin: 0 auto;
     background: var(--color-gray-100);
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     border: 2px dashed var(--color-gray-300);
     display: flex;
     align-items: center;
@@ -403,30 +461,32 @@ import Layout from '../layouts/Layout.astro';
 
   .feature-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
   }
 
   .feature-card {
     padding: 2rem;
-    border-radius: 16px;
+    border-radius: var(--radius-card);
+    background: #fff;
     border: 1px solid var(--color-gray-200);
-    transition: box-shadow 0.2s;
+    transition: box-shadow 0.2s, transform 0.2s;
   }
 
   .feature-card:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
   }
 
   .feature-icon {
     width: 48px;
     height: 48px;
-    background: var(--color-green-50);
-    border-radius: 12px;
+    background: var(--color-purple-light);
+    border-radius: var(--radius-button);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-green-700);
+    color: var(--color-purple-deep);
     margin-bottom: 1rem;
   }
 
@@ -470,7 +530,11 @@ import Layout from '../layouts/Layout.astro';
   .step-number {
     width: 48px;
     height: 48px;
-    background: var(--color-green-800);
+    background: linear-gradient(
+      135deg,
+      var(--color-purple-deep),
+      var(--color-purple)
+    );
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -517,7 +581,7 @@ import Layout from '../layouts/Layout.astro';
     font-size: 1.1rem;
   }
 
-  .pricing-grid {
+  .pricing-grid-paid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
@@ -527,14 +591,14 @@ import Layout from '../layouts/Layout.astro';
 
   .pricing-card {
     padding: 2.5rem 2rem;
-    border-radius: 16px;
+    border-radius: var(--radius-card);
     border: 1px solid var(--color-gray-200);
     position: relative;
   }
 
   .pricing-card.featured {
-    border-color: var(--color-green-500);
-    box-shadow: 0 4px 24px rgba(76, 175, 80, 0.15);
+    border-color: var(--color-purple-deep);
+    box-shadow: 0 4px 24px rgba(80, 2, 247, 0.15);
   }
 
   .badge {
@@ -542,10 +606,14 @@ import Layout from '../layouts/Layout.astro';
     top: -12px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--color-green-800);
+    background: linear-gradient(
+      135deg,
+      var(--color-purple-deep),
+      var(--color-purple)
+    );
     color: #fff;
     padding: 0.25rem 1rem;
-    border-radius: 20px;
+    border-radius: var(--radius-pill);
     font-size: 0.8rem;
     font-weight: 600;
   }
@@ -559,7 +627,7 @@ import Layout from '../layouts/Layout.astro';
   .price {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--color-green-800);
+    color: var(--color-purple-deep);
     margin-bottom: 1.5rem;
   }
 
@@ -587,8 +655,91 @@ import Layout from '../layouts/Layout.astro';
     content: '\2713';
     position: absolute;
     left: 0;
-    color: var(--color-green-600);
+    color: var(--color-purple-deep);
     font-weight: 700;
+  }
+
+  .credits {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-gray-800);
+    margin-bottom: 0.25rem;
+  }
+
+  .credits-note {
+    font-size: 0.8rem;
+    color: var(--color-gray-500);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+
+  .free-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 2.5rem auto;
+  }
+
+  .free-divider::before,
+  .free-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-gray-300);
+  }
+
+  .free-divider span {
+    font-size: 0.85rem;
+    color: var(--color-gray-500);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .free-tier {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 1.5rem 2rem;
+    border-radius: var(--radius-card);
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+  }
+
+  .free-tier-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .free-tier-info h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-gray-700);
+    margin-bottom: 0.25rem;
+  }
+
+  .free-tier-info p {
+    font-size: 0.85rem;
+    color: var(--color-gray-500);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .btn-free {
+    padding: 0.5rem 1.25rem;
+    font-size: 0.85rem;
+    border-radius: var(--radius-button);
+    background: transparent;
+    color: var(--color-gray-600);
+    border: 1px solid var(--color-gray-300);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .btn-free:hover {
+    background: var(--color-gray-100);
+    color: var(--color-gray-700);
   }
 
   /* Footer */
@@ -657,7 +808,7 @@ import Layout from '../layouts/Layout.astro';
     }
 
     .feature-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: 1fr 1fr;
     }
 
     .steps {
@@ -668,8 +819,13 @@ import Layout from '../layouts/Layout.astro';
       transform: rotate(90deg);
     }
 
-    .pricing-grid {
+    .pricing-grid-paid {
       grid-template-columns: 1fr;
+    }
+
+    .free-tier-content {
+      flex-direction: column;
+      text-align: center;
     }
 
     .nav-links a:not(.btn) {
