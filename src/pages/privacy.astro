@@ -4,10 +4,317 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Privacy Policy - GradeVine" description="GradeVine privacy policy.">
   <div class="page">
-    <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: March 2026</p>
-    <p>Privacy policy content goes here.</p>
-    <p><a href="/">Back to home</a></p>
+    <div class="container">
+
+      <h1>Privacy Policy</h1>
+      <p class="meta">
+        <strong>Last Updated</strong>: April 1, 2026<br>
+        <strong>Effective Date</strong>: April 1, 2026
+      </p>
+
+      <div class="intro">
+        <p>GradeVine ("we," "us," or "our") is a mobile application developed by Moses Harding that helps teachers digitize, transcribe, and grade handwritten student assignments using AI-powered technology. This Privacy Policy explains how we collect, use, store, share, and protect information when you use the GradeVine app ("Service").</p>
+        <p>We take the privacy of student information seriously. Please read this policy carefully. By using GradeVine, you agree to the practices described below.</p>
+      </div>
+
+      <h2>1. Information We Collect</h2>
+
+      <h3>1.1 Information You Provide</h3>
+
+      <p><strong>Teacher Account Information</strong></p>
+      <ul>
+        <li>Your Apple ID / iCloud account is used to sync data across your devices. We do not separately collect your name, email, or password for app access.</li>
+        <li>If you connect Google Drive for export, we receive your Google account name, email address, and profile photo for authentication purposes only.</li>
+      </ul>
+
+      <p><strong>Student Information</strong></p>
+      <ul>
+        <li>Student names as entered by you</li>
+        <li>Alternate names or nicknames you provide for student matching</li>
+        <li>Course enrollments and section assignments</li>
+        <li>Student archive status</li>
+      </ul>
+
+      <p><strong>Assignment and Grading Data</strong></p>
+      <ul>
+        <li>Assignment titles, questions, point values, keywords, and rubrics</li>
+        <li>Scanned images of student handwritten work (captured via your device camera or photo library)</li>
+        <li>AI-transcribed text from student handwriting</li>
+        <li>Grades, scores, and teacher-provided feedback</li>
+        <li>Keyword matching results and confidence scores</li>
+      </ul>
+
+      <h3>1.2 Information Collected Automatically</h3>
+
+      <p><strong>Usage Analytics</strong> (if you have not opted out)</p>
+      <ul>
+        <li>App feature usage events (e.g., assignments created, scans processed)</li>
+        <li>Screen views and navigation patterns</li>
+        <li>Session duration and frequency</li>
+        <li>Performance metrics and error events</li>
+        <li>Device type and operating system version</li>
+      </ul>
+
+      <div class="note">Analytics events do <strong>not</strong> include student names, assignment content, grades, or any student-identifiable information.</div>
+
+      <p><strong>Technical Data</strong></p>
+      <ul>
+        <li>Anonymous device identifiers for analytics</li>
+        <li>App crash reports</li>
+        <li>iCloud account availability status</li>
+      </ul>
+
+      <h3>1.3 Information We Do NOT Collect</h3>
+      <ul>
+        <li>Student email addresses, phone numbers, physical addresses, or Social Security numbers</li>
+        <li>Student dates of birth or demographic information</li>
+        <li>Biometric data (fingerprints, face scans, voice recordings)</li>
+        <li>Location data</li>
+        <li>Contacts, calendars, or other device data unrelated to scanning</li>
+      </ul>
+
+      <h2>2. How We Use Your Information</h2>
+
+      <p>We use the information we collect for the following purposes:</p>
+
+      <table>
+        <thead>
+          <tr><th>Purpose</th><th>Data Used</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>AI Transcription &amp; Grading</strong></td><td>Student handwriting images, assignment questions, keywords, student roster names</td></tr>
+          <tr><td><strong>Student Matching</strong></td><td>Student names, alternate names, roster data</td></tr>
+          <tr><td><strong>Cloud Sync</strong></td><td>All assignment, student, course, scan, and grade metadata (synced to your personal iCloud account)</td></tr>
+          <tr><td><strong>Google Drive Export</strong></td><td>Student names, scan images, transcripts, grades, feedback (exported at your request to your Google Drive)</td></tr>
+          <tr><td><strong>Subscription Management</strong></td><td>Anonymous user identifier, purchase history</td></tr>
+          <tr><td><strong>Product Improvement</strong></td><td>Aggregated, non-identifying usage analytics</td></tr>
+          <tr><td><strong>Technical Support</strong></td><td>Error logs and crash reports</td></tr>
+        </tbody>
+      </table>
+
+      <p>We do <strong>not</strong> use student information for:</p>
+      <ul>
+        <li>Advertising or marketing</li>
+        <li>Building student profiles for non-educational purposes</li>
+        <li>Selling or renting to third parties</li>
+        <li>Training AI models (see Section 3.1)</li>
+      </ul>
+
+      <h2>3. Third-Party Services</h2>
+
+      <p>GradeVine uses the following third-party services to provide its functionality. Each service receives only the data necessary for its purpose.</p>
+
+      <h3>3.1 Google Gemini AI (AI Transcription &amp; Grading)</h3>
+      <div class="service-block">
+        <ul>
+          <li><strong>What is sent</strong>: Images of student handwriting, assignment question content, keywords, and student roster names (for name matching)</li>
+          <li><strong>Purpose</strong>: Optical character recognition (OCR), text transcription, student name extraction, and AI-assisted grading</li>
+          <li><strong>Data retention by Google</strong>: On the paid API tier that GradeVine uses, prompts and responses are <strong>not used for model training</strong>. Google retains API logs for up to 55 days for abuse monitoring, after which they are deleted. Google takes steps to disconnect data from API keys before any human review.</li>
+          <li><strong>Google's data policy</strong>: <a href="https://ai.google.dev/gemini-api/docs/logs-policy" rel="noopener noreferrer" target="_blank">Google Gemini API Data Logging Policy</a></li>
+        </ul>
+      </div>
+
+      <h3>3.2 Apple CloudKit (iCloud Sync)</h3>
+      <div class="service-block">
+        <ul>
+          <li><strong>What is synced</strong>: Course, student, assignment, scan, and grade metadata, as well as scan images &mdash; stored in your private iCloud database</li>
+          <li><strong>Purpose</strong>: Sync your data across your Apple devices signed into the same iCloud account</li>
+          <li><strong>Encryption</strong>: Apple encrypts CloudKit data in transit and at rest</li>
+          <li><strong>Control</strong>: Data is in your personal iCloud account. Deleting data in GradeVine also removes it from iCloud.</li>
+        </ul>
+      </div>
+
+      <h3>3.3 Google Drive (Optional Export)</h3>
+      <div class="service-block">
+        <ul>
+          <li><strong>What is sent</strong>: Student names, scan images, transcribed text, grades, feedback, and AI analysis results &mdash; organized by course, assignment, and student</li>
+          <li><strong>Purpose</strong>: Export graded work to your Google Drive at your request</li>
+          <li><strong>When</strong>: Only when you explicitly initiate an export</li>
+          <li><strong>Control</strong>: Exported files are in your Google Drive account. You can delete them at any time through Google Drive.</li>
+          <li><strong>Scope</strong>: GradeVine requests access to your Google Drive to create and manage export files</li>
+        </ul>
+      </div>
+
+      <h3>3.4 Firebase Analytics (Google)</h3>
+      <div class="service-block">
+        <ul>
+          <li><strong>What is collected</strong>: App usage events, screen views, session data, and device/OS metadata</li>
+          <li><strong>What is NOT collected</strong>: Student names, grades, assignment content, or any student-identifiable information</li>
+          <li><strong>Purpose</strong>: Understand how the app is used to improve features and fix issues</li>
+          <li><strong>Opt-out</strong>: You can disable analytics at any time in Settings. When disabled, we stop collecting analytics data and clear locally stored analytics events.</li>
+          <li><strong>Data retention</strong>: Analytics data is retained for 2 months</li>
+        </ul>
+      </div>
+
+      <h3>3.5 RevenueCat (Subscription Management)</h3>
+      <div class="service-block">
+        <ul>
+          <li><strong>What is shared</strong>: An anonymous app user identifier (not your name or email), subscription status, and purchase history</li>
+          <li><strong>Purpose</strong>: Manage Pro subscriptions and credit purchases</li>
+          <li><strong>Privacy</strong>: RevenueCat does not receive any student data</li>
+          <li><strong>RevenueCat's privacy policy</strong>: <a href="https://www.revenuecat.com/privacy" rel="noopener noreferrer" target="_blank">revenuecat.com/privacy</a></li>
+        </ul>
+      </div>
+
+      <h3>3.6 Firebase Authentication (Google)</h3>
+      <div class="service-block">
+        <ul>
+          <li><strong>What is used</strong>: An anonymous authentication token</li>
+          <li><strong>Purpose</strong>: Secure access to backend services</li>
+          <li><strong>Privacy</strong>: No personal information is associated with the anonymous token</li>
+        </ul>
+      </div>
+
+      <h2>4. Data Storage and Security</h2>
+
+      <h3>4.1 Local Storage</h3>
+      <ul>
+        <li>All student data, assignments, scans, and grades are stored locally on your device in the app's private sandbox</li>
+        <li>Scan images are stored as JPEG files on your device and synced to your personal iCloud account</li>
+        <li>Local storage is protected by iOS file-system encryption, which is tied to your device passcode</li>
+      </ul>
+
+      <h3>4.2 Cloud Storage</h3>
+      <ul>
+        <li>All data &mdash; including metadata and scan images &mdash; is synced to your personal iCloud account via Apple CloudKit</li>
+        <li>CloudKit data is encrypted in transit (TLS) and at rest by Apple</li>
+        <li>Your iCloud data is accessible only to devices signed into your Apple ID</li>
+      </ul>
+
+      <h3>4.3 Security Measures</h3>
+      <ul>
+        <li>All network communications use HTTPS/TLS encryption</li>
+        <li>API authentication uses industry-standard OAuth 2.0 (Google) and API key authentication (Gemini)</li>
+        <li>Subscription identifiers are stored in the iOS Keychain</li>
+        <li>We do not maintain our own servers or databases with your data &mdash; data resides on your device, in your iCloud account, or in your Google account</li>
+      </ul>
+
+      <h2>5. Children's Privacy</h2>
+
+      <p>GradeVine is a tool for teachers, not a service directed at children. However, we recognize that teachers use GradeVine to process student work, which may include work from children under 13.</p>
+
+      <h3>5.1 What We Collect About Students</h3>
+      <p>GradeVine collects student information <strong>as entered by teachers</strong>: names, alternate names, scanned images of handwriting, and grades. Students do not interact with GradeVine directly and do not have accounts.</p>
+
+      <h3>5.2 Teacher Responsibility</h3>
+      <p>Teachers are responsible for:</p>
+      <ul>
+        <li>Ensuring they have appropriate authorization from their educational institution to use GradeVine with student data</li>
+        <li>Complying with their institution's student data privacy policies</li>
+        <li>Obtaining any required parental or institutional consent before processing student information through GradeVine</li>
+        <li>Complying with applicable laws including FERPA, COPPA, and state student privacy laws</li>
+      </ul>
+
+      <h3>5.3 Our Commitments</h3>
+      <ul>
+        <li>We do <strong>not</strong> use student data for advertising, marketing, or non-educational profiling</li>
+        <li>We do <strong>not</strong> sell student data to any third party</li>
+        <li>We minimize data collection to what is necessary for the educational service</li>
+        <li>Student data sent to Google Gemini for AI processing is not used to train AI models (paid API tier)</li>
+        <li>We will delete student data upon teacher request (see Section 7)</li>
+      </ul>
+
+      <h3>5.4 COPPA Notice</h3>
+      <p>If you are a teacher of students under 13, please ensure you have obtained the necessary consent from your educational institution or from parents/guardians before using GradeVine to process student work. GradeVine does not knowingly collect personal information directly from children under 13. If you believe a child's personal information has been collected inappropriately, please contact us at <a href="mailto:moseshh@gmail.com">moseshh@gmail.com</a> and we will promptly delete it.</p>
+
+      <h2>6. Data Retention</h2>
+
+      <table>
+        <thead>
+          <tr><th>Data Type</th><th>Retention Period</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Student records, assignments, grades</td><td>Retained until you delete them within the app or reset the app</td></tr>
+          <tr><td>Scan images</td><td>Retained on your device until you delete them, archive them, or reset the app</td></tr>
+          <tr><td>CloudKit synced data</td><td>Retained in your iCloud account until deleted through the app</td></tr>
+          <tr><td>Google Drive exports</td><td>Retained in your Google Drive until you delete them</td></tr>
+          <tr><td>Analytics data</td><td>2 months</td></tr>
+          <tr><td>Gemini API logs</td><td>Up to 55 days (retained and managed by Google)</td></tr>
+          <tr><td>RevenueCat subscription data</td><td>Per RevenueCat's retention policy</td></tr>
+        </tbody>
+      </table>
+
+      <p>We do not impose a maximum retention period on educational data you actively use. You have full control to delete data at any time.</p>
+
+      <h2>7. Your Rights and Choices</h2>
+
+      <h3>7.1 Data Access and Export</h3>
+      <ul>
+        <li><strong>View</strong>: All student data, grades, and transcripts are viewable within the app at any time</li>
+        <li><strong>Export</strong>: You can export grade data as CSV files or export complete records (images, transcripts, grades) to Google Drive</li>
+      </ul>
+
+      <h3>7.2 Data Deletion</h3>
+      <p>GradeVine provides two levels of data deletion:</p>
+      <ul>
+        <li><strong>Free Up Space</strong>: Removes orphaned files and cached data while preserving your courses, students, and grades</li>
+        <li><strong>Reset App</strong>: Complete deletion of all data &mdash; local files, CloudKit records, and cached data. Requires typing "DELETE" to confirm. This action is irreversible.</li>
+      </ul>
+
+      <h3>7.3 Analytics Opt-Out</h3>
+      <p>You can disable analytics collection at any time in the app's Settings. When disabled:</p>
+      <ul>
+        <li>Analytics collection stops immediately</li>
+        <li>Locally stored analytics events are cleared</li>
+        <li>No further data is sent to Firebase Analytics</li>
+      </ul>
+
+      <h3>7.4 Google Account</h3>
+      <p>You can disconnect your Google account at any time in Settings, which revokes GradeVine's access to your Google Drive. Previously exported files remain in your Google Drive under your control.</p>
+
+      <h3>7.5 California Residents</h3>
+      <p>If you are a California resident and the California Consumer Privacy Act (CCPA/CPRA) applies, you may have additional rights including the right to know, delete, and correct your personal information, and the right to opt out of the sale or sharing of personal information. We do not sell or share personal information as defined by the CCPA. To exercise your rights, contact us at <a href="mailto:moseshh@gmail.com">moseshh@gmail.com</a>.</p>
+
+      <h2>8. Data Sharing</h2>
+
+      <p>We do <strong>not</strong> sell, rent, or share student data or teacher data with third parties for their own commercial purposes.</p>
+
+      <p>We share data with third-party services <strong>only</strong> as described in Section 3 above, and only to the extent necessary to provide the Service. Specifically:</p>
+      <ul>
+        <li><strong>Google (Gemini AI)</strong>: Student handwriting images and assignment content for AI processing</li>
+        <li><strong>Apple (CloudKit)</strong>: All data including scan images for cloud sync to your iCloud account</li>
+        <li><strong>Google (Drive)</strong>: Graded work for export to your Google Drive, at your request</li>
+        <li><strong>Google (Firebase)</strong>: Anonymous usage analytics (if not opted out)</li>
+        <li><strong>RevenueCat</strong>: Anonymous subscription management data</li>
+      </ul>
+
+      <p>We may also disclose information if required by law, legal process, or government request, or to protect the rights, property, or safety of GradeVine, our users, or others.</p>
+
+      <h2>9. Changes to This Policy</h2>
+
+      <p>We may update this Privacy Policy from time to time. We will notify you of material changes by:</p>
+      <ul>
+        <li>Posting the updated policy within the app</li>
+        <li>Updating the "Last Updated" date at the top of this policy</li>
+        <li>For material changes, providing in-app notification</li>
+      </ul>
+
+      <p>Your continued use of GradeVine after changes become effective constitutes acceptance of the updated policy.</p>
+
+      <h2>10. Contact Us</h2>
+
+      <p>If you have questions about this Privacy Policy or our data practices, please contact us:</p>
+      <ul>
+        <li><strong>Email</strong>: <a href="mailto:moseshh@gmail.com">moseshh@gmail.com</a></li>
+        <li><strong>Address</strong>: 40 W 116th St Apt A616, New York, NY 10026</li>
+        <li><strong>Website</strong>: <a href="https://gradevine.app">gradevine.app</a></li>
+      </ul>
+
+      <p>If you believe student data has been handled inappropriately, please contact us immediately at <a href="mailto:moseshh@gmail.com">moseshh@gmail.com</a> and we will investigate and respond promptly.</p>
+
+      <h2>11. Definitions</h2>
+
+      <ul>
+        <li><strong>Personal Information</strong>: Information that identifies, relates to, or could reasonably be linked to a particular individual</li>
+        <li><strong>Student Data</strong>: Personal information about students collected through the Service, including names, handwriting images, transcribed text, and grades</li>
+        <li><strong>Teacher</strong>: The individual user of GradeVine who enters student data and uses the Service for grading</li>
+        <li><strong>Service</strong>: The GradeVine mobile application and all associated features</li>
+      </ul>
+
+      <p class="footer-note">This Privacy Policy is provided by Moses Harding, an individual developer based in New York, NY.</p>
+
+      <p><a href="/">Back to home</a></p>
+    </div>
   </div>
 </Layout>
 
@@ -18,18 +325,138 @@ import Layout from '../layouts/Layout.astro';
     padding: 6rem 1.5rem 4rem;
   }
 
-  h1 {
-    font-size: 2rem;
-    margin-bottom: 0.5rem;
+  .container {
+    line-height: 1.7;
   }
 
-  .updated {
-    color: var(--color-gray-500);
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .meta {
+    color: var(--color-gray-500, #555);
+    font-size: 0.9rem;
     margin-bottom: 2rem;
   }
 
-  p {
-    line-height: 1.7;
+  .intro {
+    font-size: 1.05rem;
+    margin-bottom: 2.5rem;
+    line-height: 1.8;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-top: 3rem;
     margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-gray-200, #e0e0e0);
+    letter-spacing: -0.01em;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  ul, ol {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.375rem;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  a {
+    color: var(--color-accent, #2563eb);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 0.625rem 0.875rem;
+    border: 1px solid var(--color-gray-200, #e0e0e0);
+  }
+
+  th {
+    background: var(--color-gray-50, #f9fafb);
+    font-weight: 600;
+  }
+
+  .note {
+    background: var(--color-gray-50, #f9fafb);
+    border-left: 3px solid var(--color-accent, #2563eb);
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    border-radius: 0 6px 6px 0;
+    font-size: 0.95rem;
+  }
+
+  .service-block {
+    margin: 1.25rem 0;
+  }
+
+  .service-block ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .service-block li {
+    margin-bottom: 0.5rem;
+    padding-left: 0;
+  }
+
+  .footer-note {
+    color: var(--color-gray-500, #555);
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-gray-200, #e0e0e0);
+  }
+
+  @media (max-width: 600px) {
+    .page {
+      padding: 4rem 1rem 3rem;
+    }
+    h1 {
+      font-size: 1.6rem;
+    }
+    h2 {
+      font-size: 1.2rem;
+    }
+    table {
+      font-size: 0.85rem;
+    }
+    th, td {
+      padding: 0.5rem 0.625rem;
+    }
   }
 </style>
