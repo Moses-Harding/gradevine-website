@@ -3,21 +3,20 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="GradeVine - Grade on the go. Powered by AI."
+  title="GradeVine - AI that grades papers, not writes them."
   description="GradeVine helps teachers digitize handwritten student assignments using AI-powered transcription, keyword matching, and smart grading tools."
 >
   <!-- Header -->
   <header class="header">
     <nav class="nav">
       <div class="logo">
-        <!-- Replace with your logo image -->
         <span class="logo-text">GradeVine</span>
       </div>
       <div class="nav-links">
         <a href="#features">Features</a>
         <a href="#how-it-works">How It Works</a>
         <a href="#pricing">Pricing</a>
-        <a href="#" class="btn btn-nav">Download</a>
+        <a href="#" class="btn btn-nav">Get Started Free</a>
       </div>
     </nav>
   </header>
@@ -25,60 +24,63 @@ import Layout from '../layouts/Layout.astro';
   <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Grade on the go.<br /><span class="highlight">Powered by AI.</span></h1>
+      <h1>AI that grades papers,<br /><span class="highlight">not writes them.</span></h1>
       <p class="hero-subtitle">
-        Digitize handwritten assignments, auto-match students, and grade
-        smarter — all from your iPhone.
+        Scan handwritten assignments, auto-match students, and grade an entire class set
+        in 35 minutes instead of 3 hours — all from your iPhone.
       </p>
       <div class="hero-cta">
-        <a href="#" class="btn btn-primary">
-          <svg class="apple-icon" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
-            <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
-          </svg>
-          Download on the App Store
-        </a>
+        <a href="#" class="btn btn-primary">Get Started for Free</a>
       </div>
       <div class="hero-videos">
-        <div class="video-row">
-          <div class="video-item">
-            <span class="video-label">Create Assignment</span>
-            <video autoplay muted loop playsinline>
-              <source src="/videos/1-create-assignment.mp4" type="video/mp4" />
-            </video>
+        <div class="video-step">
+          <div class="video-step-text">
+            <span class="video-step-number">1</span>
+            <h3>Upload your assignment</h3>
+            <p>Snap a photo of your quiz or import a PDF. GradeVine's AI extracts the questions, point values, and structure automatically — no manual setup.</p>
           </div>
           <div class="video-item">
-            <span class="video-label">Confirm Questions</span>
             <video autoplay muted loop playsinline>
               <source src="/videos/2-confirm-questions.mp4" type="video/mp4" />
             </video>
           </div>
-          <div class="video-item">
-            <span class="video-label">Upload & Process</span>
-            <video autoplay muted loop playsinline>
-              <source src="/videos/3-upload-process-work.mp4" type="video/mp4" />
-            </video>
-          </div>
         </div>
-        <div class="video-row">
+        <div class="video-step reverse">
+          <div class="video-step-text">
+            <span class="video-step-number">2</span>
+            <h3>Grade by question, not by paper</h3>
+            <p>See every student's answer to the same question side by side. Tap to assign points, swipe to the next student. Grade a full class set of Question 1 in under two minutes.</p>
+          </div>
           <div class="video-item">
-            <span class="video-label">Grade Work</span>
             <video autoplay muted loop playsinline>
               <source src="/videos/4-grade-student-work.mp4" type="video/mp4" />
             </video>
           </div>
+        </div>
+        <div class="video-step">
+          <div class="video-step-text">
+            <span class="video-step-number">3</span>
+            <h3>See who needs help</h3>
+            <p>Instantly view class averages, grade distributions, and which students are struggling — then export everything to your gradebook, Google Drive, or as a PDF.</p>
+          </div>
           <div class="video-item">
-            <span class="video-label">Analytics</span>
             <video autoplay muted loop playsinline>
               <source src="/videos/6-view-analytics.mp4" type="video/mp4" />
             </video>
           </div>
-          <div class="video-item">
-            <span class="video-label">Export</span>
-            <video autoplay muted loop playsinline>
-              <source src="/videos/7-export-feedback.mp4" type="video/mp4" />
-            </video>
-          </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Banner -->
+  <section class="privacy-banner">
+    <div class="container">
+      <div class="privacy-content">
+        <svg class="privacy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+        <p>Student data stays on your device and syncs privately via your personal iCloud account. Student work is never stored on our servers and is <strong>never used to train AI models</strong>.</p>
       </div>
     </div>
   </section>
@@ -141,21 +143,7 @@ import Layout from '../layouts/Layout.astro';
           <h3>Auto-Match Students</h3>
           <p>
             Scan a stack of papers and GradeVine automatically matches each
-            assignment to the right student. Import rosters or add students manually.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
-              <line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" />
-            </svg>
-          </div>
-          <h3>Batch Processing</h3>
-          <p>
-            Grade an entire class at once. Scan multiple pages, process them
-            concurrently, and review results in one view.
+            assignment to the right student with 96% accuracy.
           </p>
         </div>
 
@@ -166,10 +154,10 @@ import Layout from '../layouts/Layout.astro';
               <rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
             </svg>
           </div>
-          <h3>Flexible Grading Modes</h3>
+          <h3>Grade by Question</h3>
           <p>
-            Grade by question to compare answers across the class, or grade by
-            student to review one paper at a time. Your workflow, your choice.
+            See every student's answer to the same question side by side.
+            Grade faster and more consistently than paper-by-paper review.
           </p>
         </div>
 
@@ -182,7 +170,7 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <h3>Export Anywhere</h3>
           <p>
-            Export grades and feedback as PDF, CSV, or to Google Drive.
+            Export grades and feedback as PDF, CSV, or directly to Google Drive.
             Share results with students, parents, or your records system.
           </p>
         </div>
@@ -200,6 +188,9 @@ import Layout from '../layouts/Layout.astro';
           </p>
         </div>
       </div>
+      <div class="section-cta">
+        <a href="#" class="btn btn-primary">Get Started for Free</a>
+      </div>
     </div>
   </section>
 
@@ -211,7 +202,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="step">
           <div class="step-number">1</div>
           <h3>Scan</h3>
-          <p>Take photos of handwritten assignments or import PDFs.</p>
+          <p>Take photos of handwritten assignments or import PDFs. Process an entire class set at once.</p>
         </div>
         <div class="step-arrow">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
@@ -221,7 +212,7 @@ import Layout from '../layouts/Layout.astro';
         <div class="step">
           <div class="step-number">2</div>
           <h3>Transcribe</h3>
-          <p>AI reads handwriting and digitizes every response.</p>
+          <p>AI reads handwriting, digitizes every response, and matches pages to your roster.</p>
         </div>
         <div class="step-arrow">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
@@ -231,8 +222,11 @@ import Layout from '../layouts/Layout.astro';
         <div class="step">
           <div class="step-number">3</div>
           <h3>Grade</h3>
-          <p>Review transcriptions, use keyword matching, and assign grades.</p>
+          <p>Review by question, tap to assign points, and export to your gradebook. About 1 minute per student.</p>
         </div>
+      </div>
+      <div class="section-cta">
+        <a href="#" class="btn btn-primary">Get Started for Free</a>
       </div>
     </div>
   </section>
@@ -241,14 +235,38 @@ import Layout from '../layouts/Layout.astro';
   <section id="pricing" class="pricing">
     <div class="container">
       <h2>Simple, credit-based pricing</h2>
-      <p class="pricing-subtitle">Every feature is available on every plan. Credits power AI transcription.</p>
+      <p class="pricing-subtitle">Every feature is available on every plan. Credits power AI transcription — 1 credit per page scanned, or 1.5 credits per page with AI-assisted grading.</p>
+
+      <!-- Free tier elevated -->
+      <div class="free-tier-hero">
+        <div class="free-tier-hero-content">
+          <h3>Start free</h3>
+          <div class="free-price">Free</div>
+          <div class="credits">30 credits/month</div>
+          <p class="credits-note">Enough for about 1 small class assignment. All features included.</p>
+          <a href="#" class="btn btn-primary">Get Started for Free</a>
+        </div>
+      </div>
+
+      <div class="upgrade-divider">
+        <span>Need more credits?</span>
+      </div>
+
+      <!-- Billing toggle -->
+      <div class="billing-toggle">
+        <button class="toggle-btn active" data-period="monthly">Monthly</button>
+        <button class="toggle-btn" data-period="annual">Annual</button>
+      </div>
+
       <div class="pricing-grid-paid">
         <div class="pricing-card featured">
           <div class="badge">Most Popular</div>
           <h3>Standard</h3>
-          <div class="price">$4.99<span>/mo</span></div>
+          <div class="price monthly-price">$4.99<span>/mo</span></div>
+          <div class="price annual-price" style="display:none;">$49.99<span>/yr</span></div>
+          <div class="annual-savings" style="display:none;">Save $9.89/year</div>
           <div class="credits">1,000 credits/month</div>
-          <p class="credits-note">Unused credits roll over. $49.99/year.</p>
+          <p class="credits-note">Unused credits roll over month to month.</p>
           <ul>
             <li>All features included</li>
             <li>Google Drive export</li>
@@ -257,9 +275,11 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="pricing-card">
           <h3>Pro</h3>
-          <div class="price">$9.99<span>/mo</span></div>
+          <div class="price monthly-price">$9.99<span>/mo</span></div>
+          <div class="price annual-price" style="display:none;">$99.99<span>/yr</span></div>
+          <div class="annual-savings" style="display:none;">Save $19.89/year</div>
           <div class="credits">5,000 credits/month</div>
-          <p class="credits-note">Unused credits roll over. $99.99/year.</p>
+          <p class="credits-note">Unused credits roll over month to month.</p>
           <ul>
             <li>Everything in Standard</li>
             <li>5x the credits</li>
@@ -267,16 +287,20 @@ import Layout from '../layouts/Layout.astro';
           </ul>
         </div>
       </div>
-      <div class="free-divider">
-        <span>Or try GradeVine for free</span>
-      </div>
-      <div class="free-tier">
-        <div class="free-tier-content">
-          <div class="free-tier-info">
-            <h3>Free</h3>
-            <p>Get 30 credits every month — enough for about 1 assignment. All features included, no credit card required. Credits reset monthly.</p>
+
+      <div class="credit-explainer">
+        <h4>How credits work</h4>
+        <div class="credit-examples">
+          <div class="credit-example">
+            <strong>1-page quiz, 20 students, with AI grading</strong>
+            <span>30 credits</span>
+            <span class="credit-tag free-tag">Free tier</span>
           </div>
-          <a href="#" class="btn btn-free">Get Started Free</a>
+          <div class="credit-example">
+            <strong>4-page test, 30 students, with AI grading</strong>
+            <span>180 credits</span>
+            <span class="credit-tag standard-tag">Standard</span>
+          </div>
         </div>
       </div>
     </div>
@@ -288,7 +312,7 @@ import Layout from '../layouts/Layout.astro';
       <div class="footer-content">
         <div class="footer-brand">
           <span class="logo-text">GradeVine</span>
-          <p>Grade on the go. Powered by AI.</p>
+          <p>AI that grades papers, not writes them.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
@@ -404,20 +428,11 @@ import Layout from '../layouts/Layout.astro';
     background: rgba(255, 255, 255, 0.3);
   }
 
-  .apple-icon {
-    width: 20px;
-    height: 20px;
-  }
-
   /* Hero */
   .hero {
     padding: 8rem 1.5rem 4rem;
     text-align: center;
-    background: linear-gradient(
-      180deg,
-      var(--color-purple-50) 0%,
-      #fff 100%
-    );
+    background: #fff;
   }
 
   .hero-content {
@@ -448,7 +463,7 @@ import Layout from '../layouts/Layout.astro';
     margin-top: 1.25rem;
     font-size: 1.25rem;
     color: var(--color-gray-600);
-    max-width: 540px;
+    max-width: 580px;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.6;
@@ -458,38 +473,60 @@ import Layout from '../layouts/Layout.astro';
     margin-top: 2rem;
   }
 
-
   .hero-videos {
-    margin-top: 3rem;
+    margin-top: 4rem;
     display: flex;
     flex-direction: column;
-    gap: 2.5rem;
-    max-width: var(--max-width);
+    gap: 4rem;
+    max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 1.5rem;
   }
 
-  .video-row {
+  .video-step {
     display: flex;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .video-step.reverse {
+    flex-direction: row-reverse;
+  }
+
+  .video-step-text {
+    flex: 1;
+    text-align: left;
+  }
+
+  .video-step-number {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    gap: 2rem;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, var(--color-purple-deep), var(--color-purple));
+    color: #fff;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.9rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .video-step-text h3 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: 0.5rem;
+  }
+
+  .video-step-text p {
+    font-size: 1rem;
+    color: var(--color-gray-600);
+    line-height: 1.6;
   }
 
   .video-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .video-label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-gray-600);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    flex: 0 0 280px;
   }
 
   .video-item video {
@@ -499,11 +536,46 @@ import Layout from '../layouts/Layout.astro';
     background: #000;
   }
 
+  /* Privacy Banner */
+  .privacy-banner {
+    background: var(--color-purple-50);
+    border-top: 1px solid var(--color-purple-light);
+    border-bottom: 1px solid var(--color-purple-light);
+    padding: 1rem 0;
+  }
+
+  .privacy-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .privacy-icon {
+    flex-shrink: 0;
+    color: var(--color-purple-deep);
+  }
+
+  .privacy-content p {
+    font-size: 0.9rem;
+    color: var(--color-gray-700);
+    line-height: 1.5;
+    margin: 0;
+  }
+
   /* Container */
   .container {
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 0 1.5rem;
+  }
+
+  /* Section CTA */
+  .section-cta {
+    text-align: center;
+    margin-top: 3rem;
   }
 
   /* Features */
@@ -637,7 +709,110 @@ import Layout from '../layouts/Layout.astro';
     color: var(--color-gray-600);
     margin-top: 0.5rem;
     margin-bottom: 3rem;
+    font-size: 1.05rem;
+    max-width: 640px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* Free tier hero */
+  .free-tier-hero {
+    max-width: 480px;
+    margin: 0 auto 2rem;
+    padding: 2.5rem 2rem;
+    border-radius: var(--radius-card);
+    background: linear-gradient(135deg, var(--color-purple-50), #fff);
+    border: 2px solid var(--color-purple-deep);
+    box-shadow: 0 4px 24px rgba(80, 2, 247, 0.1);
+    text-align: center;
+  }
+
+  .free-tier-hero h3 {
     font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-gray-600);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .free-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-purple-deep);
+    margin-bottom: 0.25rem;
+  }
+
+  .free-tier-hero .credits {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-gray-800);
+    margin-bottom: 0.25rem;
+  }
+
+  .free-tier-hero .credits-note {
+    font-size: 0.9rem;
+    color: var(--color-gray-500);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+  }
+
+  /* Upgrade divider */
+  .upgrade-divider {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    max-width: 700px;
+    margin: 2rem auto;
+  }
+
+  .upgrade-divider::before,
+  .upgrade-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-gray-300);
+  }
+
+  .upgrade-divider span {
+    font-size: 0.9rem;
+    color: var(--color-gray-500);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* Billing toggle */
+  .billing-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 2rem;
+    background: var(--color-gray-100);
+    border-radius: var(--radius-pill);
+    padding: 0.25rem;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .toggle-btn {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-pill);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: transparent;
+    color: var(--color-gray-600);
+    font-family: var(--font-family);
+    transition: all 0.2s;
+  }
+
+  .toggle-btn.active {
+    background: #fff;
+    color: var(--color-purple-deep);
+    box-shadow: var(--shadow-sm);
   }
 
   .pricing-grid-paid {
@@ -687,13 +862,34 @@ import Layout from '../layouts/Layout.astro';
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--color-purple-deep);
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.25rem;
   }
 
   .price span {
     font-size: 1rem;
     font-weight: 400;
     color: var(--color-gray-500);
+  }
+
+  .annual-savings {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-red);
+    margin-bottom: 0.5rem;
+  }
+
+  .pricing-card .credits {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-gray-800);
+    margin-bottom: 0.25rem;
+  }
+
+  .pricing-card .credits-note {
+    font-size: 0.8rem;
+    color: var(--color-gray-500);
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
   }
 
   .pricing-card ul {
@@ -732,73 +928,64 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.4;
   }
 
-  .free-divider {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+  /* Credit explainer */
+  .credit-explainer {
     max-width: 700px;
-    margin: 2.5rem auto;
-  }
-
-  .free-divider::before,
-  .free-divider::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: var(--color-gray-300);
-  }
-
-  .free-divider span {
-    font-size: 0.85rem;
-    color: var(--color-gray-500);
-    font-weight: 500;
-    white-space: nowrap;
-  }
-
-  .free-tier {
-    max-width: 700px;
-    margin: 0 auto;
+    margin: 2.5rem auto 0;
     padding: 1.5rem 2rem;
     border-radius: var(--radius-card);
     background: var(--color-gray-50);
     border: 1px solid var(--color-gray-200);
   }
 
-  .free-tier-content {
+  .credit-explainer h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--color-gray-800);
+  }
+
+  .credit-examples {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .credit-example {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 2rem;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: var(--color-gray-700);
   }
 
-  .free-tier-info h3 {
-    font-size: 1rem;
+  .credit-example strong {
+    flex: 1;
+    font-weight: 500;
+  }
+
+  .credit-example span:not(.credit-tag) {
     font-weight: 600;
-    color: var(--color-gray-700);
-    margin-bottom: 0.25rem;
-  }
-
-  .free-tier-info p {
-    font-size: 0.85rem;
-    color: var(--color-gray-500);
-    line-height: 1.5;
-    margin: 0;
-  }
-
-  .btn-free {
-    padding: 0.5rem 1.25rem;
-    font-size: 0.85rem;
-    border-radius: var(--radius-button);
-    background: transparent;
-    color: var(--color-gray-600);
-    border: 1px solid var(--color-gray-300);
+    color: var(--color-gray-800);
     white-space: nowrap;
-    flex-shrink: 0;
   }
 
-  .btn-free:hover {
-    background: var(--color-gray-100);
-    color: var(--color-gray-700);
+  .credit-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-pill);
+    white-space: nowrap;
+  }
+
+  .free-tag {
+    background: var(--color-purple-light);
+    color: var(--color-purple-deep);
+  }
+
+  .standard-tag {
+    background: rgba(255, 28, 54, 0.08);
+    color: var(--color-red);
   }
 
   /* Footer */
@@ -866,6 +1053,22 @@ import Layout from '../layouts/Layout.astro';
       font-size: 1.05rem;
     }
 
+    .video-step,
+    .video-step.reverse {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .video-step-text {
+      text-align: center;
+    }
+
+    .video-item {
+      flex: none;
+      max-width: 280px;
+      margin: 0 auto;
+    }
+
     .feature-grid {
       grid-template-columns: 1fr 1fr;
     }
@@ -882,9 +1085,16 @@ import Layout from '../layouts/Layout.astro';
       grid-template-columns: 1fr;
     }
 
-    .free-tier-content {
+    .privacy-content {
       flex-direction: column;
       text-align: center;
+      gap: 0.5rem;
+    }
+
+    .credit-example {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
     }
 
     .nav-links a:not(.btn) {
@@ -900,3 +1110,24 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 </style>
+
+<script>
+  const toggleBtns = document.querySelectorAll('.toggle-btn');
+  const monthlyPrices = document.querySelectorAll('.monthly-price');
+  const annualPrices = document.querySelectorAll('.annual-price');
+  const annualSavings = document.querySelectorAll('.annual-savings');
+
+  toggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      toggleBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const period = btn.dataset.period;
+      const showMonthly = period === 'monthly';
+
+      monthlyPrices.forEach(el => el.style.display = showMonthly ? '' : 'none');
+      annualPrices.forEach(el => el.style.display = showMonthly ? 'none' : '');
+      annualSavings.forEach(el => el.style.display = showMonthly ? 'none' : '');
+    });
+  });
+</script>

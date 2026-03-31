@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run:*)",
+      "Bash(brew install:*)",
+      "Bash(ffmpeg -y -i \"/Users/mosesharding/Development/Active/GradeVine GTM/1 - Create assignment.mov\" -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k -movflags +faststart \"/Users/mosesharding/Development/Active/gradevine-website/public/videos/1-create-assignment.mp4\")",
+      "Bash(ffmpeg -y -i \"/Users/mosesharding/Development/Active/GradeVine GTM/2 - Confirm questions.mov\" -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k -movflags +faststart \"/Users/mosesharding/Development/Active/gradevine-website/public/videos/2-confirm-questions.mp4\")",
+      "Bash(ffmpeg -y -i \"/Users/mosesharding/Development/Active/GradeVine GTM/3 - Upload and process work.mov\" -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k -movflags +faststart \"/Users/mosesharding/Development/Active/gradevine-website/public/videos/3-upload-process-work.mp4\")",
+      "Bash(ffmpeg -y -i \"/Users/mosesharding/Development/Active/GradeVine GTM/4 - Grade student work.mov\" -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k -movflags +faststart \"/Users/mosesharding/Development/Active/gradevine-website/public/videos/4-grade-student-work.mp4\")",
+      "Bash(ffmpeg -y -i \"/Users/mosesharding/Development/Active/GradeVine GTM/5 - View transcript and give feedback.mov\" -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k -movflags +faststart \"/Users/mosesharding/Development/Active/gradevine-website/public/videos/5-view-transcript-feedback.mp4\")",
+      "Bash(ffmpeg -y -i \"/Users/mosesharding/Development/Active/GradeVine GTM/6 - View analytics.mov\" -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k -movflags +faststart \"/Users/mosesharding/Development/Active/gradevine-website/public/videos/6-view-analytics.mp4\")",
+      "Bash(ffmpeg -y -i \"/Users/mosesharding/Development/Active/GradeVine GTM/7 - Export feedback.mov\" -c:v libx264 -crf 28 -preset medium -c:a aac -b:a 128k -movflags +faststart \"/Users/mosesharding/Development/Active/gradevine-website/public/videos/7-export-feedback.mp4\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4321)",
+      "Bash(ffmpeg -y -i \"/Users/mosesharding/Development/Active/GradeVine GTM/3 - Upload and process work.mov\" -c:v libx264 -crf 28 -preset medium -an -movflags +faststart \"/Users/mosesharding/Development/Active/gradevine-website/public/videos/3-upload-process-work.mp4\")",
+      "WebFetch(domain:www.caffeinemarketing.com)",
+      "WebFetch(domain:fibr.ai)",
+      "WebFetch(domain:instapage.com)",
+      "WebFetch(domain:lovable.dev)",
+      "Bash(open:*)"
+    ]
+  }
+}
