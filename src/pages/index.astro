@@ -39,8 +39,7 @@ import Layout from '../layouts/Layout.astro';
         <h2 class="hero-videos-title">How it works</h2>
         <div class="video-step">
           <div class="video-step-text">
-            <span class="video-step-number">1</span>
-            <h3>Upload your assignment</h3>
+            <div class="video-step-header"><span class="video-step-number">1</span><h3>Upload your assignment</h3></div>
             <p>Snap a photo of your quiz or import a PDF. GradeVine's AI extracts the questions, point values, and structure automatically — no manual setup.</p>
           </div>
           <div class="video-item">
@@ -51,8 +50,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="video-step reverse">
           <div class="video-step-text">
-            <span class="video-step-number">2</span>
-            <h3>Grade by question, not by paper</h3>
+            <div class="video-step-header"><span class="video-step-number">2</span><h3>Grade by question, not by paper</h3></div>
             <p>See every student's answer to the same question side by side. Tap to assign points, swipe to the next student. Grade a full class set of Question 1 in under two minutes.</p>
           </div>
           <div class="video-item">
@@ -63,8 +61,7 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="video-step">
           <div class="video-step-text">
-            <span class="video-step-number">3</span>
-            <h3>See who needs help</h3>
+            <div class="video-step-header"><span class="video-step-number">3</span><h3>See who needs help</h3></div>
             <p>Instantly view class averages, grade distributions, and which students are struggling — then export everything to your gradebook, Google Drive, or as a PDF.</p>
           </div>
           <div class="video-item">
@@ -549,14 +546,21 @@ import Layout from '../layouts/Layout.astro';
     border-radius: 50%;
     font-weight: 700;
     font-size: 0.9rem;
-    margin-bottom: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .video-step-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
   }
 
   .video-step-text h3 {
     font-size: 1.35rem;
     font-weight: 700;
     color: var(--color-gray-900);
-    margin-bottom: 0.5rem;
+    margin: 0;
   }
 
   .video-step-text p {
