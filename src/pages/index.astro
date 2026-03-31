@@ -276,7 +276,7 @@ import Layout from '../layouts/Layout.astro';
             <label for="calc-students">Students</label>
             <div class="calc-stepper">
               <button type="button" class="stepper-btn" data-target="calc-students" data-dir="-1">-</button>
-              <input type="number" id="calc-students" value="25" min="1" max="500" />
+              <input type="number" id="calc-students" value="20" min="1" max="500" />
               <button type="button" class="stepper-btn" data-target="calc-students" data-dir="1">+</button>
             </div>
           </div>
@@ -284,7 +284,7 @@ import Layout from '../layouts/Layout.astro';
             <label for="calc-pages">Pages per assignment</label>
             <div class="calc-stepper">
               <button type="button" class="stepper-btn" data-target="calc-pages" data-dir="-1">-</button>
-              <input type="number" id="calc-pages" value="2" min="1" max="50" />
+              <input type="number" id="calc-pages" value="1" min="1" max="50" />
               <button type="button" class="stepper-btn" data-target="calc-pages" data-dir="1">+</button>
             </div>
           </div>
@@ -300,12 +300,12 @@ import Layout from '../layouts/Layout.astro';
         </div>
         <div class="calc-result">
           <div class="calc-total">
-            <span class="calc-total-number" id="calc-total">75</span>
+            <span class="calc-total-number" id="calc-total">30</span>
             <span class="calc-total-label">credits per assignment</span>
           </div>
           <div class="calc-plan" id="calc-plan">
-            <span class="credit-tag standard-tag">Standard</span>
-            <span>Up to <strong id="calc-assignments">13</strong> assignments/month</span>
+            <span class="credit-tag free-tag">Free</span>
+            <span>Up to <strong id="calc-assignments">1</strong> assignment/month</span>
           </div>
         </div>
       </div>
@@ -1071,8 +1071,7 @@ import Layout from '../layouts/Layout.astro';
     text-align: center;
     padding: 1.5rem;
     border-radius: var(--radius-card);
-    background: linear-gradient(135deg, var(--color-purple-50), #fff);
-    border: 1px solid var(--color-purple-light);
+    background: var(--color-purple-deep);
   }
 
   .calc-total {
@@ -1086,13 +1085,13 @@ import Layout from '../layouts/Layout.astro';
   .calc-total-number {
     font-size: 2.25rem;
     font-weight: 700;
-    color: var(--color-purple-deep);
+    color: #fff;
     line-height: 1;
   }
 
   .calc-total-label {
     font-size: 0.95rem;
-    color: var(--color-gray-600);
+    color: rgba(255, 255, 255, 0.8);
   }
 
   .calc-plan {
@@ -1101,7 +1100,7 @@ import Layout from '../layouts/Layout.astro';
     justify-content: center;
     gap: 0.5rem;
     font-size: 0.9rem;
-    color: var(--color-gray-700);
+    color: rgba(255, 255, 255, 0.9);
   }
 
   .credit-tag {
@@ -1125,6 +1124,11 @@ import Layout from '../layouts/Layout.astro';
   .pro-tag {
     background: rgba(80, 2, 247, 0.08);
     color: var(--color-purple-deep);
+  }
+
+  .calc-result .credit-tag {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
   }
 
   /* Footer */
