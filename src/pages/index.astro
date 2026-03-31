@@ -210,43 +210,6 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
-  <!-- How It Works -->
-  <section id="how-it-works" class="how-it-works">
-    <div class="container">
-      <h2>How it works</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-number">1</div>
-          <h3>Scan</h3>
-          <p>Take photos of handwritten assignments or import PDFs. Process an entire class set at once.</p>
-        </div>
-        <div class="step-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-          </svg>
-        </div>
-        <div class="step">
-          <div class="step-number">2</div>
-          <h3>Transcribe</h3>
-          <p>AI reads handwriting, digitizes every response, and matches pages to your roster.</p>
-        </div>
-        <div class="step-arrow">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24">
-            <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-          </svg>
-        </div>
-        <div class="step">
-          <div class="step-number">3</div>
-          <h3>Grade</h3>
-          <p>Review by question, tap to assign points, and export to your gradebook. About 1 minute per student.</p>
-        </div>
-      </div>
-      <div class="section-cta">
-        <a href="#" class="btn btn-primary">Get Started for Free</a>
-      </div>
-    </div>
-  </section>
-
   <!-- Pricing -->
   <section id="pricing" class="pricing">
     <div class="container">
@@ -692,66 +655,6 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.6;
   }
 
-  /* How It Works */
-  .how-it-works {
-    padding: 5rem 0;
-    background: var(--color-gray-50);
-  }
-
-  .how-it-works h2 {
-    text-align: center;
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin-bottom: 3rem;
-  }
-
-  .steps {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-  }
-
-  .step {
-    text-align: center;
-    max-width: 240px;
-  }
-
-  .step-number {
-    width: 48px;
-    height: 48px;
-    background: linear-gradient(
-      135deg,
-      var(--color-purple-deep),
-      var(--color-purple)
-    );
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 1.25rem;
-    margin: 0 auto 1rem;
-  }
-
-  .step h3 {
-    font-size: 1.15rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-
-  .step p {
-    font-size: 0.9rem;
-    color: var(--color-gray-600);
-    line-height: 1.5;
-  }
-
-  .step-arrow {
-    color: var(--color-gray-300);
-    flex-shrink: 0;
-  }
-
   /* Pricing */
   .pricing {
     padding: 5rem 0;
@@ -1130,14 +1033,6 @@ import Layout from '../layouts/Layout.astro';
 
     .feature-grid {
       grid-template-columns: 1fr 1fr;
-    }
-
-    .steps {
-      flex-direction: column;
-    }
-
-    .step-arrow {
-      transform: rotate(90deg);
     }
 
     .pricing-grid-paid {
