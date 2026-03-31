@@ -264,18 +264,30 @@ import Layout from '../layouts/Layout.astro';
         </div>
       </div>
 
-      <div class="credit-explainer">
-        <h4>How credits work</h4>
-        <div class="credit-examples">
-          <div class="credit-example">
-            <strong>1-page quiz, 20 students, with AI grading</strong>
-            <span>30 credits</span>
-            <span class="credit-tag free-tag">Free tier</span>
+      <div class="credit-calculator">
+        <h4>Credit calculator</h4>
+        <div class="calc-inputs">
+          <div class="calc-field">
+            <label for="calc-students">Students</label>
+            <input type="number" id="calc-students" value="25" min="1" max="500" />
           </div>
-          <div class="credit-example">
-            <strong>4-page test, 30 students, with AI grading</strong>
-            <span>180 credits</span>
+          <div class="calc-field">
+            <label for="calc-pages">Pages per assignment</label>
+            <input type="number" id="calc-pages" value="2" min="1" max="50" />
+          </div>
+          <div class="calc-field calc-toggle-field">
+            <label for="calc-ai">AI-assisted grading</label>
+            <button type="button" id="calc-ai" class="calc-ai-toggle active" aria-pressed="true">On</button>
+          </div>
+        </div>
+        <div class="calc-result">
+          <div class="calc-total">
+            <span class="calc-total-number" id="calc-total">75</span>
+            <span class="calc-total-label">credits per assignment</span>
+          </div>
+          <div class="calc-plan" id="calc-plan">
             <span class="credit-tag standard-tag">Standard</span>
+            <span>Up to <strong id="calc-assignments">13</strong> assignments/month</span>
           </div>
         </div>
       </div>
@@ -887,46 +899,116 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.4;
   }
 
-  /* Credit explainer */
-  .credit-explainer {
-    max-width: 700px;
+  /* Credit calculator */
+  .credit-calculator {
+    max-width: 480px;
     margin: 2.5rem auto 0;
-    padding: 1.5rem 2rem;
+    padding: 2rem;
     border-radius: var(--radius-card);
     background: var(--color-gray-50);
     border: 1px solid var(--color-gray-200);
   }
 
-  .credit-explainer h4 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: var(--color-gray-800);
+  .credit-calculator h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.25rem;
+    color: var(--color-gray-900);
+    text-align: center;
   }
 
-  .credit-examples {
+  .calc-inputs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .calc-field {
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.4rem;
   }
 
-  .credit-example {
+  .calc-field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-gray-600);
+  }
+
+  .calc-field input {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-button);
+    font-size: 1rem;
+    font-family: var(--font-family);
+    color: var(--color-gray-900);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .calc-field input:focus {
+    outline: none;
+    border-color: var(--color-purple-deep);
+    box-shadow: 0 0 0 3px rgba(80, 2, 247, 0.1);
+  }
+
+  .calc-toggle-field {
+    flex: 0 0 auto;
+    align-items: center;
+  }
+
+  .calc-ai-toggle {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-button);
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+    background: #fff;
+    color: var(--color-gray-500);
+    transition: all 0.2s;
+  }
+
+  .calc-ai-toggle.active {
+    background: var(--color-purple-deep);
+    border-color: var(--color-purple-deep);
+    color: #fff;
+  }
+
+  .calc-result {
+    text-align: center;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-gray-200);
+  }
+
+  .calc-total {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .calc-total-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-purple-deep);
+  }
+
+  .calc-total-label {
+    font-size: 0.95rem;
+    color: var(--color-gray-600);
+  }
+
+  .calc-plan {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
+    gap: 0.5rem;
     font-size: 0.9rem;
     color: var(--color-gray-700);
-  }
-
-  .credit-example strong {
-    flex: 1;
-    font-weight: 500;
-  }
-
-  .credit-example span:not(.credit-tag) {
-    font-weight: 600;
-    color: var(--color-gray-800);
-    white-space: nowrap;
   }
 
   .credit-tag {
@@ -945,6 +1027,11 @@ import Layout from '../layouts/Layout.astro';
   .standard-tag {
     background: rgba(255, 28, 54, 0.08);
     color: var(--color-red);
+  }
+
+  .pro-tag {
+    background: rgba(80, 2, 247, 0.08);
+    color: var(--color-purple-deep);
   }
 
   /* Footer */
@@ -1042,10 +1129,8 @@ import Layout from '../layouts/Layout.astro';
       gap: 0.5rem;
     }
 
-    .credit-example {
+    .calc-inputs {
       flex-direction: column;
-      align-items: flex-start;
-      gap: 0.25rem;
     }
 
     .nav-links a:not(.btn) {
@@ -1081,4 +1166,47 @@ import Layout from '../layouts/Layout.astro';
       annualSavings.forEach(el => el.style.display = showMonthly ? 'none' : '');
     });
   });
+
+  // Credit calculator
+  const calcStudents = document.getElementById('calc-students');
+  const calcPages = document.getElementById('calc-pages');
+  const calcAi = document.getElementById('calc-ai');
+  const calcTotal = document.getElementById('calc-total');
+  const calcPlan = document.getElementById('calc-plan');
+  const calcAssignments = document.getElementById('calc-assignments');
+
+  function updateCalc() {
+    const students = Math.max(1, parseInt(calcStudents.value) || 1);
+    const pages = Math.max(1, parseInt(calcPages.value) || 1);
+    const aiOn = calcAi.classList.contains('active');
+    const rate = aiOn ? 1.5 : 1;
+    const total = Math.ceil(students * pages * rate);
+
+    calcTotal.textContent = total.toLocaleString();
+
+    const plans = [
+      { name: 'Free', credits: 30, tagClass: 'free-tag' },
+      { name: 'Standard', credits: 1000, tagClass: 'standard-tag' },
+      { name: 'Pro', credits: 5000, tagClass: 'pro-tag' },
+    ];
+
+    const plan = plans.find(p => p.credits >= total) || plans[plans.length - 1];
+    const assignments = Math.floor(plan.credits / total);
+
+    calcAssignments.textContent = assignments;
+    calcPlan.innerHTML =
+      `<span class="credit-tag ${plan.tagClass}">${plan.name}</span>` +
+      `<span>Up to <strong>${assignments}</strong> assignment${assignments !== 1 ? 's' : ''}/month</span>`;
+  }
+
+  calcStudents.addEventListener('input', updateCalc);
+  calcPages.addEventListener('input', updateCalc);
+  calcAi.addEventListener('click', () => {
+    calcAi.classList.toggle('active');
+    calcAi.textContent = calcAi.classList.contains('active') ? 'On' : 'Off';
+    calcAi.setAttribute('aria-pressed', calcAi.classList.contains('active'));
+    updateCalc();
+  });
+
+  updateCalc();
 </script>
