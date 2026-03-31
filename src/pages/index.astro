@@ -25,14 +25,17 @@ import Layout from '../layouts/Layout.astro';
   <section class="hero">
     <div class="hero-content">
       <h1>AI that grades papers,<br /><span class="highlight">not writes them.</span></h1>
-      <p class="hero-subtitle">
-        Scan handwritten assignments, auto-match students, and grade an entire class set
-        in 35 minutes instead of 3 hours — all from your iPhone.
-      </p>
+      <ul class="hero-bullets">
+        <li>Scan handwritten assignments from your iPhone</li>
+        <li>AI transcribes handwriting and auto-matches students</li>
+        <li>Grade an entire class set in 35 minutes instead of 3 hours</li>
+        <li>Export to your gradebook, Google Drive, or PDF</li>
+      </ul>
       <div class="hero-cta">
         <a href="#" class="btn btn-primary">Get Started for Free</a>
       </div>
       <div class="hero-videos">
+        <h2 class="hero-videos-title">How it works</h2>
         <div class="video-step">
           <div class="video-step-text">
             <span class="video-step-number">1</span>
@@ -469,6 +472,34 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.6;
   }
 
+  .hero-bullets {
+    margin-top: 1.5rem;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+  }
+
+  .hero-bullets li {
+    font-size: 1.1rem;
+    color: #000;
+    line-height: 1.5;
+    padding-left: 1.5rem;
+    position: relative;
+  }
+
+  .hero-bullets li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: var(--color-purple-deep);
+  }
+
   .hero-cta {
     margin-top: 2rem;
   }
@@ -481,6 +512,14 @@ import Layout from '../layouts/Layout.astro';
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .hero-videos-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    text-align: center;
+    margin-bottom: 0;
   }
 
   .video-step {
@@ -1049,8 +1088,8 @@ import Layout from '../layouts/Layout.astro';
       font-size: 2.25rem;
     }
 
-    .hero-subtitle {
-      font-size: 1.05rem;
+    .hero-bullets li {
+      font-size: 1rem;
     }
 
     .video-step,
