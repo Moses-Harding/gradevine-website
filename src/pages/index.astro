@@ -265,19 +265,37 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div class="credit-calculator">
-        <h4>Credit calculator</h4>
+        <div class="calc-header">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+            <rect x="4" y="2" width="16" height="20" rx="2" /><line x1="8" y1="6" x2="16" y2="6" /><line x1="8" y1="10" x2="10" y2="10" /><line x1="14" y1="10" x2="16" y2="10" /><line x1="8" y1="14" x2="10" y2="14" /><line x1="14" y1="14" x2="16" y2="14" /><line x1="8" y1="18" x2="16" y2="18" />
+          </svg>
+          <h4>Credit calculator</h4>
+        </div>
         <div class="calc-inputs">
           <div class="calc-field">
             <label for="calc-students">Students</label>
-            <input type="number" id="calc-students" value="25" min="1" max="500" />
+            <div class="calc-stepper">
+              <button type="button" class="stepper-btn" data-target="calc-students" data-dir="-1">-</button>
+              <input type="number" id="calc-students" value="25" min="1" max="500" />
+              <button type="button" class="stepper-btn" data-target="calc-students" data-dir="1">+</button>
+            </div>
           </div>
           <div class="calc-field">
             <label for="calc-pages">Pages per assignment</label>
-            <input type="number" id="calc-pages" value="2" min="1" max="50" />
+            <div class="calc-stepper">
+              <button type="button" class="stepper-btn" data-target="calc-pages" data-dir="-1">-</button>
+              <input type="number" id="calc-pages" value="2" min="1" max="50" />
+              <button type="button" class="stepper-btn" data-target="calc-pages" data-dir="1">+</button>
+            </div>
           </div>
-          <div class="calc-field calc-toggle-field">
+          <div class="calc-field">
             <label for="calc-ai">AI-assisted grading</label>
-            <button type="button" id="calc-ai" class="calc-ai-toggle active" aria-pressed="true">On</button>
+            <div class="calc-switch-wrap">
+              <button type="button" id="calc-ai" class="calc-switch active" aria-pressed="true">
+                <span class="calc-switch-knob"></span>
+              </button>
+              <span class="calc-switch-label" id="calc-ai-label">+0.5 credits/page</span>
+            </div>
           </div>
         </div>
         <div class="calc-result">
@@ -901,86 +919,160 @@ import Layout from '../layouts/Layout.astro';
 
   /* Credit calculator */
   .credit-calculator {
-    max-width: 480px;
+    max-width: 520px;
     margin: 2.5rem auto 0;
-    padding: 2rem;
-    border-radius: var(--radius-card);
-    background: var(--color-gray-50);
+    padding: 2rem 2.5rem;
+    border-radius: var(--radius-lg);
+    background: #fff;
     border: 1px solid var(--color-gray-200);
+    box-shadow: var(--shadow-md);
+  }
+
+  .calc-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1.75rem;
+    color: var(--color-purple-deep);
   }
 
   .credit-calculator h4 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    margin-bottom: 1.25rem;
     color: var(--color-gray-900);
-    text-align: center;
+    margin: 0;
   }
 
   .calc-inputs {
     display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
   }
 
   .calc-field {
-    flex: 1;
     display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
   }
 
   .calc-field label {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-gray-600);
-  }
-
-  .calc-field input {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid var(--color-gray-300);
-    border-radius: var(--radius-button);
-    font-size: 1rem;
-    font-family: var(--font-family);
-    color: var(--color-gray-900);
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .calc-field input:focus {
-    outline: none;
-    border-color: var(--color-purple-deep);
-    box-shadow: 0 0 0 3px rgba(80, 2, 247, 0.1);
-  }
-
-  .calc-toggle-field {
-    flex: 0 0 auto;
-    align-items: center;
-  }
-
-  .calc-ai-toggle {
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--color-gray-300);
-    border-radius: var(--radius-button);
     font-size: 0.9rem;
     font-weight: 600;
-    font-family: var(--font-family);
-    cursor: pointer;
-    background: #fff;
-    color: var(--color-gray-500);
-    transition: all 0.2s;
+    color: var(--color-gray-700);
+    white-space: nowrap;
   }
 
-  .calc-ai-toggle.active {
+  .calc-stepper {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-button);
+    overflow: hidden;
+    background: var(--color-gray-50);
+  }
+
+  .stepper-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-purple-deep);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s;
+    font-family: var(--font-family);
+  }
+
+  .stepper-btn:hover {
+    background: var(--color-purple-light);
+  }
+
+  .stepper-btn:active {
+    background: var(--color-purple-50);
+  }
+
+  .calc-stepper input {
+    width: 52px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid var(--color-gray-300);
+    border-right: 1px solid var(--color-gray-300);
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: var(--font-family);
+    color: var(--color-gray-900);
+    background: #fff;
+    padding: 0.4rem 0;
+    -moz-appearance: textfield;
+  }
+
+  .calc-stepper input::-webkit-inner-spin-button,
+  .calc-stepper input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .calc-stepper input:focus {
+    outline: none;
+    background: var(--color-purple-50);
+  }
+
+  .calc-switch-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .calc-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    border-radius: var(--radius-pill);
+    border: none;
+    background: var(--color-gray-300);
+    cursor: pointer;
+    padding: 2px;
+    transition: background 0.2s;
+    flex-shrink: 0;
+  }
+
+  .calc-switch.active {
     background: var(--color-purple-deep);
-    border-color: var(--color-purple-deep);
-    color: #fff;
+  }
+
+  .calc-switch-knob {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s;
+  }
+
+  .calc-switch.active .calc-switch-knob {
+    transform: translateX(20px);
+  }
+
+  .calc-switch-label {
+    font-size: 0.8rem;
+    color: var(--color-gray-500);
+    white-space: nowrap;
   }
 
   .calc-result {
     text-align: center;
-    padding-top: 1.25rem;
-    border-top: 1px solid var(--color-gray-200);
+    padding: 1.5rem;
+    border-radius: var(--radius-card);
+    background: linear-gradient(135deg, var(--color-purple-50), #fff);
+    border: 1px solid var(--color-purple-light);
   }
 
   .calc-total {
@@ -988,13 +1080,14 @@ import Layout from '../layouts/Layout.astro';
     align-items: baseline;
     justify-content: center;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
   }
 
   .calc-total-number {
-    font-size: 2rem;
+    font-size: 2.25rem;
     font-weight: 700;
     color: var(--color-purple-deep);
+    line-height: 1;
   }
 
   .calc-total-label {
@@ -1129,8 +1222,8 @@ import Layout from '../layouts/Layout.astro';
       gap: 0.5rem;
     }
 
-    .calc-inputs {
-      flex-direction: column;
+    .credit-calculator {
+      padding: 1.5rem;
     }
 
     .nav-links a:not(.btn) {
@@ -1199,13 +1292,29 @@ import Layout from '../layouts/Layout.astro';
       `<span>Up to <strong>${assignments}</strong> assignment${assignments !== 1 ? 's' : ''}/month</span>`;
   }
 
+  const calcAiLabel = document.getElementById('calc-ai-label');
+
   calcStudents.addEventListener('input', updateCalc);
   calcPages.addEventListener('input', updateCalc);
+
   calcAi.addEventListener('click', () => {
     calcAi.classList.toggle('active');
-    calcAi.textContent = calcAi.classList.contains('active') ? 'On' : 'Off';
-    calcAi.setAttribute('aria-pressed', calcAi.classList.contains('active'));
+    const isOn = calcAi.classList.contains('active');
+    calcAi.setAttribute('aria-pressed', isOn);
+    calcAiLabel.textContent = isOn ? '+0.5 credits/page' : 'Off';
     updateCalc();
+  });
+
+  document.querySelectorAll('.stepper-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const input = document.getElementById(btn.dataset.target);
+      const dir = parseInt(btn.dataset.dir);
+      const min = parseInt(input.min) || 1;
+      const max = parseInt(input.max) || 999;
+      const next = Math.min(max, Math.max(min, (parseInt(input.value) || min) + dir));
+      input.value = next;
+      updateCalc();
+    });
   });
 
   updateCalc();
