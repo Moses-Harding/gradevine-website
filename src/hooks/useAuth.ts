@@ -37,8 +37,20 @@ export function useAuth(): UseAuthReturn {
     initialized.current = true;
 
     // Defer init to next frame so CloudKit JS button containers are in the DOM
-    requestAnimationFrame(() => {
-      initialize();
+    requestAnimationFrame(async () => {
+      await initialize();
+
+      // If ?login=1 param is present, auto-click the Apple sign-in button
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('login') === '1') {
+        // Clean up the URL
+        window.history.replaceState({}, '', window.location.pathname);
+        // CloudKit JS renders an anchor inside #apple-sign-in-button — click it
+        const signInBtn = document.querySelector('#apple-sign-in-button a, #apple-sign-in-button button') as HTMLElement | null;
+        if (signInBtn) {
+          signInBtn.click();
+        }
+      }
     });
 
     const unsubscribe = onAuthStateChange((state) => {
