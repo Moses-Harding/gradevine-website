@@ -1,0 +1,408 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Support - GradeVine" description="Get help with GradeVine. Browse frequently asked questions or contact our support team.">
+  <div class="page">
+    <div class="container">
+
+      <h1>Support</h1>
+      <p class="intro">Browse the FAQs below or reach out directly — we're happy to help.</p>
+
+      <div class="contact-card">
+        <h2 class="contact-heading">Contact Us</h2>
+        <p>Email us at <a href="mailto:support@gradevine.app">support@gradevine.app</a> and we'll get back to you as soon as we can.</p>
+      </div>
+
+      <h2 class="faq-section-title">Frequently Asked Questions</h2>
+
+      <!-- Getting Started -->
+      <div class="faq-category">
+        <h3>Getting Started</h3>
+
+        <details class="faq">
+          <summary>What does GradeVine do?</summary>
+          <p>GradeVine digitizes handwritten student work, uses AI evaluation to suggest a grade, and allows you to provide a grade and feedback on an assignment, all on your phone. You can also view analytics and track how your students are doing. Scan or import pages, and the AI transcribes handwriting, matches pages to students, and organizes responses by question — so you can grade faster and give better feedback.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How do I get started?</summary>
+          <p>Create a course, add your students (or import a roster), then create an assignment with questions. Once students complete their work, scan or import their pages and GradeVine handles the rest.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What are credits?</summary>
+          <p>Credits are used when GradeVine processes scans with AI. Each page costs 1 credit (1.5 with AI Grading). Pages cost credits because AI is expensive! Free users get some credits to play with. Paid plans include more credits, and unused credits roll over.</p>
+        </details>
+      </div>
+
+      <!-- Courses & Sections -->
+      <div class="faq-category">
+        <h3>Courses & Sections</h3>
+
+        <details class="faq">
+          <summary>Why do I need to create a course?</summary>
+          <p>Courses organize your students and assignments together. When you scan student work, GradeVine uses the course roster to match pages to the right students automatically.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How do I add students to courses?</summary>
+          <p>Open a course and go to the Students tab. You can add students individually, or import a CSV roster for bulk import. Importing a roster also improves AI matching accuracy. You can also add existing students to the same course.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Do I need separate courses for separate sections?</summary>
+          <p>Not necessarily. Courses support sections (like periods or blocks) to organize students within a single course. Use separate courses only if the assignments are different.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Can a student be enrolled in multiple courses?</summary>
+          <p>Yes. A student can belong to as many courses as needed. Their grades and scans are tracked separately per assignment, so there's no overlap.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What's the difference between deleting and archiving a course?</summary>
+          <p>Archiving hides a course from your active list but preserves all data — you can restore it anytime. Deleting permanently removes the course, its assignments, and all associated scans, even from cloud.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Can I import a roster?</summary>
+          <p>Yes — tap the + button in the Students tab and choose "Import Roster." Upload a CSV file with student names. This saves time and significantly improves how accurately the AI matches scanned pages to students.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What are sections?</summary>
+          <p>Sections are optional groups within a course, like periods or blocks. They help organize students and improve AI matching accuracy. Students without a section go into "No Section" by default.</p>
+        </details>
+      </div>
+
+      <!-- Assignments -->
+      <div class="faq-category">
+        <h3>Assignments</h3>
+
+        <details class="faq">
+          <summary>What is an assignment in GradeVine?</summary>
+          <p>An assignment represents a piece of student work you want to grade — like a quiz, test, or worksheet. It contains questions with point values, and holds all the scanned student responses.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Why do I need a template to create an assignment?</summary>
+          <p>The template helps GradeVine's AI understand your assignment's structure — how many questions there are, where they appear on the page, and what correct answers look like. This allows the app to break up individual questions and allows you to give each question an individual grade.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What does uploading a template do?</summary>
+          <p>The template is a blank or answer-key version of your assignment. GradeVine's AI analyzes it to identify questions, understand the layout, and generate a structure — saving you from manually entering every question.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What does a grading key do?</summary>
+          <p>A grading key provides the correct answers for each question. When enabled, GradeVine can use it to suggest grades and highlight how well student responses match expected answers. Or, you can simply use it for your own reference.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What do keywords do?</summary>
+          <p>Keywords are words or phrases you expect in correct answers. GradeVine highlights them in student transcriptions so you can quickly see coverage at a glance — making grading faster without replacing your judgment.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Can I duplicate an assignment?</summary>
+          <p>Yes. Duplicating copies the assignment structure (questions, point values, keywords) into a new assignment. This is useful when giving the same test to a different course. Student responses are not copied.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What do I do if the app misses a question or generates an incorrect one?</summary>
+          <p>You can edit, add, or remove questions manually on the review step. The AI-generated structure is a starting point — you have full control to adjust questions, point values, and labels before creating the assignment.</p>
+        </details>
+      </div>
+
+      <!-- Importing & Scanning -->
+      <div class="faq-category">
+        <h3>Importing & Scanning</h3>
+
+        <details class="faq">
+          <summary>How do I import student work?</summary>
+          <p>Tap "Upload Work" to scan pages with your camera or import PDF files. You can do this directly from files saved on your phone, or you can connect your Google account. You can upload multiple pages at once — GradeVine groups them by student and matches them to your roster automatically.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What if I need to import work for just one student?</summary>
+          <p>You can import pages for a specific student from their scan view. This is useful for late submissions or when a student needs to resubmit specific pages.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How does matching work?</summary>
+          <p>After scanning, the AI reads each page looking for student names, then compares against your class roster. High-confidence matches are assigned automatically; uncertain matches are flagged for your review.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What do I do if pages were matched incorrectly?</summary>
+          <p>Use "Manage Pages" to reassign pages between students. You can move, delete, or add pages to correct any matching errors before grading.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Why do I need to reprocess when I change a question or reassign a page?</summary>
+          <p>Reprocessing re-runs the AI transcription with updated context. If you changed which question a response belongs to or reassigned a page, the AI needs to re-analyze the content to produce an accurate transcription. This costs 1 credit per page.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What's the difference between Grade by Question and Grade by Student?</summary>
+          <p>Grade by Question shows all students' answers to one question at a time — great for consistent scoring. It also allows you to reuse feedback across multiple students. Grade by Student shows one student's full assignment — great for holistic feedback. Use whichever fits your grading style.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Why do I need to add a roster?</summary>
+          <p>Without a roster, GradeVine can only transcribe — it can't match pages to students. Adding students (even a few) gives the AI names to look for, enabling automatic matching instead of manual assignment.</p>
+        </details>
+      </div>
+
+      <!-- Student Matching -->
+      <div class="faq-category">
+        <h3>Student Matching</h3>
+
+        <details class="faq">
+          <summary>How does automatic matching work?</summary>
+          <p>GradeVine's AI reads each scanned page for student names, then compares what it finds against your roster. Pages are assigned to the best match, and confidence scores show how certain each match is.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Why wasn't the app able to match a student correctly?</summary>
+          <p>Common causes: unclear handwriting, the student wrote a nickname instead of their roster name, they didn't write their name on the correct page, pages were out of order, or the student isn't in your roster yet. You can manually assign any incorrectly matched pages.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Why might a page say "no roster match"?</summary>
+          <p>The AI found a name on the page but couldn't match it to anyone in your roster. The student may not be enrolled, or the AI might have transcribed their name wrong, or their name may be spelled differently. You can add the student to your roster, or you can assign it manually.</p>
+        </details>
+
+        <details class="faq">
+          <summary>Why might a page say "needs review" or "Unknown page type"?</summary>
+          <p>This means the AI couldn't confidently determine what's on the page — it might be blank, or not one of the template pages, or upside down, or not a student assignment. Review these pages to delete extras or manually assign them.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What does the match percentage mean?</summary>
+          <p>The percentage is the AI's confidence in its student match. Higher percentages mean more certain matches. Review low-confidence matches carefully — they're the ones most likely to be wrong.</p>
+        </details>
+
+        <details class="faq">
+          <summary>A student has too many or too few pages — how do I fix this?</summary>
+          <p>Tap the student to see their assigned pages. You can remove incorrectly assigned pages or add missing ones. Extra pages may belong to another student — reassign them as needed.</p>
+        </details>
+      </div>
+
+      <!-- Grading -->
+      <div class="faq-category">
+        <h3>Grading</h3>
+
+        <details class="faq">
+          <summary>What do I do if the transcript looks wrong?</summary>
+          <p>Transcriptions are read-only — you can't edit them directly. To fix an inaccurate transcription, use "Reprocess Pages" from the menu in Grade by Student view. This re-runs the AI transcription and costs 1 credit per page.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How do I reuse feedback for multiple students?</summary>
+          <p>In Grade by Question view, type feedback for one student, then tap "Save Quick Feedback" to save it as a reusable chip. That chip appears for every student on the same question — tap it to append the same feedback instantly. Use "Manage" to edit or delete saved chips.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How do I give feedback on the entire assignment for a student?</summary>
+          <p>In Grade by Student view, tap the speech bubble icon in the toolbar to open the feedback editor. This is separate from per-question feedback and appears on exported reports.</p>
+        </details>
+
+        <details class="faq">
+          <summary>What's the difference between blue and yellow highlighting in transcriptions?</summary>
+          <p>Blue highlighting shows "contextual" keyword matches, where the AI found semantically related content that might not be an exact keyword. Yellow means an exact match.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How did the AI make its evaluation?</summary>
+          <p>The AI compares the student's transcribed response against your keywords and grading key, then shows a recommendation — Correct, Partial Credit, Incorrect, or Unclear — along with a confidence percentage and brief reasoning. This is advisory only; you assign the final grade.</p>
+        </details>
+      </div>
+
+      <!-- Students -->
+      <div class="faq-category">
+        <h3>Students</h3>
+
+        <details class="faq">
+          <summary>How do I add a student?</summary>
+          <p>Students are added from within a course — go to a course's Students tab and tap the + button. You can't create students directly from the All Students list; that view shows students who already exist across your courses.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How do I enroll or unenroll a student in a course?</summary>
+          <p>To enroll: use the context menu on a student or select multiple students and tap "Enroll" in the floating bar. Or go to the student's profile. To unenroll: open the student's profile, where you can select courses to unenroll from with a confirmation step.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How do I fix duplicate students?</summary>
+          <p>Select two or more students using selection mode (tap the checkmark icon), then tap "Merge." Choose which record to keep, confirm the final name, and all scans and grades from both records combine under one profile.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How can I monitor a student's progress?</summary>
+          <p>Open a student's profile to see their enrolled courses, total assignments, pages scanned, and keywords matched. You can also see all their active assignments with links to view each one.</p>
+        </details>
+
+        <details class="faq">
+          <summary>How do I add a student to a specific period or section?</summary>
+          <p>On any enrolled course card, tap the pencil icon to open the section editor. Choose from existing sections or create a new one. Sections are managed at the course level — if you don't see the one you need, add it in the course first.</p>
+        </details>
+      </div>
+
+      <p class="footer-note">Can't find what you're looking for? Email us at <a href="mailto:support@gradevine.app">support@gradevine.app</a>.</p>
+
+      <p><a href="/">Back to home</a></p>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 6rem 1.5rem 4rem;
+  }
+
+  .container {
+    line-height: 1.7;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+  }
+
+  .intro {
+    color: var(--color-gray-600, #555);
+    font-size: 1.05rem;
+    margin-bottom: 2rem;
+  }
+
+  .contact-card {
+    background: var(--color-purple-50, #f5f0ff);
+    border: 1px solid var(--color-purple-light, #e0d4ff);
+    border-radius: var(--radius-card, 16px);
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .contact-heading {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    padding: 0;
+    border: none;
+  }
+
+  .contact-card p {
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .faq-section-title {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-gray-200, #e0e0e0);
+    letter-spacing: -0.01em;
+  }
+
+  .faq-category {
+    margin-bottom: 2rem;
+  }
+
+  h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    color: var(--color-purple, #7002F7);
+  }
+
+  .faq {
+    border: 1px solid var(--color-gray-200, #e0e0e0);
+    border-radius: var(--radius-sm, 10px);
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+
+  .faq summary {
+    padding: 0.875rem 1.25rem;
+    font-weight: 500;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    transition: background 0.15s ease;
+  }
+
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq summary::after {
+    content: "+";
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--color-gray-400, #999);
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .faq[open] summary::after {
+    content: "\2212";
+  }
+
+  .faq summary:hover {
+    background: var(--color-gray-50, #f9fafb);
+  }
+
+  .faq p {
+    padding: 0 1.25rem 1rem;
+    margin: 0;
+    color: var(--color-gray-600, #555);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  a {
+    color: var(--color-purple, #7002F7);
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .footer-note {
+    color: var(--color-gray-500, #555);
+    font-size: 0.9rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-gray-200, #e0e0e0);
+  }
+
+  @media (max-width: 600px) {
+    .page {
+      padding: 4rem 1rem 3rem;
+    }
+    h1 {
+      font-size: 1.6rem;
+    }
+    .faq summary {
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+    }
+    .faq p {
+      padding: 0 1rem 0.875rem;
+    }
+  }
+</style>
