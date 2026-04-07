@@ -649,7 +649,14 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     align-items: start;
   }
 
-  .scan-viewer-image-panel { min-width: 0; }
+  .scan-viewer-image-panel {
+    min-width: 0;
+    position: sticky;
+    top: 110px;
+    align-self: start;
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+  }
 
   .scan-viewer-grade-panel {
     /* Cards stack vertically, scroll with page */
@@ -1247,6 +1254,7 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     .dashboard-main { padding: 24px 16px; }
     .course-grid { grid-template-columns: 1fr; }
     .scan-viewer-layout { grid-template-columns: 1fr; }
+    .scan-viewer-image-panel { position: static; max-height: none; }
     .scan-viewer-grade-panel { position: static; max-height: none; }
     .student-nav-bar { flex-wrap: wrap; gap: 8px; justify-content: center; }
     .grade-card-top { flex-wrap: wrap; }
