@@ -1,0 +1,3070 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="GradeVine — Dashboard Design Test"
+  description="Design variations for the grading dashboard."
+>
+  <div class="dt-page">
+    <header class="dt-header">
+      <h1>Dashboard Design Variations</h1>
+      <p class="dt-subtitle">Comparing three approaches for bringing the iOS design language to the web.</p>
+    </header>
+
+    <!-- ================================================================== -->
+    <!-- VARIATION A: BRUTALIST WEB                                          -->
+    <!-- ================================================================== -->
+    <section class="dt-section">
+      <div class="dt-section-label">VARIATION A</div>
+      <h2>Brutalist Web</h2>
+      <p class="dt-desc">Full iOS brutalist aesthetic: heavy tracked uppercase headers, black section bars, monospaced numerals, square avatars, minimal rounding. Matches the batch-scan sheet design language.</p>
+
+      <!-- A: Dashboard Header -->
+      <h3 class="dt-component-label">Dashboard Header</h3>
+      <div class="a-dashboard-header">
+        <div class="a-dashboard-header-inner">
+          <div class="a-header-brand">
+            <span class="a-header-logo">G</span>
+            <span class="a-header-title">GRADEVINE</span>
+          </div>
+          <div class="a-header-user">
+            <span class="a-header-user-name">MOSES HARDING</span>
+            <button class="a-header-signout">SIGN OUT</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- A: Breadcrumb -->
+      <h3 class="dt-component-label">Breadcrumb</h3>
+      <div class="dt-mock-bg">
+        <nav class="a-breadcrumb">
+          <button class="a-breadcrumb-link">COURSES</button>
+          <span class="a-breadcrumb-sep">/</span>
+          <button class="a-breadcrumb-link">US HISTORY</button>
+          <span class="a-breadcrumb-sep">/</span>
+          <span class="a-breadcrumb-current">CH. 12 QUIZ</span>
+        </nav>
+      </div>
+
+      <!-- A: Course Cards -->
+      <h3 class="dt-component-label">Course Cards</h3>
+      <div class="dt-mock-bg">
+        <div class="a-course-grid">
+          <div class="a-course-card" style="--course-color: #E41749">
+            <div class="a-course-card-accent"></div>
+            <div class="a-course-card-body">
+              <div class="a-course-card-name">US History</div>
+              <div class="a-course-card-meta">
+                <span class="a-course-meta-num">24</span>
+                <span class="a-course-meta-label">STUDENTS</span>
+                <span class="a-course-meta-dot"></span>
+                <span class="a-course-meta-num">6</span>
+                <span class="a-course-meta-label">ASSIGNMENTS</span>
+              </div>
+            </div>
+          </div>
+          <div class="a-course-card" style="--course-color: #1565C0">
+            <div class="a-course-card-accent"></div>
+            <div class="a-course-card-body">
+              <div class="a-course-card-name">AP Biology</div>
+              <div class="a-course-card-meta">
+                <span class="a-course-meta-num">18</span>
+                <span class="a-course-meta-label">STUDENTS</span>
+                <span class="a-course-meta-dot"></span>
+                <span class="a-course-meta-num">3</span>
+                <span class="a-course-meta-label">ASSIGNMENTS</span>
+              </div>
+            </div>
+          </div>
+          <div class="a-course-card" style="--course-color: #6F00FF">
+            <div class="a-course-card-accent"></div>
+            <div class="a-course-card-body">
+              <div class="a-course-card-name">English 10</div>
+              <div class="a-course-card-meta">
+                <span class="a-course-meta-num">31</span>
+                <span class="a-course-meta-label">STUDENTS</span>
+                <span class="a-course-meta-dot"></span>
+                <span class="a-course-meta-num">8</span>
+                <span class="a-course-meta-label">ASSIGNMENTS</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- A: Student Rows -->
+      <h3 class="dt-component-label">Student List</h3>
+      <div class="dt-mock-bg">
+        <div class="a-section-bar">SUBMISSIONS &mdash; 24 STUDENTS</div>
+        <div class="a-progress-bar">
+          <div class="a-progress-fill" style="width: 62%"></div>
+        </div>
+        <div class="a-student-list">
+          <div class="a-student-row">
+            <div class="a-avatar" style="background: #E41749">A</div>
+            <span class="a-student-name">Alvarez, Maria</span>
+            <span class="a-student-badge a-badge-graded">GRADED</span>
+            <span class="a-student-score">8 / 10</span>
+            <span class="a-student-arrow">&rarr;</span>
+          </div>
+          <div class="a-student-row">
+            <div class="a-avatar" style="background: #E41749">C</div>
+            <span class="a-student-name">Chen, David</span>
+            <span class="a-student-badge a-badge-partial">PARTIAL</span>
+            <span class="a-student-score">3 / 10</span>
+            <span class="a-student-arrow">&rarr;</span>
+          </div>
+          <div class="a-student-row">
+            <div class="a-avatar" style="background: #E41749">J</div>
+            <span class="a-student-name">Johnson, Tyler</span>
+            <span class="a-student-badge a-badge-ungraded">UNGRADED</span>
+            <span class="a-student-score">&mdash;</span>
+            <span class="a-student-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- A: Grading Panel -->
+      <h3 class="dt-component-label">Grading Panel</h3>
+      <div class="dt-mock-bg" style="max-width: 440px">
+        <div class="a-grade-panel">
+          <div class="a-grade-panel-header">
+            <span class="a-grade-panel-title">GRADING</span>
+            <span class="a-grade-panel-total">8 / 10</span>
+          </div>
+          <div class="a-grade-questions">
+            <div class="a-grade-q">
+              <div class="a-grade-q-header">
+                <div class="a-grade-q-num">01</div>
+                <div class="a-grade-q-info">
+                  <div class="a-grade-q-label">Question 1</div>
+                  <div class="a-grade-q-prompt">What were the main causes of WWI?</div>
+                </div>
+                <div class="a-grade-q-input-group">
+                  <input type="text" class="a-grade-input" value="4" />
+                  <span class="a-grade-max">/ 5</span>
+                </div>
+              </div>
+              <div class="a-ai-hint a-ai-correct">
+                <span class="a-ai-label">AI: CORRECT</span>
+                <span class="a-ai-reason">Student identifies all 4 MAIN causes</span>
+              </div>
+            </div>
+            <div class="a-grade-q">
+              <div class="a-grade-q-header">
+                <div class="a-grade-q-num">02</div>
+                <div class="a-grade-q-info">
+                  <div class="a-grade-q-label">Question 2</div>
+                  <div class="a-grade-q-prompt">Describe the Treaty of Versailles.</div>
+                </div>
+                <div class="a-grade-q-input-group">
+                  <input type="text" class="a-grade-input" value="4" />
+                  <span class="a-grade-max">/ 5</span>
+                </div>
+              </div>
+              <div class="a-ai-hint a-ai-partial">
+                <span class="a-ai-label">AI: PARTIAL</span>
+                <span class="a-ai-reason">Missing key terms about reparations</span>
+              </div>
+            </div>
+          </div>
+          <div class="a-scan-feedback">
+            <div class="a-section-label">OVERALL FEEDBACK</div>
+            <textarea class="a-feedback-input" rows="2" placeholder="Add feedback for this student..."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- VARIATION B: REFINED CURRENT                                        -->
+    <!-- ================================================================== -->
+    <section class="dt-section">
+      <div class="dt-section-label">VARIATION B</div>
+      <h2>Refined Current</h2>
+      <p class="dt-desc">Keep the current clean card-based SaaS feel, but elevate with student avatars, richer course color usage, better grading panel hierarchy, and a branded header.</p>
+
+      <!-- B: Dashboard Header -->
+      <h3 class="dt-component-label">Dashboard Header</h3>
+      <div class="b-dashboard-header">
+        <div class="b-dashboard-header-inner">
+          <div class="b-header-brand">
+            <img src="/favicon.svg" alt="" width="28" height="28" class="b-header-logo" />
+            <span class="b-header-title">GradeVine Dashboard</span>
+          </div>
+          <div class="b-header-user">
+            <span class="b-user-name">Moses Harding</span>
+            <div class="b-user-avatar">MH</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B: Breadcrumb -->
+      <h3 class="dt-component-label">Breadcrumb</h3>
+      <div class="dt-mock-bg">
+        <nav class="b-breadcrumb">
+          <button class="b-breadcrumb-link">Courses</button>
+          <span class="b-breadcrumb-chevron">&rsaquo;</span>
+          <button class="b-breadcrumb-link">US History</button>
+          <span class="b-breadcrumb-chevron">&rsaquo;</span>
+          <span class="b-breadcrumb-current">Ch. 12 Quiz</span>
+        </nav>
+      </div>
+
+      <!-- B: Course Cards -->
+      <h3 class="dt-component-label">Course Cards</h3>
+      <div class="dt-mock-bg">
+        <div class="b-course-grid">
+          <div class="b-course-card" style="--course-color: #E41749">
+            <div class="b-course-card-color"></div>
+            <div class="b-course-card-body">
+              <h3>US History</h3>
+              <div class="b-course-card-stats">
+                <div class="b-stat">
+                  <span class="b-stat-num">24</span>
+                  <span class="b-stat-label">students</span>
+                </div>
+                <div class="b-stat-divider"></div>
+                <div class="b-stat">
+                  <span class="b-stat-num">6</span>
+                  <span class="b-stat-label">assignments</span>
+                </div>
+              </div>
+              <div class="b-course-sections">
+                <span class="b-section-chip">Period 1</span>
+                <span class="b-section-chip">Period 3</span>
+              </div>
+            </div>
+          </div>
+          <div class="b-course-card" style="--course-color: #1565C0">
+            <div class="b-course-card-color"></div>
+            <div class="b-course-card-body">
+              <h3>AP Biology</h3>
+              <div class="b-course-card-stats">
+                <div class="b-stat">
+                  <span class="b-stat-num">18</span>
+                  <span class="b-stat-label">students</span>
+                </div>
+                <div class="b-stat-divider"></div>
+                <div class="b-stat">
+                  <span class="b-stat-num">3</span>
+                  <span class="b-stat-label">assignments</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="b-course-card" style="--course-color: #6F00FF">
+            <div class="b-course-card-color"></div>
+            <div class="b-course-card-body">
+              <h3>English 10</h3>
+              <div class="b-course-card-stats">
+                <div class="b-stat">
+                  <span class="b-stat-num">31</span>
+                  <span class="b-stat-label">students</span>
+                </div>
+                <div class="b-stat-divider"></div>
+                <div class="b-stat">
+                  <span class="b-stat-num">8</span>
+                  <span class="b-stat-label">assignments</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- B: Student Rows -->
+      <h3 class="dt-component-label">Student List</h3>
+      <div class="dt-mock-bg">
+        <div class="b-list-header">
+          <h2>Submissions</h2>
+          <span class="b-list-count">15 of 24 graded</span>
+        </div>
+        <div class="b-progress-bar">
+          <div class="b-progress-fill" style="width: 62%"></div>
+        </div>
+        <div class="b-student-list">
+          <div class="b-student-row">
+            <div class="b-avatar" style="--avatar-color: #E41749">A</div>
+            <div class="b-student-info">
+              <span class="b-student-name">Alvarez, Maria</span>
+              <span class="b-student-score-inline">8 / 10 pts</span>
+            </div>
+            <span class="b-student-badge b-badge-graded">Graded</span>
+            <span class="b-row-chevron">&rsaquo;</span>
+          </div>
+          <div class="b-student-row">
+            <div class="b-avatar" style="--avatar-color: #E41749">C</div>
+            <div class="b-student-info">
+              <span class="b-student-name">Chen, David</span>
+              <span class="b-student-score-inline">3 / 10 pts</span>
+            </div>
+            <span class="b-student-badge b-badge-partial">Partial</span>
+            <span class="b-row-chevron">&rsaquo;</span>
+          </div>
+          <div class="b-student-row">
+            <div class="b-avatar" style="--avatar-color: #E41749">J</div>
+            <div class="b-student-info">
+              <span class="b-student-name">Johnson, Tyler</span>
+            </div>
+            <span class="b-student-badge b-badge-ungraded">Ungraded</span>
+            <span class="b-row-chevron">&rsaquo;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- B: Grading Panel -->
+      <h3 class="dt-component-label">Grading Panel</h3>
+      <div class="dt-mock-bg" style="max-width: 440px">
+        <div class="b-grade-panel">
+          <div class="b-grade-panel-header">
+            <h3>Grading</h3>
+            <div class="b-grade-panel-status">
+              <span class="b-save-badge b-save-saved">Saved</span>
+              <span class="b-grade-total">8 / 10</span>
+            </div>
+          </div>
+          <div class="b-grade-questions">
+            <div class="b-grade-q">
+              <div class="b-grade-q-top">
+                <span class="b-grade-q-label">Q1</span>
+                <span class="b-grade-q-prompt">What were the main causes of WWI?</span>
+                <div class="b-grade-q-input-group">
+                  <input type="text" class="b-grade-input" value="4" />
+                  <span class="b-grade-max">/ 5</span>
+                </div>
+              </div>
+              <div class="b-ai-hint b-ai-correct">
+                <span class="b-ai-icon">&#x2713;</span>
+                <span class="b-ai-text"><strong>Correct</strong> &mdash; Student identifies all 4 MAIN causes</span>
+              </div>
+            </div>
+            <div class="b-grade-q">
+              <div class="b-grade-q-top">
+                <span class="b-grade-q-label">Q2</span>
+                <span class="b-grade-q-prompt">Describe the Treaty of Versailles.</span>
+                <div class="b-grade-q-input-group">
+                  <input type="text" class="b-grade-input" value="4" />
+                  <span class="b-grade-max">/ 5</span>
+                </div>
+              </div>
+              <div class="b-ai-hint b-ai-partial">
+                <span class="b-ai-icon">~</span>
+                <span class="b-ai-text"><strong>Partial</strong> &mdash; Missing key terms about reparations</span>
+              </div>
+            </div>
+          </div>
+          <div class="b-scan-feedback">
+            <label class="b-feedback-label">Overall Feedback</label>
+            <textarea class="b-feedback-input" rows="2" placeholder="Add feedback for this student..."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- VARIATION C: HYBRID                                                 -->
+    <!-- ================================================================== -->
+    <section class="dt-section">
+      <div class="dt-section-label">VARIATION C</div>
+      <h2>Hybrid</h2>
+      <p class="dt-desc">Brutalist accents (tracked section labels, colored left borders, monospaced question numbers) layered onto the clean card layout. The best of both worlds &mdash; recognizable as the same app, but web-native.</p>
+
+      <!-- C: Dashboard Header -->
+      <h3 class="dt-component-label">Dashboard Header</h3>
+      <div class="c-dashboard-header">
+        <div class="c-dashboard-header-inner">
+          <div class="c-header-left">
+            <span class="c-header-brand">GRADEVINE</span>
+            <span class="c-header-divider"></span>
+            <span class="c-header-subtitle">Dashboard</span>
+          </div>
+          <div class="c-header-user">
+            <span class="c-header-user-name">Moses Harding</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- C: Breadcrumb -->
+      <h3 class="dt-component-label">Breadcrumb</h3>
+      <div class="dt-mock-bg">
+        <nav class="c-breadcrumb">
+          <button class="c-breadcrumb-link">Courses</button>
+          <span class="c-breadcrumb-sep">&rarr;</span>
+          <button class="c-breadcrumb-link">US History</button>
+          <span class="c-breadcrumb-sep">&rarr;</span>
+          <span class="c-breadcrumb-current">Ch. 12 Quiz</span>
+        </nav>
+      </div>
+
+      <!-- C: Course Cards -->
+      <h3 class="dt-component-label">Course Cards</h3>
+      <div class="dt-mock-bg">
+        <div class="c-section-label">YOUR COURSES</div>
+        <div class="c-course-grid">
+          <div class="c-course-card" style="--course-color: #E41749">
+            <div class="c-course-card-left"></div>
+            <div class="c-course-card-body">
+              <div class="c-course-card-name">US History</div>
+              <div class="c-course-card-meta">
+                <span class="c-meta-value">24</span> students
+                <span class="c-meta-dot">&middot;</span>
+                <span class="c-meta-value">6</span> assignments
+              </div>
+            </div>
+            <span class="c-course-card-arrow">&rarr;</span>
+          </div>
+          <div class="c-course-card" style="--course-color: #1565C0">
+            <div class="c-course-card-left"></div>
+            <div class="c-course-card-body">
+              <div class="c-course-card-name">AP Biology</div>
+              <div class="c-course-card-meta">
+                <span class="c-meta-value">18</span> students
+                <span class="c-meta-dot">&middot;</span>
+                <span class="c-meta-value">3</span> assignments
+              </div>
+            </div>
+            <span class="c-course-card-arrow">&rarr;</span>
+          </div>
+          <div class="c-course-card" style="--course-color: #6F00FF">
+            <div class="c-course-card-left"></div>
+            <div class="c-course-card-body">
+              <div class="c-course-card-name">English 10</div>
+              <div class="c-course-card-meta">
+                <span class="c-meta-value">31</span> students
+                <span class="c-meta-dot">&middot;</span>
+                <span class="c-meta-value">8</span> assignments
+              </div>
+            </div>
+            <span class="c-course-card-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- C: Student Rows -->
+      <h3 class="dt-component-label">Student List</h3>
+      <div class="dt-mock-bg">
+        <div class="c-section-label">SUBMISSIONS &mdash; 15 OF 24 GRADED</div>
+        <div class="c-progress-bar">
+          <div class="c-progress-fill" style="width: 62%"></div>
+        </div>
+        <div class="c-student-list">
+          <div class="c-student-row">
+            <div class="c-avatar" style="--avatar-color: #E41749">A</div>
+            <div class="c-student-info">
+              <span class="c-student-name">Alvarez, Maria</span>
+            </div>
+            <span class="c-student-badge c-badge-graded">GRADED</span>
+            <span class="c-student-score">8 / 10</span>
+            <span class="c-row-arrow">&rarr;</span>
+          </div>
+          <div class="c-student-row">
+            <div class="c-avatar" style="--avatar-color: #E41749">C</div>
+            <div class="c-student-info">
+              <span class="c-student-name">Chen, David</span>
+            </div>
+            <span class="c-student-badge c-badge-partial">PARTIAL</span>
+            <span class="c-student-score">3 / 10</span>
+            <span class="c-row-arrow">&rarr;</span>
+          </div>
+          <div class="c-student-row">
+            <div class="c-avatar" style="--avatar-color: #E41749">J</div>
+            <div class="c-student-info">
+              <span class="c-student-name">Johnson, Tyler</span>
+            </div>
+            <span class="c-student-badge c-badge-ungraded">UNGRADED</span>
+            <span class="c-student-score">&mdash;</span>
+            <span class="c-row-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- C: Grading Panel -->
+      <h3 class="dt-component-label">Grading Panel</h3>
+      <div class="dt-mock-bg" style="max-width: 440px">
+        <div class="c-grade-panel">
+          <div class="c-grade-panel-header">
+            <div class="c-grade-panel-left">
+              <span class="c-grade-section-label">GRADING</span>
+              <span class="c-grade-total">8 / 10</span>
+            </div>
+            <span class="c-save-badge c-save-saved">Saved</span>
+          </div>
+          <div class="c-grade-questions">
+            <div class="c-grade-q">
+              <div class="c-grade-q-left-border" style="--q-color: #248a3d"></div>
+              <div class="c-grade-q-content">
+                <div class="c-grade-q-header">
+                  <span class="c-grade-q-num">01</span>
+                  <div class="c-grade-q-info">
+                    <div class="c-grade-q-label">Question 1</div>
+                    <div class="c-grade-q-prompt">What were the main causes of WWI?</div>
+                  </div>
+                  <div class="c-grade-q-input-group">
+                    <input type="text" class="c-grade-input" value="4" />
+                    <span class="c-grade-max">/ 5</span>
+                  </div>
+                </div>
+                <div class="c-ai-hint c-ai-correct">
+                  <strong>Correct</strong> &mdash; Student identifies all 4 MAIN causes
+                </div>
+              </div>
+            </div>
+            <div class="c-grade-q">
+              <div class="c-grade-q-left-border" style="--q-color: #946800"></div>
+              <div class="c-grade-q-content">
+                <div class="c-grade-q-header">
+                  <span class="c-grade-q-num">02</span>
+                  <div class="c-grade-q-info">
+                    <div class="c-grade-q-label">Question 2</div>
+                    <div class="c-grade-q-prompt">Describe the Treaty of Versailles.</div>
+                  </div>
+                  <div class="c-grade-q-input-group">
+                    <input type="text" class="c-grade-input" value="4" />
+                    <span class="c-grade-max">/ 5</span>
+                  </div>
+                </div>
+                <div class="c-ai-hint c-ai-partial">
+                  <strong>Partial</strong> &mdash; Missing key terms about reparations
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="c-scan-feedback">
+            <div class="c-section-label" style="margin-bottom: 8px">OVERALL FEEDBACK</div>
+            <textarea class="c-feedback-input" rows="2" placeholder="Add feedback for this student..."></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- STUDENT NAV BAR COMPARISON                                          -->
+    <!-- ================================================================== -->
+    <section class="dt-section">
+      <div class="dt-section-label">STUDENT NAVIGATION BAR</div>
+      <h2>Nav Bar Comparison</h2>
+
+      <h3 class="dt-component-label">A: Brutalist</h3>
+      <div class="dt-mock-bg">
+        <div class="a-student-nav">
+          <button class="a-nav-btn">&larr; PREV</button>
+          <div class="a-nav-center">
+            <div class="a-avatar" style="background: #E41749">A</div>
+            <span class="a-nav-name">ALVAREZ, MARIA</span>
+            <span class="a-nav-pos">3 / 24</span>
+          </div>
+          <button class="a-nav-btn">NEXT &rarr;</button>
+        </div>
+      </div>
+
+      <h3 class="dt-component-label">B: Refined</h3>
+      <div class="dt-mock-bg">
+        <div class="b-student-nav">
+          <button class="b-nav-btn">&larr; Previous</button>
+          <div class="b-nav-center">
+            <div class="b-avatar" style="--avatar-color: #E41749">A</div>
+            <div class="b-nav-info">
+              <span class="b-nav-name">Alvarez, Maria</span>
+              <span class="b-nav-pos">3 of 24 students</span>
+            </div>
+          </div>
+          <button class="b-nav-btn">Next &rarr;</button>
+        </div>
+      </div>
+
+      <h3 class="dt-component-label">C: Hybrid</h3>
+      <div class="dt-mock-bg">
+        <div class="c-student-nav">
+          <button class="c-nav-btn">&larr;</button>
+          <div class="c-nav-center">
+            <div class="c-avatar" style="--avatar-color: #E41749">A</div>
+            <span class="c-nav-name">Alvarez, Maria</span>
+            <span class="c-nav-sep">&middot;</span>
+            <span class="c-nav-pos">3 / 24</span>
+          </div>
+          <button class="c-nav-btn">&rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- VARIATION D: SOFT BRUTALIST                                         -->
+    <!-- ================================================================== -->
+    <section class="dt-section">
+      <div class="dt-section-label">VARIATION D</div>
+      <h2>Soft Brutalist</h2>
+      <p class="dt-desc">Brutalist character &mdash; heavy tracked text, dark headers, square avatars, section bars, arrow indicators &mdash; softened with rounded corners, thin borders, and Inter throughout. No monospaced fonts.</p>
+
+      <!-- D: Dashboard Header -->
+      <h3 class="dt-component-label">Dashboard Header</h3>
+      <div class="d-dashboard-header">
+        <div class="d-dashboard-header-inner">
+          <div class="d-header-brand">
+            <span class="d-header-logo">G</span>
+            <span class="d-header-title">GRADEVINE</span>
+          </div>
+          <div class="d-header-right">
+            <span class="d-header-user">MOSES HARDING</span>
+            <button class="d-header-signout">SIGN OUT</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- D: Breadcrumb -->
+      <h3 class="dt-component-label">Breadcrumb</h3>
+      <div class="dt-mock-bg">
+        <nav class="d-breadcrumb">
+          <button class="d-breadcrumb-link">COURSES</button>
+          <span class="d-breadcrumb-sep">&rarr;</span>
+          <button class="d-breadcrumb-link">US HISTORY</button>
+          <span class="d-breadcrumb-sep">&rarr;</span>
+          <span class="d-breadcrumb-current">CH. 12 QUIZ</span>
+        </nav>
+      </div>
+
+      <!-- D: Course Cards -->
+      <h3 class="dt-component-label">Course Cards</h3>
+      <div class="dt-mock-bg">
+        <div class="d-section-label">YOUR COURSES</div>
+        <div class="d-course-grid">
+          <div class="d-course-card" style="--course-color: #E41749">
+            <div class="d-course-card-body">
+              <div class="d-course-card-title">
+                <span class="d-course-title-accent" style="background: var(--course-color)"></span>
+                <span class="d-course-card-name">US History</span>
+              </div>
+              <div class="d-course-card-meta">
+                <span class="d-course-meta-num">24</span>
+                <span class="d-course-meta-label">STUDENTS</span>
+                <span class="d-course-meta-dot"></span>
+                <span class="d-course-meta-num">6</span>
+                <span class="d-course-meta-label">ASSIGNMENTS</span>
+              </div>
+            </div>
+            <span class="d-course-card-arrow">&rarr;</span>
+          </div>
+          <div class="d-course-card" style="--course-color: #1565C0">
+            <div class="d-course-card-body">
+              <div class="d-course-card-title">
+                <span class="d-course-title-accent" style="background: var(--course-color)"></span>
+                <span class="d-course-card-name">AP Biology</span>
+              </div>
+              <div class="d-course-card-meta">
+                <span class="d-course-meta-num">18</span>
+                <span class="d-course-meta-label">STUDENTS</span>
+                <span class="d-course-meta-dot"></span>
+                <span class="d-course-meta-num">3</span>
+                <span class="d-course-meta-label">ASSIGNMENTS</span>
+              </div>
+            </div>
+            <span class="d-course-card-arrow">&rarr;</span>
+          </div>
+          <div class="d-course-card" style="--course-color: #6F00FF">
+            <div class="d-course-card-body">
+              <div class="d-course-card-title">
+                <span class="d-course-title-accent" style="background: var(--course-color)"></span>
+                <span class="d-course-card-name">English 10</span>
+              </div>
+              <div class="d-course-card-meta">
+                <span class="d-course-meta-num">31</span>
+                <span class="d-course-meta-label">STUDENTS</span>
+                <span class="d-course-meta-dot"></span>
+                <span class="d-course-meta-num">8</span>
+                <span class="d-course-meta-label">ASSIGNMENTS</span>
+              </div>
+            </div>
+            <span class="d-course-card-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- D: Assignment List -->
+      <h3 class="dt-component-label">Assignment List</h3>
+      <div class="dt-mock-bg">
+        <div class="d-section-bar">
+          <span class="d-section-bar-title">US HISTORY</span>
+          <span class="d-section-bar-accent" style="background: #E41749"></span>
+        </div>
+        <div class="d-section-label">6 ASSIGNMENTS</div>
+        <div class="d-assignment-list">
+          <div class="d-assignment-row" style="--assign-color: #E41749">
+            <div class="d-assignment-color-edge"></div>
+            <div class="d-assignment-body">
+              <div class="d-assignment-top">
+                <div class="d-assignment-info">
+                  <span class="d-assignment-name">Ch. 12 Quiz &mdash; World War I</span>
+                  <div class="d-assignment-meta">
+                    <span class="d-assign-meta-pill">5 Q</span>
+                    <span class="d-assign-meta-pill">50 PTS</span>
+                    <span class="d-assign-meta-pill">24 SCANS</span>
+                  </div>
+                </div>
+                <span class="d-assignment-arrow">&rarr;</span>
+              </div>
+              <div class="d-assignment-progress-row">
+                <div class="d-assignment-progress-bar">
+                  <div class="d-assignment-progress-fill" style="width: 62%; background: var(--assign-color)"></div>
+                </div>
+                <span class="d-assignment-progress-text">15 / 24 GRADED</span>
+              </div>
+            </div>
+          </div>
+          <div class="d-assignment-row" style="--assign-color: #E41749">
+            <div class="d-assignment-color-edge"></div>
+            <div class="d-assignment-body">
+              <div class="d-assignment-top">
+                <div class="d-assignment-info">
+                  <span class="d-assignment-name">Ch. 11 Test &mdash; Imperialism</span>
+                  <div class="d-assignment-meta">
+                    <span class="d-assign-meta-pill">8 Q</span>
+                    <span class="d-assign-meta-pill">100 PTS</span>
+                    <span class="d-assign-meta-pill">24 SCANS</span>
+                  </div>
+                </div>
+                <span class="d-assignment-arrow">&rarr;</span>
+              </div>
+              <div class="d-assignment-progress-row">
+                <div class="d-assignment-progress-bar">
+                  <div class="d-assignment-progress-fill d-progress-complete" style="width: 100%"></div>
+                </div>
+                <span class="d-assignment-progress-text d-progress-complete-text">24 / 24 COMPLETE</span>
+              </div>
+            </div>
+          </div>
+          <div class="d-assignment-row" style="--assign-color: #E41749">
+            <div class="d-assignment-color-edge"></div>
+            <div class="d-assignment-body">
+              <div class="d-assignment-top">
+                <div class="d-assignment-info">
+                  <span class="d-assignment-name">Ch. 10 Worksheet &mdash; Progressive Era</span>
+                  <div class="d-assignment-meta">
+                    <span class="d-assign-meta-pill">3 Q</span>
+                    <span class="d-assign-meta-pill">30 PTS</span>
+                    <span class="d-assign-meta-pill">22 SCANS</span>
+                  </div>
+                </div>
+                <span class="d-assignment-arrow">&rarr;</span>
+              </div>
+              <div class="d-assignment-progress-row">
+                <div class="d-assignment-progress-bar">
+                  <div class="d-assignment-progress-fill" style="width: 0%"></div>
+                </div>
+                <span class="d-assignment-progress-text">0 / 22 GRADED</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D: Student Rows -->
+      <h3 class="dt-component-label">Student List</h3>
+      <div class="dt-mock-bg">
+        <div class="d-section-bar">SUBMISSIONS &mdash; 24 STUDENTS</div>
+        <div class="d-progress-bar">
+          <div class="d-progress-fill" style="width: 62%"></div>
+        </div>
+        <div class="d-student-list">
+          <div class="d-student-row">
+            <div class="d-avatar" style="--avatar-color: #E41749">A</div>
+            <span class="d-student-name">Alvarez, Maria</span>
+            <span class="d-student-badge d-badge-graded">GRADED</span>
+            <span class="d-student-score">8 / 10</span>
+            <span class="d-student-arrow">&rarr;</span>
+          </div>
+          <div class="d-student-row">
+            <div class="d-avatar" style="--avatar-color: #E41749">C</div>
+            <span class="d-student-name">Chen, David</span>
+            <span class="d-student-badge d-badge-partial">PARTIAL</span>
+            <span class="d-student-score">3 / 10</span>
+            <span class="d-student-arrow">&rarr;</span>
+          </div>
+          <div class="d-student-row">
+            <div class="d-avatar" style="--avatar-color: #E41749">J</div>
+            <span class="d-student-name">Johnson, Tyler</span>
+            <span class="d-student-badge d-badge-ungraded">UNGRADED</span>
+            <span class="d-student-score">&mdash;</span>
+            <span class="d-student-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- D: Grading Panel -->
+      <h3 class="dt-component-label">Grading Panel</h3>
+      <div class="dt-mock-bg" style="max-width: 460px">
+        <div class="d-grade-panel">
+          <div class="d-grade-panel-header">
+            <span class="d-grade-panel-title">GRADING</span>
+            <div class="d-grade-panel-right">
+              <span class="d-save-badge d-save-saved">SAVED</span>
+              <span class="d-grade-panel-total">8 / 10</span>
+            </div>
+          </div>
+          <div class="d-grade-questions">
+
+            <!-- Q1: Graded, correct -->
+            <div class="d-grade-card">
+              <div class="d-grade-card-top">
+                <div class="d-grade-card-q-badge" style="--badge-bg: #3880F4">QUESTION</div>
+                <span class="d-grade-card-q-label">Q1</span>
+                <span class="d-grade-card-chevron">&#x25BE;</span>
+              </div>
+              <div class="d-grade-card-prompt">What were the main causes of WWI?</div>
+              <div class="d-grade-chips">
+                <button class="d-chip">0</button>
+                <button class="d-chip">1</button>
+                <button class="d-chip">2</button>
+                <button class="d-chip">3</button>
+                <button class="d-chip d-chip-selected" style="--chip-color: #E41749">4</button>
+                <button class="d-chip">5</button>
+              </div>
+              <div class="d-ai-hint d-ai-correct">
+                <span class="d-ai-label">AI: CORRECT</span>
+                <span class="d-ai-reason">&mdash; Student identifies all 4 MAIN causes</span>
+              </div>
+              <div class="d-feedback-section">
+                <div class="d-feedback-header">
+                  <div class="d-grade-card-q-badge" style="--badge-bg: #F5A623">FEEDBACK</div>
+                  <span class="d-feedback-char-count">24 / 500</span>
+                </div>
+                <div class="d-quick-chips">
+                  <button class="d-quick-chip d-quick-chip-used">Great detail on alliances</button>
+                  <button class="d-quick-chip">Needs more examples</button>
+                  <button class="d-quick-chip">Review chapter notes</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Q2: Graded, partial -->
+            <div class="d-grade-card">
+              <div class="d-grade-card-top">
+                <div class="d-grade-card-q-badge" style="--badge-bg: #3880F4">QUESTION</div>
+                <span class="d-grade-card-q-label">Q2</span>
+                <span class="d-grade-card-chevron">&#x25BE;</span>
+              </div>
+              <div class="d-grade-card-prompt">Describe the Treaty of Versailles and its major provisions.</div>
+              <div class="d-grade-chips">
+                <button class="d-chip">0</button>
+                <button class="d-chip">1</button>
+                <button class="d-chip">2</button>
+                <button class="d-chip">3</button>
+                <button class="d-chip d-chip-selected" style="--chip-color: #E41749">4</button>
+                <button class="d-chip">5</button>
+              </div>
+              <div class="d-ai-hint d-ai-partial">
+                <span class="d-ai-label">AI: PARTIAL</span>
+                <span class="d-ai-reason">&mdash; Missing key terms about reparations</span>
+              </div>
+              <div class="d-feedback-section">
+                <div class="d-feedback-header">
+                  <div class="d-grade-card-q-badge" style="--badge-bg: #F5A623">FEEDBACK</div>
+                </div>
+                <div class="d-quick-chips">
+                  <button class="d-quick-chip">Incomplete answer</button>
+                  <button class="d-quick-chip">Good start, needs depth</button>
+                  <button class="d-quick-chip">Review section 11.3</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Q3: Ungraded -->
+            <div class="d-grade-card d-grade-card-ungraded">
+              <div class="d-grade-card-top">
+                <div class="d-grade-card-q-badge" style="--badge-bg: #3880F4">QUESTION</div>
+                <span class="d-grade-card-q-label">Q3</span>
+                <span class="d-grade-card-chevron">&#x25B8;</span>
+              </div>
+              <div class="d-grade-card-prompt">Name three Allied powers during WWI.</div>
+              <div class="d-grade-chips">
+                <button class="d-chip">0</button>
+                <button class="d-chip">1</button>
+                <button class="d-chip">2</button>
+                <button class="d-chip">3</button>
+                <button class="d-chip">4</button>
+                <button class="d-chip">5</button>
+              </div>
+            </div>
+
+          </div>
+          <div class="d-scan-feedback">
+            <div class="d-section-label" style="margin-bottom: 8px">OVERALL FEEDBACK</div>
+            <textarea class="d-feedback-input" rows="2" placeholder="Add feedback for this student..."></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- D: Student Nav Bar -->
+      <h3 class="dt-component-label">Student Navigation</h3>
+      <div class="dt-mock-bg">
+        <div class="d-student-nav">
+          <button class="d-nav-btn">&larr; PREV</button>
+          <div class="d-nav-center">
+            <div class="d-avatar" style="--avatar-color: #E41749">A</div>
+            <span class="d-nav-name">Alvarez, Maria</span>
+            <span class="d-nav-pos">3 / 24</span>
+          </div>
+          <button class="d-nav-btn">NEXT &rarr;</button>
+        </div>
+      </div>
+    </section>
+
+  </div>
+</Layout>
+
+<style is:global>
+  /* ================================================================== */
+  /* DESIGN TEST PAGE SCAFFOLDING                                        */
+  /* ================================================================== */
+
+  .dt-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .dt-page > header {
+    margin-bottom: 48px;
+  }
+
+  .dt-page > header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 8px;
+  }
+
+  .dt-subtitle {
+    font-size: 15px;
+    color: #757575;
+    line-height: 1.5;
+  }
+
+  .dt-section {
+    margin-bottom: 64px;
+    padding-top: 32px;
+    border-top: 2px solid #212121;
+  }
+
+  .dt-section-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #9e9e9e;
+    margin-bottom: 4px;
+  }
+
+  .dt-section > h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 8px;
+  }
+
+  .dt-desc {
+    font-size: 14px;
+    color: #616161;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 640px;
+  }
+
+  .dt-component-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #9e9e9e;
+    margin-top: 32px;
+    margin-bottom: 12px;
+  }
+
+  .dt-mock-bg {
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid #e0e0e0;
+  }
+
+  /* ================================================================== */
+  /* VARIATION A: BRUTALIST WEB                                          */
+  /* ================================================================== */
+
+  /* A: Header */
+  .a-dashboard-header {
+    background: #1a1a1a;
+    padding: 14px 24px;
+  }
+
+  .a-dashboard-header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .a-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .a-header-logo {
+    width: 28px;
+    height: 28px;
+    background: #5002F7;
+    color: white;
+    font-size: 15px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+  }
+
+  .a-header-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: white;
+  }
+
+  .a-header-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .a-header-user-name {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .a-header-signout {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.5);
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .a-header-signout:hover {
+    color: white;
+    border-color: rgba(255,255,255,0.5);
+  }
+
+  /* A: Breadcrumb */
+  .a-breadcrumb {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+  }
+
+  .a-breadcrumb-link {
+    background: none;
+    border: none;
+    color: #5002F7;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .a-breadcrumb-link:hover { text-decoration: underline; }
+
+  .a-breadcrumb-sep {
+    margin: 0 8px;
+    color: #9e9e9e;
+  }
+
+  .a-breadcrumb-current {
+    color: #424242;
+  }
+
+  /* A: Course Cards */
+  .a-course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+  }
+
+  .a-course-card {
+    background: white;
+    border: 2px solid #212121;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+  }
+
+  .a-course-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .a-course-card-accent {
+    height: 4px;
+    background: var(--course-color);
+  }
+
+  .a-course-card-body {
+    padding: 16px;
+  }
+
+  .a-course-card-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212121;
+    margin-bottom: 8px;
+  }
+
+  .a-course-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .a-course-meta-num {
+    font-size: 16px;
+    font-weight: 300;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #424242;
+  }
+
+  .a-course-meta-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #9e9e9e;
+  }
+
+  .a-course-meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #bdbdbd;
+    margin: 0 4px;
+  }
+
+  /* A: Section Bar */
+  .a-section-bar {
+    background: #1a1a1a;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+  }
+
+  /* A: Progress */
+  .a-progress-bar {
+    height: 3px;
+    background: #e0e0e0;
+    margin-bottom: 12px;
+  }
+
+  .a-progress-fill {
+    height: 100%;
+    background: #1a1a1a;
+  }
+
+  /* A: Student Rows */
+  .a-student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .a-student-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    cursor: pointer;
+    transition: border-color 0.1s;
+  }
+
+  .a-student-row:hover {
+    border-color: #212121;
+  }
+
+  .a-avatar {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .a-student-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: #212121;
+  }
+
+  .a-student-badge {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 3px 8px;
+  }
+
+  .a-badge-graded { background: #e8f5e9; color: #248a3d; }
+  .a-badge-partial { background: #fff8e1; color: #946800; }
+  .a-badge-ungraded { background: #f5f5f5; color: #9e9e9e; }
+
+  .a-student-score {
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #616161;
+    min-width: 52px;
+    text-align: right;
+  }
+
+  .a-student-arrow {
+    font-size: 14px;
+    color: #9e9e9e;
+    font-weight: 300;
+  }
+
+  /* A: Grading Panel */
+  .a-grade-panel {
+    background: white;
+    border: 2px solid #212121;
+  }
+
+  .a-grade-panel-header {
+    background: #1a1a1a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+  }
+
+  .a-grade-panel-title {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+  }
+
+  .a-grade-panel-total {
+    font-size: 18px;
+    font-weight: 300;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .a-grade-questions {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .a-grade-q {
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+  }
+
+  .a-grade-q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .a-grade-q-num {
+    font-size: 20px;
+    font-weight: 200;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #9e9e9e;
+    min-width: 32px;
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .a-grade-q-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .a-grade-q-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #424242;
+    margin-bottom: 2px;
+  }
+
+  .a-grade-q-prompt {
+    font-size: 12px;
+    color: #757575;
+    line-height: 1.4;
+  }
+
+  .a-grade-q-input-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .a-grade-input {
+    width: 48px;
+    padding: 6px;
+    border: 2px solid #212121;
+    font-size: 16px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-weight: 400;
+    text-align: center;
+    background: white;
+  }
+
+  .a-grade-input:focus {
+    outline: none;
+    border-color: #5002F7;
+  }
+
+  .a-grade-max {
+    font-size: 12px;
+    color: #9e9e9e;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .a-ai-hint {
+    margin-top: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+    display: flex;
+    gap: 8px;
+  }
+
+  .a-ai-correct { background: #e8f5e9; color: #248a3d; }
+  .a-ai-partial { background: #fff8e1; color: #946800; }
+
+  .a-ai-label {
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  .a-ai-reason { opacity: 0.8; }
+
+  .a-section-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #757575;
+    margin-bottom: 8px;
+  }
+
+  .a-scan-feedback {
+    padding: 16px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .a-feedback-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #e0e0e0;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    resize: vertical;
+  }
+
+  .a-feedback-input:focus {
+    outline: none;
+    border-color: #212121;
+  }
+
+  /* A: Student Nav */
+  .a-student-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #1a1a1a;
+  }
+
+  .a-nav-btn {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: white;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 14px;
+    cursor: pointer;
+  }
+
+  .a-nav-btn:hover { border-color: white; }
+
+  .a-nav-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .a-nav-name {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: white;
+  }
+
+  .a-nav-pos {
+    font-size: 12px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* ================================================================== */
+  /* VARIATION B: REFINED CURRENT                                        */
+  /* ================================================================== */
+
+  /* B: Header */
+  .b-dashboard-header {
+    background: white;
+    border-bottom: 1px solid #eeeeee;
+    padding: 12px 24px;
+  }
+
+  .b-dashboard-header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .b-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .b-header-logo {
+    border-radius: 8px;
+  }
+
+  .b-header-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #212121;
+  }
+
+  .b-header-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .b-user-name {
+    font-size: 14px;
+    color: #616161;
+  }
+
+  .b-user-avatar {
+    width: 32px;
+    height: 32px;
+    background: #5002F7;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  /* B: Breadcrumb */
+  .b-breadcrumb {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+
+  .b-breadcrumb-link {
+    background: none;
+    border: none;
+    color: #5002F7;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .b-breadcrumb-link:hover { text-decoration: underline; }
+
+  .b-breadcrumb-chevron {
+    margin: 0 8px;
+    color: #bdbdbd;
+    font-size: 18px;
+    font-weight: 300;
+  }
+
+  .b-breadcrumb-current {
+    color: #424242;
+    font-weight: 500;
+  }
+
+  /* B: Course Cards */
+  .b-course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px;
+  }
+
+  .b-course-card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+  }
+
+  .b-course-card:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+  }
+
+  .b-course-card-color {
+    height: 6px;
+    background: var(--course-color);
+  }
+
+  .b-course-card-body {
+    padding: 20px;
+  }
+
+  .b-course-card-body h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #212121;
+    margin-bottom: 12px;
+  }
+
+  .b-course-card-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .b-stat { display: flex; align-items: baseline; gap: 4px; }
+
+  .b-stat-num {
+    font-size: 18px;
+    font-weight: 600;
+    color: #424242;
+  }
+
+  .b-stat-label {
+    font-size: 13px;
+    color: #9e9e9e;
+  }
+
+  .b-stat-divider {
+    width: 1px;
+    height: 16px;
+    background: #e0e0e0;
+  }
+
+  .b-course-sections {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .b-section-chip {
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: #f5f5f5;
+    color: #757575;
+  }
+
+  /* B: Student List */
+  .b-list-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .b-list-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #212121;
+  }
+
+  .b-list-count {
+    font-size: 13px;
+    color: #9e9e9e;
+  }
+
+  .b-progress-bar {
+    height: 4px;
+    background: #eeeeee;
+    border-radius: 2px;
+    margin-bottom: 16px;
+    overflow: hidden;
+  }
+
+  .b-progress-fill {
+    height: 100%;
+    background: #5002F7;
+    border-radius: 2px;
+  }
+
+  .b-student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .b-student-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: white;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  .b-student-row:hover {
+    border-color: #5002F7;
+    box-shadow: 0 2px 8px rgba(80, 2, 247, 0.06);
+  }
+
+  .b-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--avatar-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .b-student-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .b-student-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #212121;
+  }
+
+  .b-student-score-inline {
+    font-size: 12px;
+    color: #9e9e9e;
+  }
+
+  .b-student-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+  }
+
+  .b-badge-graded { background: rgba(52,199,89,0.1); color: #248a3d; }
+  .b-badge-partial { background: rgba(255,210,76,0.15); color: #946800; }
+  .b-badge-ungraded { background: #f5f5f5; color: #9e9e9e; }
+
+  .b-row-chevron {
+    font-size: 22px;
+    color: #bdbdbd;
+    font-weight: 300;
+  }
+
+  /* B: Grading Panel */
+  .b-grade-panel {
+    background: white;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+    padding: 20px;
+  }
+
+  .b-grade-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .b-grade-panel-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #212121;
+  }
+
+  .b-grade-panel-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .b-save-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  .b-save-saved { background: rgba(52,199,89,0.1); color: #248a3d; }
+
+  .b-grade-total {
+    font-size: 16px;
+    font-weight: 700;
+    color: #5002F7;
+  }
+
+  .b-grade-questions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .b-grade-q {
+    padding: 12px;
+    border: 1px solid #f0f0f0;
+    border-radius: 12px;
+  }
+
+  .b-grade-q-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .b-grade-q-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #5002F7;
+    background: rgba(80, 2, 247, 0.06);
+    padding: 2px 8px;
+    border-radius: 6px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .b-grade-q-prompt {
+    flex: 1;
+    font-size: 13px;
+    color: #616161;
+    line-height: 1.4;
+  }
+
+  .b-grade-q-input-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .b-grade-input {
+    width: 52px;
+    padding: 6px 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+  }
+
+  .b-grade-input:focus {
+    outline: none;
+    border-color: #5002F7;
+    box-shadow: 0 0 0 2px rgba(80,2,247,0.1);
+  }
+
+  .b-grade-max {
+    font-size: 13px;
+    color: #9e9e9e;
+  }
+
+  .b-ai-hint {
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 12px;
+    display: flex;
+    gap: 6px;
+    align-items: flex-start;
+  }
+
+  .b-ai-correct { background: rgba(52,199,89,0.06); color: #248a3d; }
+  .b-ai-partial { background: rgba(255,210,76,0.1); color: #946800; }
+
+  .b-ai-icon {
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .b-ai-text { line-height: 1.4; }
+
+  .b-scan-feedback {
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .b-feedback-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #616161;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .b-feedback-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    resize: vertical;
+  }
+
+  .b-feedback-input:focus {
+    outline: none;
+    border-color: #5002F7;
+  }
+
+  /* B: Student Nav */
+  .b-student-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: white;
+    border: 1px solid #eeeeee;
+    border-radius: 16px;
+  }
+
+  .b-nav-btn {
+    font-size: 13px;
+    font-weight: 500;
+    color: #5002F7;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 8px;
+  }
+
+  .b-nav-btn:hover { background: rgba(80,2,247,0.04); }
+
+  .b-nav-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .b-nav-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .b-nav-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #212121;
+  }
+
+  .b-nav-pos {
+    font-size: 12px;
+    color: #9e9e9e;
+  }
+
+  /* ================================================================== */
+  /* VARIATION C: HYBRID                                                 */
+  /* ================================================================== */
+
+  /* C: Header */
+  .c-dashboard-header {
+    background: white;
+    border-bottom: 2px solid #212121;
+    padding: 14px 24px;
+  }
+
+  .c-dashboard-header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .c-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .c-header-brand {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #212121;
+  }
+
+  .c-header-divider {
+    width: 1px;
+    height: 16px;
+    background: #e0e0e0;
+  }
+
+  .c-header-subtitle {
+    font-size: 14px;
+    font-weight: 500;
+    color: #757575;
+  }
+
+  .c-header-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .c-header-user-name {
+    font-size: 14px;
+    color: #616161;
+  }
+
+  /* C: Breadcrumb */
+  .c-breadcrumb {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+  }
+
+  .c-breadcrumb-link {
+    background: none;
+    border: none;
+    color: #5002F7;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .c-breadcrumb-link:hover { text-decoration: underline; }
+
+  .c-breadcrumb-sep {
+    margin: 0 8px;
+    color: #bdbdbd;
+    font-size: 12px;
+  }
+
+  .c-breadcrumb-current {
+    color: #424242;
+    font-weight: 600;
+  }
+
+  /* C: Section Label */
+  .c-section-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #9e9e9e;
+    margin-bottom: 12px;
+  }
+
+  /* C: Course Cards */
+  .c-course-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .c-course-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .c-course-card:hover {
+    border-color: #424242;
+  }
+
+  .c-course-card-left {
+    width: 4px;
+    align-self: stretch;
+    background: var(--course-color);
+    flex-shrink: 0;
+  }
+
+  .c-course-card-body {
+    flex: 1;
+    padding: 14px 16px;
+  }
+
+  .c-course-card-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #212121;
+    margin-bottom: 4px;
+  }
+
+  .c-course-card-meta {
+    font-size: 13px;
+    color: #9e9e9e;
+  }
+
+  .c-meta-value {
+    font-weight: 600;
+    color: #616161;
+  }
+
+  .c-meta-dot { margin: 0 6px; }
+
+  .c-course-card-arrow {
+    font-size: 16px;
+    color: #bdbdbd;
+    padding-right: 16px;
+    flex-shrink: 0;
+  }
+
+  /* C: Progress */
+  .c-progress-bar {
+    height: 3px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .c-progress-fill {
+    height: 100%;
+    background: #5002F7;
+    border-radius: 2px;
+  }
+
+  /* C: Student List */
+  .c-student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .c-student-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: white;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+
+  .c-student-row:hover {
+    border-color: #5002F7;
+  }
+
+  .c-avatar {
+    width: 28px;
+    height: 28px;
+    background: var(--avatar-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    border-radius: 4px;
+  }
+
+  .c-student-info { flex: 1; }
+
+  .c-student-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #212121;
+  }
+
+  .c-student-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .c-badge-graded { background: #e8f5e9; color: #248a3d; }
+  .c-badge-partial { background: #fff8e1; color: #946800; }
+  .c-badge-ungraded { background: #f5f5f5; color: #9e9e9e; }
+
+  .c-student-score {
+    font-size: 13px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #616161;
+    min-width: 48px;
+    text-align: right;
+  }
+
+  .c-row-arrow {
+    font-size: 14px;
+    color: #bdbdbd;
+  }
+
+  /* C: Grading Panel */
+  .c-grade-panel {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .c-grade-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .c-grade-panel-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .c-grade-section-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #9e9e9e;
+  }
+
+  .c-grade-total {
+    font-size: 18px;
+    font-weight: 600;
+    color: #212121;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .c-save-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .c-save-saved { background: #e8f5e9; color: #248a3d; }
+
+  .c-grade-questions {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .c-grade-q {
+    display: flex;
+    border: 1px solid #eeeeee;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .c-grade-q-left-border {
+    width: 3px;
+    background: var(--q-color, #e0e0e0);
+    flex-shrink: 0;
+  }
+
+  .c-grade-q-content {
+    flex: 1;
+    padding: 12px;
+  }
+
+  .c-grade-q-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .c-grade-q-num {
+    font-size: 18px;
+    font-weight: 200;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #bdbdbd;
+    min-width: 28px;
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .c-grade-q-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .c-grade-q-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #424242;
+    margin-bottom: 2px;
+  }
+
+  .c-grade-q-prompt {
+    font-size: 12px;
+    color: #757575;
+    line-height: 1.4;
+  }
+
+  .c-grade-q-input-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  .c-grade-input {
+    width: 52px;
+    padding: 6px 8px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    text-align: center;
+  }
+
+  .c-grade-input:focus {
+    outline: none;
+    border-color: #5002F7;
+    box-shadow: 0 0 0 2px rgba(80,2,247,0.08);
+  }
+
+  .c-grade-max {
+    font-size: 12px;
+    color: #9e9e9e;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .c-ai-hint {
+    margin-top: 8px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .c-ai-correct { background: rgba(52,199,89,0.06); color: #248a3d; }
+  .c-ai-partial { background: rgba(255,210,76,0.1); color: #946800; }
+
+  .c-scan-feedback {
+    padding: 16px;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  .c-feedback-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #eeeeee;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    resize: vertical;
+  }
+
+  .c-feedback-input:focus {
+    outline: none;
+    border-color: #5002F7;
+  }
+
+  /* C: Student Nav */
+  .c-student-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    border-top: 2px solid #212121;
+  }
+
+  .c-nav-btn {
+    font-size: 16px;
+    color: #5002F7;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  .c-nav-btn:hover { background: rgba(80,2,247,0.04); }
+
+  .c-nav-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .c-nav-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #212121;
+  }
+
+  .c-nav-sep {
+    color: #bdbdbd;
+  }
+
+  .c-nav-pos {
+    font-size: 13px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #9e9e9e;
+  }
+
+  /* ================================================================== */
+  /* VARIATION D: SOFT BRUTALIST                                         */
+  /* ================================================================== */
+
+  /* D: Header — dark, square corners */
+  .d-dashboard-header {
+    background: #1a1a1a;
+    padding: 12px 24px;
+  }
+
+  .d-dashboard-header-inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .d-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .d-header-logo {
+    width: 28px;
+    height: 28px;
+    background: #5002F7;
+    color: white;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .d-header-title {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: white;
+  }
+
+  .d-header-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .d-header-user {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .d-header-signout {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.4);
+    background: none;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 4px 12px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.15s ease;
+  }
+
+  .d-header-signout:hover {
+    color: white;
+    border-color: rgba(255,255,255,0.4);
+  }
+
+  /* D: Breadcrumb */
+  .d-breadcrumb {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    display: flex;
+    align-items: center;
+  }
+
+  .d-breadcrumb-link {
+    background: none;
+    border: none;
+    color: #5002F7;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .d-breadcrumb-link:hover { text-decoration: underline; }
+
+  .d-breadcrumb-sep {
+    margin: 0 10px;
+    color: #bdbdbd;
+    font-size: 11px;
+  }
+
+  .d-breadcrumb-current {
+    color: #424242;
+  }
+
+  /* D: Section labels — tracked uppercase, the brutalist signature */
+  .d-section-label {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #9e9e9e;
+    margin-bottom: 12px;
+  }
+
+  /* D: Section bar — dark, square corners */
+  .d-section-bar {
+    background: #1a1a1a;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    padding: 10px 16px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .d-section-bar-title {
+    /* inherits from .d-section-bar */
+  }
+
+  .d-section-bar-accent {
+    width: 16px;
+    height: 3px;
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  /* D: Course Cards — grid layout, rounded, colored left accent */
+  .d-course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+  }
+
+  .d-course-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .d-course-card:hover {
+    border-color: #424242;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+
+  .d-course-card-body {
+    flex: 1;
+    padding: 14px 16px;
+  }
+
+  .d-course-card-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+
+  .d-course-title-accent {
+    width: 3px;
+    height: 18px;
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  .d-course-card-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #212121;
+  }
+
+  .d-course-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .d-course-meta-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: #424242;
+  }
+
+  .d-course-meta-label {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: #9e9e9e;
+  }
+
+  .d-course-meta-dot {
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #bdbdbd;
+    margin: 0 4px;
+  }
+
+  .d-course-card-arrow {
+    font-size: 14px;
+    color: #bdbdbd;
+    padding-right: 16px;
+    flex-shrink: 0;
+  }
+
+  /* D: Progress bar */
+  .d-progress-bar {
+    height: 3px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+
+  .d-progress-fill {
+    height: 100%;
+    background: #1a1a1a;
+    border-radius: 2px;
+  }
+
+  /* D: Student List */
+  .d-student-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .d-student-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    background: white;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+  }
+
+  .d-student-row:hover {
+    border-color: #424242;
+  }
+
+  /* D: Avatar — square with soft radius (iOS-inspired but not sharp) */
+  .d-avatar {
+    width: 28px;
+    height: 28px;
+    background: var(--avatar-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+    border-radius: 6px;
+  }
+
+  .d-student-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+    color: #212121;
+  }
+
+  .d-student-badge {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .d-badge-graded { background: #e8f5e9; color: #248a3d; }
+  .d-badge-partial { background: #fff8e1; color: #946800; }
+  .d-badge-ungraded { background: #f5f5f5; color: #9e9e9e; }
+
+  .d-student-score {
+    font-size: 14px;
+    font-weight: 600;
+    color: #616161;
+    min-width: 52px;
+    text-align: right;
+  }
+
+  .d-student-arrow {
+    font-size: 14px;
+    color: #bdbdbd;
+  }
+
+  /* D: Grading Panel */
+  .d-grade-panel {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .d-grade-panel-header {
+    background: #1a1a1a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+  }
+
+  .d-grade-panel-title {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+  }
+
+  .d-grade-panel-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .d-save-badge {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+
+  .d-save-saved { background: rgba(52,199,89,0.2); color: #4ade80; }
+
+  .d-grade-panel-total {
+    font-size: 18px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .d-grade-questions {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* D: Question Cards */
+  .d-grade-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 14px;
+    background: white;
+  }
+
+  .d-grade-card-ungraded {
+    background: #fafafa;
+  }
+
+  .d-grade-card-top {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .d-grade-card-q-badge {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: white;
+    background: var(--badge-bg);
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .d-grade-card-q-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #3880F4;
+  }
+
+  .d-grade-card-chevron {
+    margin-left: auto;
+    font-size: 12px;
+    color: #bdbdbd;
+  }
+
+  .d-grade-card-prompt {
+    font-size: 13px;
+    color: #616161;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  /* D: Grade Chips — tappable point selector like iOS ChipGradeRuler */
+  .d-grade-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .d-chip {
+    min-width: 40px;
+    height: 36px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #f5f5f5;
+    color: #424242;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+  }
+
+  .d-chip:hover {
+    border-color: #9e9e9e;
+    background: #eeeeee;
+  }
+
+  .d-chip-selected {
+    background: var(--chip-color, #5002F7);
+    color: white;
+    border-color: var(--chip-color, #5002F7);
+    font-weight: 700;
+  }
+
+  .d-chip-selected:hover {
+    background: var(--chip-color, #5002F7);
+    border-color: var(--chip-color, #5002F7);
+    opacity: 0.9;
+  }
+
+  /* D: AI hints */
+  .d-ai-hint {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    display: flex;
+    gap: 6px;
+    align-items: baseline;
+    margin-bottom: 10px;
+  }
+
+  .d-ai-correct { background: rgba(52,199,89,0.06); color: #248a3d; }
+  .d-ai-partial { background: rgba(255,210,76,0.1); color: #946800; }
+
+  .d-ai-label {
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    font-size: 10px;
+  }
+
+  .d-ai-reason {
+    opacity: 0.8;
+    font-size: 12px;
+  }
+
+  /* D: Per-question feedback section */
+  .d-feedback-section {
+    border-top: 1px solid #eeeeee;
+    padding-top: 10px;
+  }
+
+  .d-feedback-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .d-feedback-char-count {
+    font-size: 11px;
+    color: #bdbdbd;
+    margin-left: auto;
+  }
+
+  /* D: Quick feedback chips — light blue tappable pills matching iOS */
+  .d-quick-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .d-quick-chip {
+    background: rgba(56, 128, 244, 0.08);
+    color: #2758A0;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    line-height: 1.4;
+  }
+
+  .d-quick-chip:hover {
+    background: rgba(56, 128, 244, 0.14);
+  }
+
+  .d-quick-chip-used {
+    background: rgba(56, 128, 244, 0.15);
+    font-weight: 600;
+  }
+
+  /* D: Scan feedback */
+  .d-scan-feedback {
+    padding: 16px;
+    border-top: 1px solid #eeeeee;
+  }
+
+  .d-feedback-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    font-size: 13px;
+    font-family: 'Inter', sans-serif;
+    resize: vertical;
+    transition: border-color 0.15s ease;
+  }
+
+  .d-feedback-input:focus {
+    outline: none;
+    border-color: #5002F7;
+  }
+
+  /* D: Student Nav */
+  .d-student-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #1a1a1a;
+    border-radius: 12px;
+  }
+
+  .d-nav-btn {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: white;
+    background: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 6px 14px;
+    cursor: pointer;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.15s ease;
+  }
+
+  .d-nav-btn:hover { border-color: rgba(255,255,255,0.5); }
+
+  .d-nav-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .d-nav-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+  }
+
+  .d-nav-pos {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* D: Assignment List */
+  .d-assignment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .d-assignment-row {
+    display: flex;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .d-assignment-row:hover {
+    border-color: #424242;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .d-assignment-color-edge {
+    width: 4px;
+    align-self: stretch;
+    background: var(--assign-color);
+    flex-shrink: 0;
+  }
+
+  .d-assignment-body {
+    flex: 1;
+    padding: 12px 16px;
+  }
+
+  .d-assignment-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .d-assignment-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .d-assignment-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #212121;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .d-assignment-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .d-assign-meta-pill {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #757575;
+    background: #f5f5f5;
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .d-assignment-arrow {
+    font-size: 14px;
+    color: #bdbdbd;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .d-assignment-progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .d-assignment-progress-bar {
+    flex: 1;
+    height: 3px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .d-assignment-progress-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  .d-assignment-progress-fill.d-progress-complete {
+    background: #248a3d;
+  }
+
+  .d-assignment-progress-text {
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #9e9e9e;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .d-progress-complete-text {
+    color: #248a3d;
+  }
+</style>

@@ -5,17 +5,16 @@ import { CsvExport } from './CsvExport';
 
 interface StudentScanListProps {
   assignment: QuestionAssignment;
+  courseColor?: string;
   onSelectScan: (entry: StudentScanEntry, allEntries: StudentScanEntry[]) => void;
   onBack: () => void;
 }
 
-type SortKey = 'name' | 'status' | 'score';
-
 function statusLabel(status: StudentScanEntry['gradingStatus']): string {
   switch (status) {
-    case 'graded': return 'Graded';
-    case 'partial': return 'Partial';
-    case 'ungraded': return 'Ungraded';
+    case 'graded': return 'GRADED';
+    case 'partial': return 'PARTIAL';
+    case 'ungraded': return 'UNGRADED';
   }
 }
 
@@ -27,7 +26,12 @@ function statusClass(status: StudentScanEntry['gradingStatus']): string {
   }
 }
 
-export function StudentScanList({ assignment, onSelectScan, onBack }: StudentScanListProps) {
+function initial(name: string | undefined): string {
+  if (!name) return '?';
+  return name.charAt(0).toUpperCase();
+}
+
+export function StudentScanList({ assignment, courseColor, onSelectScan, onBack }: StudentScanListProps) {
   const { entries, isLoading, error, refresh } = useStudentScans(assignment.id);
 
   const totalPointsPossible = useMemo(
@@ -35,7 +39,6 @@ export function StudentScanList({ assignment, onSelectScan, onBack }: StudentSca
     [assignment.questions],
   );
 
-  // Enrich entries with pointsPossible and sort by name
   const sortedEntries = useMemo(() => {
     return entries
       .map((e) => ({ ...e, pointsPossible: totalPointsPossible }))
@@ -75,26 +78,22 @@ export function StudentScanList({ assignment, onSelectScan, onBack }: StudentSca
     );
   }
 
+  const pct = sortedEntries.length > 0 ? (gradedCount / sortedEntries.length) * 100 : 0;
+  const avatarColor = courseColor ?? '#5002F7';
+
   return (
     <div className="student-scan-list">
-      <div className="list-header">
-        <div>
-          <h2>Submissions</h2>
-          <p className="text-muted">
-            {gradedCount} / {sortedEntries.length} graded
-          </p>
-        </div>
-        <div className="list-header-actions">
-          <CsvExport assignment={assignment} entries={sortedEntries} />
-          <button onClick={refresh} className="btn-icon" title="Refresh">↻</button>
-        </div>
+      <div className="section-bar">
+        <span>SUBMISSIONS &mdash; {sortedEntries.length} STUDENTS</span>
+      </div>
+
+      <div className="list-header-actions" style={{ marginBottom: 12 }}>
+        <CsvExport assignment={assignment} entries={sortedEntries} />
+        <button onClick={refresh} className="btn-icon" title="Refresh">&#x21bb;</button>
       </div>
 
       <div className="progress-bar-container">
-        <div
-          className="progress-bar-fill"
-          style={{ width: `${sortedEntries.length > 0 ? (gradedCount / sortedEntries.length) * 100 : 0}%` }}
-        />
+        <div className="progress-bar-fill" style={{ width: `${pct}%` }} />
       </div>
 
       <div className="student-list">
@@ -104,20 +103,21 @@ export function StudentScanList({ assignment, onSelectScan, onBack }: StudentSca
             className="student-row"
             onClick={() => onSelectScan(entry, sortedEntries)}
           >
-            <div className="student-row-info">
-              <span className="student-name">
-                {entry.student?.name ?? 'Unknown Student'}
-              </span>
-              <span className={`status-badge ${statusClass(entry.gradingStatus)}`}>
-                {statusLabel(entry.gradingStatus)}
-              </span>
+            <div className="student-avatar" style={{ background: avatarColor }}>
+              {initial(entry.student?.name)}
             </div>
+            <span className="student-name">
+              {entry.student?.name ?? 'Unknown Student'}
+            </span>
+            <span className={`status-badge ${statusClass(entry.gradingStatus)}`}>
+              {statusLabel(entry.gradingStatus)}
+            </span>
             {entry.gradingStatus !== 'ungraded' && (
               <span className="student-score">
                 {entry.pointsEarned} / {entry.pointsPossible}
               </span>
             )}
-            <span className="student-row-arrow">›</span>
+            <span className="student-row-arrow">&rarr;</span>
           </button>
         ))}
       </div>

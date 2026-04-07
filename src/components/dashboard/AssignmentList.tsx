@@ -11,8 +11,14 @@ function totalPoints(assignment: QuestionAssignment): number {
   return assignment.questions.reduce((sum, q) => sum + q.pointValue, 0);
 }
 
+function courseColor(colorHex: string | null): string {
+  if (!colorHex) return 'var(--color-purple)';
+  return colorHex.startsWith('#') ? colorHex : `#${colorHex}`;
+}
+
 export function AssignmentList({ course, onSelect, onBack }: AssignmentListProps) {
   const { assignments, isLoading, error, refresh } = useAssignments(course.id);
+  const color = courseColor(course.colorHex);
 
   if (isLoading) {
     return (
@@ -43,25 +49,36 @@ export function AssignmentList({ course, onSelect, onBack }: AssignmentListProps
 
   return (
     <div className="assignment-list">
-      <div className="list-header">
-        <h2>Assignments</h2>
-        <button onClick={refresh} className="btn-icon" title="Refresh">↻</button>
+      <div className="section-bar">
+        <span>{course.name.toUpperCase()}</span>
+        <span className="section-bar-accent" style={{ background: color }} />
       </div>
+      <div className="section-label">{assignments.length} ASSIGNMENT{assignments.length !== 1 ? 'S' : ''}</div>
 
       <div className="assignment-grid">
         {assignments.map((a) => (
-          <button key={a.id} className="assignment-card" onClick={() => onSelect(a)}>
-            <div className="assignment-card-body">
-              <h3>{a.title}</h3>
+          <button
+            key={a.id}
+            className="assignment-card"
+            onClick={() => onSelect(a)}
+            style={{ '--assign-color': color } as React.CSSProperties}
+          >
+            <div className="assignment-header">
+              <span className="assignment-name">{a.title}</span>
+              <span className="assignment-scan-count">{a.scanIDs.length}</span>
+            </div>
+            <div className="assignment-body">
               <div className="assignment-meta">
-                <span>{a.questions.length} question{a.questions.length !== 1 ? 's' : ''}</span>
-                <span className="meta-dot" />
-                <span>{totalPoints(a)} pts</span>
-                <span className="meta-dot" />
-                <span>{a.scanIDs.length} scan{a.scanIDs.length !== 1 ? 's' : ''}</span>
+                <span className="assign-meta-pill">{a.questions.length} Q</span>
+                <span className="assign-meta-pill">{totalPoints(a)} PTS</span>
+                <span className="assign-meta-pill">{a.scanIDs.length} SCANS</span>
+              </div>
+              <div className="assignment-progress-row">
+                <div className="assignment-progress-bar">
+                  <div className="assignment-progress-fill" style={{ width: '0%' }} />
+                </div>
               </div>
             </div>
-            <span className="assignment-card-arrow">›</span>
           </button>
         ))}
       </div>

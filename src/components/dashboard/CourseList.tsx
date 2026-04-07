@@ -6,10 +6,9 @@ interface CourseListProps {
   onSelect?: (course: Course) => void;
 }
 
-function courseColorStyle(colorHex: string | null): React.CSSProperties {
-  if (!colorHex) return { backgroundColor: 'var(--color-purple)' };
-  const hex = colorHex.startsWith('#') ? colorHex : `#${colorHex}`;
-  return { backgroundColor: hex };
+function courseColor(colorHex: string | null): string {
+  if (!colorHex) return 'var(--color-purple)';
+  return colorHex.startsWith('#') ? colorHex : `#${colorHex}`;
 }
 
 export function CourseList({ onSelect }: CourseListProps) {
@@ -48,10 +47,7 @@ export function CourseList({ onSelect }: CourseListProps) {
 
   return (
     <div className="course-list">
-      <div className="list-header">
-        <h2>Your Courses</h2>
-        <button onClick={refresh} className="btn-icon" title="Refresh">↻</button>
-      </div>
+      <div className="section-label">YOUR COURSES</div>
 
       <div className="course-grid">
         {courses.map((course) => (
@@ -68,18 +64,27 @@ export function CourseList({ onSelect }: CourseListProps) {
               }
             }}
           >
-            <div className="course-card-color" style={courseColorStyle(course.colorHex)} />
             <div className="course-card-body">
-              <h3>{course.name}</h3>
-              <p className="text-muted">
-                {course.studentIDs.length} student{course.studentIDs.length !== 1 ? 's' : ''}
-              </p>
-              {course.customSections.length > 0 && (
-                <p className="text-muted text-small">
-                  Sections: {course.customSections.join(', ')}
-                </p>
-              )}
+              <div className="course-card-title">
+                <span
+                  className="course-title-accent"
+                  style={{ background: courseColor(course.colorHex) }}
+                />
+                <span className="course-card-name">{course.name}</span>
+              </div>
+              <div className="course-card-meta">
+                <span className="course-meta-num">{course.studentIDs.length}</span>
+                <span className="course-meta-label">STUDENTS</span>
+                {course.customSections.length > 0 && (
+                  <>
+                    <span className="course-meta-dot" />
+                    <span className="course-meta-num">{course.customSections.length}</span>
+                    <span className="course-meta-label">SECTIONS</span>
+                  </>
+                )}
+              </div>
             </div>
+            <span className="course-card-arrow">&rarr;</span>
           </div>
         ))}
       </div>

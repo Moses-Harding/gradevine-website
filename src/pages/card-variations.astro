@@ -1,0 +1,583 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="GradeVine — Card Variations" description="10 variations each for assignment and question cards.">
+  <div class="cv-page">
+    <header>
+      <h1>Card Variations</h1>
+      <p class="cv-sub">10 assignment card + 10 question card explorations. All use the Soft Brutalist base with iOS-inspired elements.</p>
+    </header>
+
+    <!-- ================================================================ -->
+    <!-- ASSIGNMENT CARDS                                                  -->
+    <!-- ================================================================ -->
+    <section class="cv-section">
+      <h2>Assignment Cards</h2>
+      <div class="cv-grid">
+
+        <!-- V1: Current (color edge + meta pills) -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">1. Color Edge + Pills</div>
+          <div class="ac1" style="--c: #E41749">
+            <div class="ac1-edge"></div>
+            <div class="ac1-body">
+              <div class="ac1-name">Ch. 12 Quiz — World War I</div>
+              <div class="ac1-meta"><span class="ac1-pill">5 Q</span><span class="ac1-pill">50 PTS</span><span class="ac1-pill">24 SCANS</span></div>
+              <div class="ac1-prog"><div class="ac1-bar"><div class="ac1-fill" style="width:62%"></div></div><span class="ac1-pct">15/24</span></div>
+            </div>
+            <span class="ac1-arrow">&rarr;</span>
+          </div>
+        </div>
+
+        <!-- V2: iOS-style with shadow + color bar top -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">2. iOS Card (Top Bar)</div>
+          <div class="ac2" style="--c: #E41749">
+            <div class="ac2-bar"></div>
+            <div class="ac2-body">
+              <div class="ac2-title">Ch. 12 Quiz — World War I</div>
+              <div class="ac2-stats">
+                <div class="ac2-stat"><span class="ac2-stat-val">5</span><span class="ac2-stat-lbl">Questions</span></div>
+                <div class="ac2-divider"></div>
+                <div class="ac2-stat"><span class="ac2-stat-val">50</span><span class="ac2-stat-lbl">Points</span></div>
+                <div class="ac2-divider"></div>
+                <div class="ac2-stat"><span class="ac2-stat-val">24</span><span class="ac2-stat-lbl">Scans</span></div>
+              </div>
+              <div class="ac2-prog"><div class="ac2-prog-bar"><div class="ac2-prog-fill" style="width:62%"></div></div><span class="ac2-prog-lbl">62% graded</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V3: Compact row with inline badge + score -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">3. Compact Row</div>
+          <div class="ac3" style="--c: #1565C0">
+            <div class="ac3-dot"></div>
+            <div class="ac3-info">
+              <span class="ac3-name">Ch. 12 Quiz — World War I</span>
+              <span class="ac3-meta">5 questions &middot; 50 pts</span>
+            </div>
+            <div class="ac3-badge">15/24</div>
+            <span class="ac3-arrow">&rarr;</span>
+          </div>
+        </div>
+
+        <!-- V4: Card with course pill + progress ring -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">4. Course Pill + Ring</div>
+          <div class="ac4" style="--c: #6F00FF">
+            <div class="ac4-left">
+              <svg class="ac4-ring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#eee" stroke-width="3"/><circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--c)" stroke-width="3" stroke-dasharray="62 100" stroke-linecap="round" transform="rotate(-90 18 18)"/></svg>
+              <span class="ac4-ring-text">62%</span>
+            </div>
+            <div class="ac4-info">
+              <span class="ac4-name">Ch. 12 Quiz — World War I</span>
+              <div class="ac4-meta">
+                <span class="ac4-course-pill" style="background: var(--c)">US History</span>
+                <span class="ac4-detail">5Q &middot; 50pts</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V5: Dark accent header card -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">5. Dark Header Card</div>
+          <div class="ac5" style="--c: #15B392">
+            <div class="ac5-header">
+              <span class="ac5-title">Ch. 12 Quiz — World War I</span>
+              <span class="ac5-count">15/24</span>
+            </div>
+            <div class="ac5-body">
+              <div class="ac5-pills"><span class="ac5-pill">5 Q</span><span class="ac5-pill">50 PTS</span><span class="ac5-pill">24 SCANS</span></div>
+              <div class="ac5-bar"><div class="ac5-fill" style="width:62%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V6: Big number left -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">6. Big Score Left</div>
+          <div class="ac6" style="--c: #E41749">
+            <div class="ac6-score"><span class="ac6-num">62</span><span class="ac6-pct">%</span></div>
+            <div class="ac6-info">
+              <span class="ac6-name">Ch. 12 Quiz — World War I</span>
+              <span class="ac6-meta">5 questions &middot; 50 pts &middot; 24 scans</span>
+              <div class="ac6-bar"><div class="ac6-fill" style="width:62%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V7: Stacked with gradient accent -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">7. Gradient Accent</div>
+          <div class="ac7" style="--c: #006BFF; --c2: #5002F7">
+            <div class="ac7-accent"></div>
+            <div class="ac7-body">
+              <div class="ac7-name">Ch. 12 Quiz — World War I</div>
+              <div class="ac7-row"><span class="ac7-meta">5 questions &middot; 50 pts</span><span class="ac7-badge">15/24 GRADED</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V8: Minimal list with color bullet -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">8. Minimal List</div>
+          <div class="ac8-list">
+            <div class="ac8" style="--c: #E41749"><span class="ac8-bullet"></span><span class="ac8-name">Ch. 12 Quiz — World War I</span><span class="ac8-tag">15/24</span><span class="ac8-arrow">&rarr;</span></div>
+            <div class="ac8" style="--c: #E41749"><span class="ac8-bullet"></span><span class="ac8-name">Ch. 11 Test — Imperialism</span><span class="ac8-tag ac8-done">24/24</span><span class="ac8-arrow">&rarr;</span></div>
+            <div class="ac8" style="--c: #E41749"><span class="ac8-bullet"></span><span class="ac8-name">Ch. 10 Worksheet</span><span class="ac8-tag ac8-none">0/22</span><span class="ac8-arrow">&rarr;</span></div>
+          </div>
+        </div>
+
+        <!-- V9: iOS-inspired with 3-column data row -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">9. iOS Data Row</div>
+          <div class="ac9" style="--c: #E41749">
+            <div class="ac9-top">
+              <span class="ac9-color-bar"></span>
+              <span class="ac9-name">Ch. 12 Quiz — World War I</span>
+            </div>
+            <div class="ac9-data">
+              <div class="ac9-col"><span class="ac9-val">78.4</span><span class="ac9-lbl">AVG</span></div>
+              <div class="ac9-sep"></div>
+              <div class="ac9-col"><span class="ac9-val">42–98</span><span class="ac9-lbl">RANGE</span></div>
+              <div class="ac9-sep"></div>
+              <div class="ac9-col"><span class="ac9-val">24</span><span class="ac9-lbl">SCANNED</span></div>
+              <div class="ac9-sep"></div>
+              <div class="ac9-col"><span class="ac9-val">15</span><span class="ac9-lbl">GRADED</span></div>
+            </div>
+            <div class="ac9-bar"><div class="ac9-fill" style="width:62%"></div></div>
+          </div>
+        </div>
+
+        <!-- V10: Tile grid card -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">10. Tile Card</div>
+          <div class="ac10" style="--c: #534C98">
+            <div class="ac10-top">
+              <div class="ac10-icon-wrap"><span class="ac10-icon">&#x1F4DD;</span></div>
+              <div class="ac10-badge-wrap"><span class="ac10-badge">15/24</span></div>
+            </div>
+            <div class="ac10-name">Ch. 12 Quiz — World War I</div>
+            <div class="ac10-meta">5 questions &middot; 50 pts</div>
+            <div class="ac10-bar"><div class="ac10-fill" style="width:62%"></div></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================================================================ -->
+    <!-- QUESTION CARDS                                                    -->
+    <!-- ================================================================ -->
+    <section class="cv-section">
+      <h2>Question Cards</h2>
+      <div class="cv-grid cv-grid-wide">
+
+        <!-- Q1: Current (left border + badge) -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">1. Left Border + Badge</div>
+          <div class="qc1">
+            <div class="qc1-left" style="background: #248a3d"></div>
+            <div class="qc1-body">
+              <div class="qc1-top"><span class="qc1-badge" style="--bg:#3880F4">QUESTION</span><span class="qc1-qlabel">Q1</span></div>
+              <div class="qc1-prompt">What were the main causes of WWI?</div>
+              <div class="qc1-chips"><button class="qc1-chip">0</button><button class="qc1-chip">1</button><button class="qc1-chip">2</button><button class="qc1-chip">3</button><button class="qc1-chip qc1-sel" style="--sel:#E41749">4</button><button class="qc1-chip">5</button></div>
+              <div class="qc1-ai qc1-ai-ok"><span class="qc1-ai-lbl">AI: CORRECT</span><span class="qc1-ai-txt">&mdash; Identifies all 4 causes</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2: iOS collapsible with color-coded sections -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">2. iOS Collapsible Sections</div>
+          <div class="qc2">
+            <div class="qc2-section qc2-blue">
+              <div class="qc2-header"><span class="qc2-pill" style="--pill:#3880F4">QUESTION</span><span class="qc2-title">Q1</span><span class="qc2-chev">&#x25BE;</span></div>
+              <div class="qc2-content">What were the main causes of WWI?</div>
+            </div>
+            <div class="qc2-chips"><button class="qc2-chip">0</button><button class="qc2-chip">1</button><button class="qc2-chip">2</button><button class="qc2-chip">3</button><button class="qc2-chip qc2-sel" style="--sel:#E41749">4</button><button class="qc2-chip">5</button></div>
+            <div class="qc2-section qc2-orange">
+              <div class="qc2-header"><span class="qc2-pill" style="--pill:#F5A623">TEACHER</span><span class="qc2-title">Grading Key</span><span class="qc2-chev">&#x25B8;</span></div>
+            </div>
+            <div class="qc2-section qc2-green">
+              <div class="qc2-header"><span class="qc2-pill" style="--pill:#248a3d">AI</span><span class="qc2-title">Correct — Identifies all 4 causes</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3: Horizontal split (prompt left, grade right) -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">3. Horizontal Split</div>
+          <div class="qc3">
+            <div class="qc3-left">
+              <span class="qc3-num">Q1</span>
+              <span class="qc3-prompt">What were the main causes of WWI?</span>
+              <div class="qc3-ai"><span class="qc3-ai-dot" style="background:#248a3d"></span>AI: Correct</div>
+            </div>
+            <div class="qc3-right">
+              <div class="qc3-chips"><button class="qc3-chip">0</button><button class="qc3-chip">1</button><button class="qc3-chip">2</button><button class="qc3-chip">3</button><button class="qc3-chip qc3-sel" style="--sel:#E41749">4</button><button class="qc3-chip">5</button></div>
+              <span class="qc3-score">4 / 5</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4: Minimal row with inline chip strip -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">4. Minimal Inline</div>
+          <div class="qc4">
+            <span class="qc4-label">Q1</span>
+            <span class="qc4-prompt">What were the main causes of WWI?</span>
+            <div class="qc4-chips"><button class="qc4-chip">0</button><button class="qc4-chip">1</button><button class="qc4-chip">2</button><button class="qc4-chip">3</button><button class="qc4-chip qc4-sel" style="--sel:#E41749">4</button><button class="qc4-chip">5</button></div>
+          </div>
+        </div>
+
+        <!-- Q5: Big Q number with card -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">5. Big Q Badge</div>
+          <div class="qc5" style="--c: #E41749">
+            <div class="qc5-badge">Q1</div>
+            <div class="qc5-body">
+              <div class="qc5-prompt">What were the main causes of WWI?</div>
+              <div class="qc5-chips"><button class="qc5-chip">0</button><button class="qc5-chip">1</button><button class="qc5-chip">2</button><button class="qc5-chip">3</button><button class="qc5-chip qc5-sel">4</button><button class="qc5-chip">5</button></div>
+              <div class="qc5-ai">&#x2713; Correct &mdash; Identifies all 4 causes</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q6: Dark header card -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">6. Dark Q Header</div>
+          <div class="qc6">
+            <div class="qc6-header"><span class="qc6-q">Q1</span><span class="qc6-pts">5 PTS</span><span class="qc6-score">4/5</span></div>
+            <div class="qc6-body">
+              <div class="qc6-prompt">What were the main causes of WWI?</div>
+              <div class="qc6-chips"><button class="qc6-chip">0</button><button class="qc6-chip">1</button><button class="qc6-chip">2</button><button class="qc6-chip">3</button><button class="qc6-chip qc6-sel" style="--sel:#E41749">4</button><button class="qc6-chip">5</button></div>
+              <div class="qc6-ai">AI: CORRECT &mdash; Identifies all 4 causes</div>
+              <div class="qc6-fb"><span class="qc6-fb-badge">FEEDBACK</span><span class="qc6-fb-chip">Great detail on alliances</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q7: Stacked vertical with progress dot -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">7. Stacked + Status Dot</div>
+          <div class="qc7">
+            <div class="qc7-top"><span class="qc7-dot" style="background:#248a3d"></span><span class="qc7-label">Q1 &mdash; 4/5 pts</span></div>
+            <div class="qc7-prompt">What were the main causes of WWI?</div>
+            <div class="qc7-chips"><button class="qc7-chip">0</button><button class="qc7-chip">1</button><button class="qc7-chip">2</button><button class="qc7-chip">3</button><button class="qc7-chip qc7-sel" style="--sel:#E41749">4</button><button class="qc7-chip">5</button></div>
+          </div>
+        </div>
+
+        <!-- Q8: Card with colored badge bg -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">8. Color Badge BG</div>
+          <div class="qc8" style="--c: #E41749">
+            <div class="qc8-badge-area"><span class="qc8-badge">Q1</span><span class="qc8-max">/ 5 pts</span></div>
+            <div class="qc8-prompt">What were the main causes of WWI?</div>
+            <div class="qc8-chips"><button class="qc8-chip">0</button><button class="qc8-chip">1</button><button class="qc8-chip">2</button><button class="qc8-chip">3</button><button class="qc8-chip qc8-sel">4</button><button class="qc8-chip">5</button></div>
+            <div class="qc8-hint">&#x2713; Correct</div>
+          </div>
+        </div>
+
+        <!-- Q9: Two-tone with feedback chips -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">9. Two-Tone + Feedback Chips</div>
+          <div class="qc9">
+            <div class="qc9-upper">
+              <div class="qc9-q-row"><span class="qc9-q">Q1</span><span class="qc9-pts">4 / 5</span></div>
+              <div class="qc9-prompt">What were the main causes of WWI?</div>
+              <div class="qc9-chips"><button class="qc9-chip">0</button><button class="qc9-chip">1</button><button class="qc9-chip">2</button><button class="qc9-chip">3</button><button class="qc9-chip qc9-sel" style="--sel:#E41749">4</button><button class="qc9-chip">5</button></div>
+            </div>
+            <div class="qc9-lower">
+              <div class="qc9-ai"><span class="qc9-ai-icon">&#x2713;</span> Correct &mdash; Identifies all 4 causes</div>
+              <div class="qc9-fb-chips"><button class="qc9-fb">Great detail on alliances</button><button class="qc9-fb">Needs more examples</button><button class="qc9-fb">Review notes</button></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q10: Accordion with everything -->
+        <div class="cv-card-wrap">
+          <div class="cv-label">10. Full Accordion</div>
+          <div class="qc10">
+            <div class="qc10-header"><span class="qc10-q">Q1</span><span class="qc10-score">4/5</span><span class="qc10-status" style="background:#248a3d"></span></div>
+            <div class="qc10-prompt">What were the main causes of WWI?</div>
+            <div class="qc10-chips"><button class="qc10-chip">0</button><button class="qc10-chip">1</button><button class="qc10-chip">2</button><button class="qc10-chip">3</button><button class="qc10-chip qc10-sel" style="--sel:#E41749">4</button><button class="qc10-chip">5</button></div>
+            <div class="qc10-sections">
+              <div class="qc10-sec"><span class="qc10-sec-pill" style="--sp:#248a3d">AI</span><span class="qc10-sec-text">Correct — Identifies all 4 causes</span></div>
+              <div class="qc10-sec"><span class="qc10-sec-pill" style="--sp:#F5A623">KEY</span><span class="qc10-sec-text">Assassination, alliances, militarism, imperialism</span></div>
+              <div class="qc10-sec"><span class="qc10-sec-pill" style="--sp:#3880F4">FB</span><span class="qc10-sec-text">Great detail on alliances</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* ================================================================ */
+  /* Page scaffold                                                     */
+  /* ================================================================ */
+  .cv-page { max-width: 1100px; margin: 0 auto; padding: 48px 24px 96px; font-family: 'Inter', -apple-system, sans-serif; }
+  .cv-page > header h1 { font-size: 28px; font-weight: 700; color: #212121; margin-bottom: 4px; }
+  .cv-sub { font-size: 14px; color: #757575; margin-bottom: 48px; }
+  .cv-section { margin-bottom: 64px; }
+  .cv-section > h2 { font-size: 10px; font-weight: 800; letter-spacing: 3px; color: #9e9e9e; margin-bottom: 20px; border-top: 2px solid #212121; padding-top: 12px; }
+  .cv-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+  .cv-grid-wide { grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); }
+  .cv-card-wrap { display: flex; flex-direction: column; gap: 8px; }
+  .cv-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #9e9e9e; }
+
+  /* Shared chip base */
+  .chip-base { min-width: 36px; height: 32px; border: 1px solid #e0e0e0; border-radius: 8px; background: #f5f5f5; color: #424242; font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; display: flex; align-items: center; justify-content: center; flex: 1; transition: all .1s; }
+  .chip-base:hover { border-color: #9e9e9e; background: #eee; }
+
+  /* ================================================================ */
+  /* ASSIGNMENT CARDS                                                   */
+  /* ================================================================ */
+
+  /* V1: Color Edge */
+  .ac1 { display:flex; background:#fff; border:1px solid #e0e0e0; border-radius:12px; overflow:hidden; cursor:pointer; transition:border-color .15s; }
+  .ac1:hover { border-color:#424242; }
+  .ac1-edge { width:4px; background:var(--c); flex-shrink:0; }
+  .ac1-body { flex:1; padding:12px 16px; }
+  .ac1-name { font-size:14px; font-weight:600; color:#212121; margin-bottom:6px; }
+  .ac1-meta { display:flex; gap:6px; margin-bottom:8px; }
+  .ac1-pill { font-size:9px; font-weight:800; letter-spacing:1px; color:#757575; background:#f5f5f5; padding:2px 8px; border-radius:4px; }
+  .ac1-prog { display:flex; align-items:center; gap:8px; }
+  .ac1-bar { flex:1; height:3px; background:#e0e0e0; border-radius:2px; overflow:hidden; }
+  .ac1-fill { height:100%; background:var(--c); border-radius:2px; }
+  .ac1-pct { font-size:10px; font-weight:700; color:#9e9e9e; }
+  .ac1-arrow { font-size:14px; color:#bdbdbd; padding:0 16px; display:flex; align-items:center; }
+
+  /* V2: iOS Card */
+  .ac2 { background:#fff; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,.08); overflow:hidden; cursor:pointer; transition:box-shadow .15s,transform .15s; }
+  .ac2:hover { box-shadow:0 6px 20px rgba(0,0,0,.12); transform:translateY(-2px); }
+  .ac2-bar { height:4px; background:var(--c); }
+  .ac2-body { padding:16px; }
+  .ac2-title { font-size:15px; font-weight:600; color:#212121; margin-bottom:12px; }
+  .ac2-stats { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+  .ac2-stat { text-align:center; }
+  .ac2-stat-val { font-size:18px; font-weight:700; color:#424242; display:block; }
+  .ac2-stat-lbl { font-size:10px; color:#9e9e9e; }
+  .ac2-divider { width:1px; height:28px; background:#eee; }
+  .ac2-prog { display:flex; align-items:center; gap:10px; }
+  .ac2-prog-bar { flex:1; height:4px; background:#eee; border-radius:2px; overflow:hidden; }
+  .ac2-prog-fill { height:100%; background:var(--c); border-radius:2px; }
+  .ac2-prog-lbl { font-size:11px; font-weight:600; color:var(--c); white-space:nowrap; }
+
+  /* V3: Compact Row */
+  .ac3 { display:flex; align-items:center; gap:12px; padding:10px 14px; background:#fff; border:1px solid #eee; border-radius:10px; cursor:pointer; transition:border-color .15s; }
+  .ac3:hover { border-color:#424242; }
+  .ac3-dot { width:8px; height:8px; border-radius:50%; background:var(--c); flex-shrink:0; }
+  .ac3-info { flex:1; }
+  .ac3-name { font-size:14px; font-weight:500; color:#212121; display:block; }
+  .ac3-meta { font-size:12px; color:#9e9e9e; }
+  .ac3-badge { font-size:11px; font-weight:700; color:var(--c); background:color-mix(in srgb, var(--c) 10%, white); padding:3px 10px; border-radius:6px; }
+  .ac3-arrow { font-size:14px; color:#bdbdbd; }
+
+  /* V4: Course Pill + Ring */
+  .ac4 { display:flex; align-items:center; gap:14px; padding:14px 16px; background:#fff; border:1px solid #e0e0e0; border-radius:12px; cursor:pointer; transition:border-color .15s; }
+  .ac4:hover { border-color:#424242; }
+  .ac4-left { position:relative; width:44px; height:44px; flex-shrink:0; }
+  .ac4-ring { width:44px; height:44px; }
+  .ac4-ring-text { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; font-weight:800; color:#424242; }
+  .ac4-info { flex:1; }
+  .ac4-name { font-size:14px; font-weight:600; color:#212121; display:block; margin-bottom:6px; }
+  .ac4-meta { display:flex; align-items:center; gap:8px; }
+  .ac4-course-pill { font-size:10px; font-weight:700; color:#fff; padding:2px 8px; border-radius:999px; }
+  .ac4-detail { font-size:12px; color:#9e9e9e; }
+
+  /* V5: Dark Header */
+  .ac5 { background:#fff; border-radius:12px; overflow:hidden; border:1px solid #e0e0e0; cursor:pointer; transition:border-color .15s; }
+  .ac5:hover { border-color:#424242; }
+  .ac5-header { background:#1a1a1a; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; }
+  .ac5-title { font-size:13px; font-weight:600; color:#fff; }
+  .ac5-count { font-size:12px; font-weight:700; color:var(--c); }
+  .ac5-body { padding:12px 14px; }
+  .ac5-pills { display:flex; gap:6px; margin-bottom:8px; }
+  .ac5-pill { font-size:9px; font-weight:800; letter-spacing:1px; color:#757575; background:#f5f5f5; padding:2px 8px; border-radius:4px; }
+  .ac5-bar { height:3px; background:#e0e0e0; border-radius:2px; overflow:hidden; }
+  .ac5-fill { height:100%; background:var(--c); border-radius:2px; }
+
+  /* V6: Big Score */
+  .ac6 { display:flex; align-items:center; gap:16px; padding:14px 16px; background:#fff; border:1px solid #e0e0e0; border-radius:12px; cursor:pointer; transition:border-color .15s; }
+  .ac6:hover { border-color:#424242; }
+  .ac6-score { display:flex; align-items:baseline; flex-shrink:0; }
+  .ac6-num { font-size:28px; font-weight:700; color:var(--c); }
+  .ac6-pct { font-size:14px; font-weight:600; color:var(--c); opacity:.6; }
+  .ac6-info { flex:1; }
+  .ac6-name { font-size:14px; font-weight:600; color:#212121; display:block; margin-bottom:4px; }
+  .ac6-meta { font-size:12px; color:#9e9e9e; display:block; margin-bottom:8px; }
+  .ac6-bar { height:3px; background:#e0e0e0; border-radius:2px; overflow:hidden; }
+  .ac6-fill { height:100%; background:var(--c); border-radius:2px; }
+
+  /* V7: Gradient Accent */
+  .ac7 { display:flex; background:#fff; border:1px solid #e0e0e0; border-radius:12px; overflow:hidden; cursor:pointer; transition:border-color .15s; }
+  .ac7:hover { border-color:#424242; }
+  .ac7-accent { width:4px; background:linear-gradient(180deg, var(--c), var(--c2)); flex-shrink:0; }
+  .ac7-body { flex:1; padding:12px 16px; }
+  .ac7-name { font-size:14px; font-weight:600; color:#212121; margin-bottom:6px; }
+  .ac7-row { display:flex; align-items:center; justify-content:space-between; }
+  .ac7-meta { font-size:12px; color:#9e9e9e; }
+  .ac7-badge { font-size:9px; font-weight:800; letter-spacing:1px; color:#248a3d; background:#e8f5e9; padding:3px 8px; border-radius:4px; }
+
+  /* V8: Minimal List */
+  .ac8-list { display:flex; flex-direction:column; gap:2px; }
+  .ac8 { display:flex; align-items:center; gap:10px; padding:10px 12px; background:#fff; border-bottom:1px solid #f5f5f5; cursor:pointer; transition:background .1s; }
+  .ac8:hover { background:#fafafa; }
+  .ac8:last-child { border-bottom:none; }
+  .ac8-bullet { width:6px; height:6px; border-radius:50%; background:var(--c); flex-shrink:0; }
+  .ac8-name { flex:1; font-size:14px; font-weight:500; color:#212121; }
+  .ac8-tag { font-size:11px; font-weight:700; color:#616161; padding:2px 8px; background:#f5f5f5; border-radius:4px; }
+  .ac8-done { color:#248a3d; background:#e8f5e9; }
+  .ac8-none { color:#9e9e9e; }
+  .ac8-arrow { font-size:12px; color:#bdbdbd; }
+
+  /* V9: iOS Data Row */
+  .ac9 { background:#fff; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,.08); padding:16px; cursor:pointer; transition:box-shadow .15s; }
+  .ac9:hover { box-shadow:0 6px 20px rgba(0,0,0,.12); }
+  .ac9-top { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+  .ac9-color-bar { width:3px; height:18px; background:var(--c); border-radius:1px; }
+  .ac9-name { font-size:15px; font-weight:600; color:#212121; }
+  .ac9-data { display:flex; align-items:center; margin-bottom:12px; }
+  .ac9-col { flex:1; text-align:center; }
+  .ac9-val { font-size:15px; font-weight:700; color:var(--c); display:block; }
+  .ac9-lbl { font-size:9px; font-weight:800; letter-spacing:1.5px; color:#9e9e9e; }
+  .ac9-sep { width:1px; height:24px; background:#eee; }
+  .ac9-bar { height:3px; background:#eee; border-radius:2px; overflow:hidden; }
+  .ac9-fill { height:100%; background:var(--c); border-radius:2px; }
+
+  /* V10: Tile */
+  .ac10 { background:#fff; border-radius:16px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,.06); cursor:pointer; transition:box-shadow .15s; }
+  .ac10:hover { box-shadow:0 4px 16px rgba(0,0,0,.1); }
+  .ac10-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; }
+  .ac10-icon-wrap { width:36px; height:36px; background:color-mix(in srgb, var(--c) 12%, white); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+  .ac10-badge-wrap {}
+  .ac10-badge { font-size:11px; font-weight:700; color:var(--c); background:color-mix(in srgb, var(--c) 10%, white); padding:3px 10px; border-radius:6px; }
+  .ac10-name { font-size:14px; font-weight:600; color:#212121; margin-bottom:4px; }
+  .ac10-meta { font-size:12px; color:#9e9e9e; margin-bottom:10px; }
+  .ac10-bar { height:3px; background:#eee; border-radius:2px; overflow:hidden; }
+  .ac10-fill { height:100%; background:var(--c); border-radius:2px; }
+
+  /* ================================================================ */
+  /* QUESTION CARDS                                                     */
+  /* ================================================================ */
+
+  /* Shared chip styling */
+  .qc1-chip,.qc2-chip,.qc3-chip,.qc4-chip,.qc5-chip,.qc6-chip,.qc7-chip,.qc8-chip,.qc9-chip,.qc10-chip { min-width:36px; height:32px; border:1px solid #e0e0e0; border-radius:8px; background:#f5f5f5; color:#424242; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer; display:flex; align-items:center; justify-content:center; flex:1; transition:all .1s; }
+  .qc1-chip:hover,.qc2-chip:hover,.qc3-chip:hover,.qc4-chip:hover,.qc5-chip:hover,.qc6-chip:hover,.qc7-chip:hover,.qc8-chip:hover,.qc9-chip:hover,.qc10-chip:hover { border-color:#9e9e9e; background:#eee; }
+  .qc1-sel,.qc2-sel,.qc3-sel,.qc4-sel,.qc5-sel,.qc6-sel,.qc7-sel,.qc8-sel,.qc9-sel,.qc10-sel { background:var(--sel,#5002F7); color:#fff; border-color:var(--sel,#5002F7); font-weight:700; }
+  .qc1-sel:hover,.qc2-sel:hover,.qc3-sel:hover,.qc4-sel:hover,.qc5-sel:hover,.qc6-sel:hover,.qc7-sel:hover,.qc8-sel:hover,.qc9-sel:hover,.qc10-sel:hover { background:var(--sel,#5002F7); border-color:var(--sel,#5002F7); opacity:.9; }
+  .qc1-chips,.qc2-chips,.qc3-chips,.qc4-chips,.qc5-chips,.qc6-chips,.qc7-chips,.qc8-chips,.qc9-chips,.qc10-chips { display:flex; gap:5px; margin-bottom:8px; }
+
+  /* Q1: Left Border */
+  .qc1 { display:flex; border:1px solid #e0e0e0; border-radius:12px; overflow:hidden; background:#fff; }
+  .qc1-left { width:3px; flex-shrink:0; }
+  .qc1-body { flex:1; padding:14px; }
+  .qc1-top { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .qc1-badge { font-size:9px; font-weight:800; letter-spacing:1px; color:#fff; background:var(--bg); padding:3px 8px; border-radius:6px; }
+  .qc1-qlabel { font-size:12px; font-weight:700; color:#3880F4; }
+  .qc1-prompt { font-size:13px; color:#616161; line-height:1.5; margin-bottom:10px; }
+  .qc1-ai { padding:5px 10px; border-radius:8px; font-size:11px; display:flex; gap:6px; }
+  .qc1-ai-ok { background:rgba(52,199,89,.06); color:#248a3d; }
+  .qc1-ai-lbl { font-weight:800; font-size:10px; letter-spacing:.5px; }
+  .qc1-ai-txt { opacity:.8; font-size:12px; }
+
+  /* Q2: iOS Collapsible */
+  .qc2 { background:#fff; border-radius:12px; border:1px solid #e0e0e0; overflow:hidden; }
+  .qc2-section { border-bottom:1px solid #f0f0f0; }
+  .qc2-section:last-child { border-bottom:none; }
+  .qc2-blue .qc2-header { background:rgba(56,128,244,.04); }
+  .qc2-orange .qc2-header { background:rgba(245,166,35,.05); }
+  .qc2-green .qc2-header { background:rgba(36,138,61,.04); }
+  .qc2-header { display:flex; align-items:center; gap:8px; padding:10px 14px; }
+  .qc2-pill { font-size:9px; font-weight:800; color:#fff; background:var(--pill); padding:2px 8px; border-radius:999px; }
+  .qc2-title { font-size:12px; font-weight:600; color:#424242; flex:1; }
+  .qc2-chev { font-size:12px; color:#bdbdbd; }
+  .qc2-content { padding:0 14px 12px; font-size:13px; color:#616161; line-height:1.5; }
+  .qc2 > .qc2-chips { padding:0 14px 12px; }
+
+  /* Q3: Horizontal Split */
+  .qc3 { display:flex; gap:16px; padding:14px; background:#fff; border:1px solid #e0e0e0; border-radius:12px; }
+  .qc3-left { flex:1; }
+  .qc3-num { font-size:12px; font-weight:800; color:#3880F4; display:block; margin-bottom:4px; }
+  .qc3-prompt { font-size:13px; color:#616161; line-height:1.5; display:block; margin-bottom:8px; }
+  .qc3-ai { font-size:11px; color:#248a3d; display:flex; align-items:center; gap:6px; }
+  .qc3-ai-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+  .qc3-right { display:flex; flex-direction:column; align-items:center; gap:8px; min-width:140px; }
+  .qc3-right .qc3-chips { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; width:100%; }
+  .qc3-chip { min-width:0 !important; }
+  .qc3-score { font-size:16px; font-weight:700; color:#424242; }
+
+  /* Q4: Minimal Inline */
+  .qc4 { display:flex; align-items:center; gap:10px; padding:10px 14px; background:#fff; border:1px solid #eee; border-radius:10px; flex-wrap:wrap; }
+  .qc4-label { font-size:12px; font-weight:800; color:#3880F4; flex-shrink:0; }
+  .qc4-prompt { font-size:13px; color:#616161; flex:1; min-width:120px; }
+  .qc4 .qc4-chips { flex-shrink:0; }
+
+  /* Q5: Big Q Badge */
+  .qc5 { display:flex; gap:14px; padding:14px; background:#fff; border:1px solid #e0e0e0; border-radius:12px; }
+  .qc5-badge { width:44px; height:44px; background:color-mix(in srgb, var(--c) 12%, white); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:800; color:var(--c); flex-shrink:0; }
+  .qc5-body { flex:1; }
+  .qc5-prompt { font-size:13px; color:#616161; line-height:1.5; margin-bottom:10px; }
+  .qc5-ai { font-size:11px; color:#248a3d; }
+
+  /* Q6: Dark Header */
+  .qc6 { background:#fff; border-radius:12px; overflow:hidden; border:1px solid #e0e0e0; }
+  .qc6-header { background:#1a1a1a; padding:8px 14px; display:flex; align-items:center; gap:10px; }
+  .qc6-q { font-size:12px; font-weight:800; letter-spacing:1px; color:#fff; }
+  .qc6-pts { font-size:10px; font-weight:700; letter-spacing:1px; color:rgba(255,255,255,.4); flex:1; }
+  .qc6-score { font-size:14px; font-weight:700; color:#fff; }
+  .qc6-body { padding:12px 14px; }
+  .qc6-prompt { font-size:13px; color:#616161; line-height:1.5; margin-bottom:10px; }
+  .qc6-ai { font-size:11px; color:#248a3d; background:rgba(52,199,89,.06); padding:5px 10px; border-radius:8px; margin-bottom:8px; }
+  .qc6-fb { display:flex; align-items:center; gap:8px; }
+  .qc6-fb-badge { font-size:9px; font-weight:800; letter-spacing:1px; color:#fff; background:#F5A623; padding:2px 8px; border-radius:6px; }
+  .qc6-fb-chip { font-size:12px; color:#2758A0; background:rgba(56,128,244,.08); padding:4px 10px; border-radius:8px; }
+
+  /* Q7: Stacked + Dot */
+  .qc7 { padding:14px; background:#fff; border:1px solid #e0e0e0; border-radius:12px; }
+  .qc7-top { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .qc7-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .qc7-label { font-size:13px; font-weight:700; color:#424242; }
+  .qc7-prompt { font-size:13px; color:#616161; line-height:1.5; margin-bottom:10px; }
+
+  /* Q8: Color Badge BG */
+  .qc8 { padding:14px; background:#fff; border:1px solid #e0e0e0; border-radius:12px; }
+  .qc8-badge-area { display:flex; align-items:baseline; gap:6px; margin-bottom:8px; }
+  .qc8-badge { font-size:16px; font-weight:800; color:var(--c); background:color-mix(in srgb, var(--c) 12%, white); padding:4px 12px; border-radius:8px; }
+  .qc8-max { font-size:12px; color:#9e9e9e; }
+  .qc8-prompt { font-size:13px; color:#616161; line-height:1.5; margin-bottom:10px; }
+  .qc8-hint { font-size:11px; color:#248a3d; font-weight:600; }
+
+  /* Q9: Two-Tone */
+  .qc9 { background:#fff; border:1px solid #e0e0e0; border-radius:12px; overflow:hidden; }
+  .qc9-upper { padding:14px; }
+  .qc9-q-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+  .qc9-q { font-size:13px; font-weight:800; color:#3880F4; }
+  .qc9-pts { font-size:14px; font-weight:700; color:#424242; }
+  .qc9-prompt { font-size:13px; color:#616161; line-height:1.5; margin-bottom:10px; }
+  .qc9-lower { background:#fafafa; padding:12px 14px; border-top:1px solid #eee; }
+  .qc9-ai { font-size:11px; color:#248a3d; margin-bottom:8px; }
+  .qc9-ai-icon { font-weight:700; }
+  .qc9-fb-chips { display:flex; flex-wrap:wrap; gap:6px; }
+  .qc9-fb { background:rgba(56,128,244,.08); color:#2758A0; border:none; border-radius:8px; padding:5px 10px; font-size:11px; font-weight:500; font-family:inherit; cursor:pointer; transition:background .1s; }
+  .qc9-fb:hover { background:rgba(56,128,244,.14); }
+
+  /* Q10: Full Accordion */
+  .qc10 { background:#fff; border:1px solid #e0e0e0; border-radius:12px; padding:14px; }
+  .qc10-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .qc10-q { font-size:13px; font-weight:800; color:#424242; }
+  .qc10-score { font-size:14px; font-weight:700; color:#424242; flex:1; }
+  .qc10-status { width:8px; height:8px; border-radius:50%; }
+  .qc10-prompt { font-size:13px; color:#616161; line-height:1.5; margin-bottom:10px; }
+  .qc10-sections { display:flex; flex-direction:column; gap:6px; border-top:1px solid #eee; padding-top:10px; }
+  .qc10-sec { display:flex; align-items:flex-start; gap:8px; }
+  .qc10-sec-pill { font-size:9px; font-weight:800; color:#fff; background:var(--sp); padding:2px 8px; border-radius:6px; flex-shrink:0; }
+  .qc10-sec-text { font-size:12px; color:#616161; line-height:1.4; }
+</style>

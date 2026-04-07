@@ -22,19 +22,19 @@ export function DashboardApp() {
 
   const breadcrumbItems = buildBreadcrumb(view, setView);
 
+  // Extract course color for theming
+  const courseColor = (view.type !== 'courses' ? view.course.colorHex : null);
+  const courseColorCss = courseColor ? (courseColor.startsWith('#') ? courseColor : `#${courseColor}`) : undefined;
+
   return (
     <>
       <KeyboardShortcutsOverlay />
 
-      {/* CloudKit JS button containers — must always be in the DOM */}
+      {/* CloudKit JS sign-in button — must always be in DOM */}
       <div
         id="apple-sign-in-button"
         style={{ display: auth.isSignedIn ? 'none' : undefined }}
         className="auth-button-container"
-      />
-      <div
-        id="apple-sign-out-button"
-        style={{ display: !auth.isSignedIn ? 'none' : undefined }}
       />
 
       {isLoading ? (
@@ -53,9 +53,13 @@ export function DashboardApp() {
         <div className="dashboard">
           <header className="dashboard-header">
             <div className="dashboard-header-inner">
-              <h1>GradeVine Dashboard</h1>
-              <div className="user-info">
-                <span>{auth.displayName ?? 'Teacher'}</span>
+              <div className="header-brand">
+                <span className="header-logo">G</span>
+                <span className="header-title">GRADEVINE</span>
+              </div>
+              <div className="header-right">
+                <span className="header-user">{(auth.displayName ?? 'Teacher').toUpperCase()}</span>
+                <div id="apple-sign-out-button" />
               </div>
             </div>
           </header>
@@ -82,6 +86,7 @@ export function DashboardApp() {
             {view.type === 'students' && (
               <StudentScanList
                 assignment={view.assignment}
+                courseColor={courseColorCss}
                 onSelectScan={(entry, allEntries) =>
                   setView({
                     type: 'scan',
@@ -100,6 +105,7 @@ export function DashboardApp() {
                 entry={view.entry}
                 assignment={view.assignment}
                 allEntries={view.allEntries}
+                courseColor={courseColorCss}
                 onBack={() =>
                   setView({
                     type: 'students',
@@ -123,18 +129,18 @@ export function DashboardApp() {
 }
 
 function buildBreadcrumb(view: View, setView: (v: View) => void) {
-  const items = [{ label: 'Courses', onClick: () => setView({ type: 'courses' }) }];
+  const items = [{ label: 'COURSES', onClick: () => setView({ type: 'courses' }) }];
 
   if (view.type === 'assignments' || view.type === 'students' || view.type === 'scan') {
     items.push({
-      label: view.course.name,
+      label: view.course.name.toUpperCase(),
       onClick: () => setView({ type: 'assignments', course: view.course }),
     });
   }
 
   if (view.type === 'students' || view.type === 'scan') {
     items.push({
-      label: view.assignment.title,
+      label: view.assignment.title.toUpperCase(),
       onClick: () =>
         setView({
           type: 'students',
@@ -145,7 +151,7 @@ function buildBreadcrumb(view: View, setView: (v: View) => void) {
   }
 
   if (view.type === 'scan') {
-    items.push({ label: view.entry.student?.name ?? 'Unknown Student' });
+    items.push({ label: (view.entry.student?.name ?? 'Unknown Student').toUpperCase() });
   }
 
   // Last item has no onClick (it's the current page)

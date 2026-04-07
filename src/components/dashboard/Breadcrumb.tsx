@@ -12,7 +12,7 @@ export function Breadcrumb({ items }: BreadcrumbProps) {
     <nav className="breadcrumb">
       {items.map((item, i) => (
         <span key={i}>
-          {i > 0 && <span className="breadcrumb-sep">/</span>}
+          {i > 0 && <span className="breadcrumb-sep">&rarr;</span>}
           {item.onClick ? (
             <button className="breadcrumb-link" onClick={item.onClick}>
               {item.label}
