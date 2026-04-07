@@ -641,7 +641,109 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
   .nav-save-saved { background: rgba(52,199,89,0.2); color: #4ade80; }
   .nav-save-error { background: rgba(255,28,54,0.2); color: #ff6b6b; }
 
-  /* Side-by-side layout */
+  /* Three-panel layout: student sidebar + image + grading cards */
+  .gbs-layout {
+    display: grid;
+    grid-template-columns: 220px 1fr 440px;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .gbs-student-sidebar {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    position: sticky;
+    top: 56px;
+    max-height: calc(100vh - 76px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gbs-student-list {
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    gap: 1px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .gbs-student-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-family);
+    transition: all 0.1s ease;
+  }
+
+  .gbs-student-row:hover {
+    background: #f5f5f5;
+  }
+
+  .gbs-student-selected {
+    background: color-mix(in srgb, var(--s-color, #5002F7) 6%, white);
+    border-color: var(--s-color, #5002F7);
+  }
+
+  .gbs-student-selected:hover {
+    background: color-mix(in srgb, var(--s-color, #5002F7) 10%, white);
+  }
+
+  .gbs-student-name {
+    flex: 1;
+    font-size: 12px;
+    font-weight: 500;
+    color: #212121;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .gbs-student-status {
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 2px 5px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .gbs-image-panel {
+    min-width: 0;
+    position: sticky;
+    top: 110px;
+    align-self: start;
+    max-height: calc(100vh - 130px);
+    overflow-y: auto;
+  }
+
+  .gbs-grade-panel {
+    /* All question cards scroll with page */
+  }
+
+  .gbq-sidebar-count {
+    margin-left: auto;
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+  }
+
+  .gbq-sidebar-header {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Legacy two-column layout (kept for backward compat) */
   .scan-viewer-layout {
     display: grid;
     grid-template-columns: 1fr 460px;
@@ -1063,6 +1165,7 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
   }
 
   .btn-save-quick-feedback:hover { text-decoration: underline; }
+  .btn-save-quick-feedback:disabled { color: #bdbdbd; cursor: default; text-decoration: none; }
 
   /* Quick feedback chips — BLUE (matching iOS QuickFeedbackChip) */
   .quick-feedback-chips {
@@ -1246,6 +1349,355 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
   }
 
   /* ------------------------------------------------------------------ */
+  /* Grade by Question view                                              */
+  /* ------------------------------------------------------------------ */
+
+  .gbq-container {
+    max-width: none;
+    margin: 0 -24px;
+    padding: 0 24px;
+  }
+
+  /* Top bar — dark, with actions */
+  .gbq-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #1a1a1a;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .gbq-top-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .gbq-top-title {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: white;
+  }
+
+  .gbq-top-stats {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.5px;
+  }
+
+  .gbq-top-bar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .gbq-top-bar-right .btn-secondary {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 5px 12px;
+    color: rgba(255,255,255,0.7);
+    background: none;
+    border-color: rgba(255,255,255,0.2);
+  }
+
+  .gbq-top-bar-right .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.5);
+    color: white;
+  }
+
+  .gbq-top-bar-right .btn-icon {
+    color: rgba(255,255,255,0.5);
+  }
+
+  .gbq-top-bar-right .btn-icon:hover {
+    color: white;
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* Filter pill group */
+  .gbq-filter-group {
+    display: flex;
+    background: rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 2px;
+  }
+
+  .gbq-filter-btn {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: rgba(255,255,255,0.4);
+    background: none;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-family: var(--font-family);
+    transition: all 0.15s ease;
+  }
+
+  .gbq-filter-btn:hover {
+    color: rgba(255,255,255,0.7);
+  }
+
+  .gbq-filter-active {
+    background: var(--filter-color, #5002F7);
+    color: white;
+  }
+
+  .gbq-filter-active:hover {
+    color: white;
+  }
+
+  /* Two-column layout: sidebar + main */
+  .gbq-layout {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+
+  /* Sidebar */
+  .gbq-sidebar {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    position: sticky;
+    top: 56px;
+    max-height: calc(100vh - 76px);
+    overflow-y: auto;
+  }
+
+  .gbq-sidebar-header {
+    background: #1a1a1a;
+    color: white;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    padding: 10px 14px;
+  }
+
+  .gbq-sidebar-list {
+    display: flex;
+    flex-direction: column;
+    padding: 6px;
+    gap: 2px;
+  }
+
+  .gbq-question-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    font-family: var(--font-family);
+    transition: all 0.1s ease;
+  }
+
+  .gbq-question-row:hover {
+    background: #f5f5f5;
+  }
+
+  .gbq-question-selected {
+    background: color-mix(in srgb, var(--q-color, #5002F7) 6%, white);
+    border-color: var(--q-color, #5002F7);
+  }
+
+  .gbq-question-selected:hover {
+    background: color-mix(in srgb, var(--q-color, #5002F7) 10%, white);
+  }
+
+  .gbq-question-badge {
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+  }
+
+  .gbq-question-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .gbq-question-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #212121;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .gbq-question-pts {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #9e9e9e;
+  }
+
+  .gbq-question-status {
+    font-size: 11px;
+    font-weight: 600;
+    color: #9e9e9e;
+    flex-shrink: 0;
+  }
+
+  .gbq-status-complete {
+    color: #248a3d;
+    font-weight: 700;
+  }
+
+  /* Main area */
+  .gbq-main {
+    min-width: 0;
+  }
+
+  .gbq-card-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Two-column card layout: image left, grading right */
+  .gbq-card-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  .gbq-image-panel {
+    position: sticky;
+    top: 110px;
+    align-self: start;
+  }
+
+  .gbq-image-body {
+    padding: 12px;
+    background: var(--color-gray-100);
+    max-height: 70vh;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .gbq-image-body .scan-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .gbq-grade-panel {
+    /* scrolls with page */
+  }
+
+  /* Quick feedback add row */
+  .quick-chip-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .quick-chip-delete {
+    background: none;
+    border: none;
+    color: #bdbdbd;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 2px 4px;
+    line-height: 1;
+    transition: color 0.1s ease;
+  }
+
+  .quick-chip-delete:hover {
+    color: #FF1C36;
+  }
+
+  .quick-feedback-add-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+  }
+
+  .quick-feedback-add-input {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: var(--font-family);
+    background: #f9f9f9;
+  }
+
+  .quick-feedback-add-input:focus {
+    outline: none;
+    border-color: #3880F4;
+    background: white;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Assignment action buttons                                           */
+  /* ------------------------------------------------------------------ */
+
+  .assignment-card-static {
+    cursor: default;
+  }
+
+  .assignment-card-static:hover {
+    border-color: #e0e0e0;
+    box-shadow: none;
+  }
+
+  .assignment-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .assignment-action-btn {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    font-family: var(--font-family);
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: white;
+    color: #424242;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .assignment-action-btn:hover {
+    border-color: var(--assign-color, #5002F7);
+    color: var(--assign-color, #5002F7);
+    background: color-mix(in srgb, var(--assign-color, #5002F7) 4%, white);
+  }
+
+  /* ------------------------------------------------------------------ */
   /* Responsive                                                          */
   /* ------------------------------------------------------------------ */
 
@@ -1253,10 +1705,19 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     .auth-card { padding: 32px 24px; }
     .dashboard-main { padding: 24px 16px; }
     .course-grid { grid-template-columns: 1fr; }
+    .gbs-layout { grid-template-columns: 1fr; }
+    .gbs-student-sidebar { position: static; max-height: none; }
+    .gbs-image-panel { position: static; max-height: none; }
     .scan-viewer-layout { grid-template-columns: 1fr; }
     .scan-viewer-image-panel { position: static; max-height: none; }
     .scan-viewer-grade-panel { position: static; max-height: none; }
     .student-nav-bar { flex-wrap: wrap; gap: 8px; justify-content: center; }
     .grade-card-top { flex-wrap: wrap; }
+    .gbq-layout { grid-template-columns: 1fr; }
+    .gbq-sidebar { position: static; max-height: none; }
+    .gbq-top-bar { flex-direction: column; align-items: stretch; }
+    .gbq-top-bar-right { flex-wrap: wrap; justify-content: center; }
+    .gbq-card-layout { grid-template-columns: 1fr; }
+    .gbq-image-panel { position: static; }
   }
 </style>

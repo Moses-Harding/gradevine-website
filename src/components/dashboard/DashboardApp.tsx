@@ -4,17 +4,16 @@ import { AuthGate } from './AuthGate';
 import { Breadcrumb } from './Breadcrumb';
 import { CourseList } from './CourseList';
 import { AssignmentList } from './AssignmentList';
-import { StudentScanList } from './StudentScanList';
-import { ScanViewer } from './ScanViewer';
+import { GradeByStudentView } from './GradeByStudentView';
+import { GradeByQuestionView } from './GradeByQuestionView';
 import type { Course, QuestionAssignment } from '../../types/cloudkit';
-import type { StudentScanEntry } from '../../hooks/useStudentScans';
 import { KeyboardShortcutsOverlay } from './KeyboardShortcuts';
 
 type View =
   | { type: 'courses' }
   | { type: 'assignments'; course: Course }
-  | { type: 'students'; course: Course; assignment: QuestionAssignment }
-  | { type: 'scan'; course: Course; assignment: QuestionAssignment; entry: StudentScanEntry; allEntries: StudentScanEntry[] };
+  | { type: 'gradeByStudent'; course: Course; assignment: QuestionAssignment }
+  | { type: 'gradeByQuestion'; course: Course; assignment: QuestionAssignment };
 
 export function DashboardApp() {
   const { auth, isLoading, error, retry } = useAuth();
@@ -77,47 +76,31 @@ export function DashboardApp() {
               <AssignmentList
                 course={view.course}
                 onSelect={(assignment) =>
-                  setView({ type: 'students', course: view.course, assignment })
+                  setView({ type: 'gradeByStudent', course: view.course, assignment })
+                }
+                onGradeByQuestion={(assignment) =>
+                  setView({ type: 'gradeByQuestion', course: view.course, assignment })
                 }
                 onBack={() => setView({ type: 'courses' })}
               />
             )}
 
-            {view.type === 'students' && (
-              <StudentScanList
+            {view.type === 'gradeByStudent' && (
+              <GradeByStudentView
                 assignment={view.assignment}
                 courseColor={courseColorCss}
-                onSelectScan={(entry, allEntries) =>
-                  setView({
-                    type: 'scan',
-                    course: view.course,
-                    assignment: view.assignment,
-                    entry,
-                    allEntries,
-                  })
+                onBack={() =>
+                  setView({ type: 'assignments', course: view.course })
                 }
-                onBack={() => setView({ type: 'assignments', course: view.course })}
               />
             )}
 
-            {view.type === 'scan' && (
-              <ScanViewer
-                entry={view.entry}
+            {view.type === 'gradeByQuestion' && (
+              <GradeByQuestionView
                 assignment={view.assignment}
-                allEntries={view.allEntries}
                 courseColor={courseColorCss}
                 onBack={() =>
-                  setView({
-                    type: 'students',
-                    course: view.course,
-                    assignment: view.assignment,
-                  })
-                }
-                onNavigate={(entry) =>
-                  setView({
-                    ...view,
-                    entry,
-                  })
+                  setView({ type: 'assignments', course: view.course })
                 }
               />
             )}
@@ -131,27 +114,17 @@ export function DashboardApp() {
 function buildBreadcrumb(view: View, setView: (v: View) => void) {
   const items = [{ label: 'COURSES', onClick: () => setView({ type: 'courses' }) }];
 
-  if (view.type === 'assignments' || view.type === 'students' || view.type === 'scan') {
+  if (view.type !== 'courses') {
     items.push({
       label: view.course.name.toUpperCase(),
       onClick: () => setView({ type: 'assignments', course: view.course }),
     });
   }
 
-  if (view.type === 'students' || view.type === 'scan') {
+  if (view.type === 'gradeByStudent' || view.type === 'gradeByQuestion') {
     items.push({
       label: view.assignment.title.toUpperCase(),
-      onClick: () =>
-        setView({
-          type: 'students',
-          course: view.course,
-          assignment: view.assignment,
-        }),
     });
-  }
-
-  if (view.type === 'scan') {
-    items.push({ label: (view.entry.student?.name ?? 'Unknown Student').toUpperCase() });
   }
 
   // Last item has no onClick (it's the current page)

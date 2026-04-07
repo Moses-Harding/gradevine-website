@@ -4,6 +4,7 @@ import type { QuestionAssignment, Course } from '../../types/cloudkit';
 interface AssignmentListProps {
   course: Course;
   onSelect: (assignment: QuestionAssignment) => void;
+  onGradeByQuestion: (assignment: QuestionAssignment) => void;
   onBack: () => void;
 }
 
@@ -16,7 +17,7 @@ function courseColor(colorHex: string | null): string {
   return colorHex.startsWith('#') ? colorHex : `#${colorHex}`;
 }
 
-export function AssignmentList({ course, onSelect, onBack }: AssignmentListProps) {
+export function AssignmentList({ course, onSelect, onGradeByQuestion, onBack }: AssignmentListProps) {
   const { assignments, isLoading, error, refresh } = useAssignments(course.id);
   const color = courseColor(course.colorHex);
 
@@ -57,10 +58,9 @@ export function AssignmentList({ course, onSelect, onBack }: AssignmentListProps
 
       <div className="assignment-grid">
         {assignments.map((a) => (
-          <button
+          <div
             key={a.id}
-            className="assignment-card"
-            onClick={() => onSelect(a)}
+            className="assignment-card assignment-card-static"
             style={{ '--assign-color': color } as React.CSSProperties}
           >
             <div className="assignment-header">
@@ -73,13 +73,24 @@ export function AssignmentList({ course, onSelect, onBack }: AssignmentListProps
                 <span className="assign-meta-pill">{totalPoints(a)} PTS</span>
                 <span className="assign-meta-pill">{a.scanIDs.length} SCANS</span>
               </div>
-              <div className="assignment-progress-row">
-                <div className="assignment-progress-bar">
-                  <div className="assignment-progress-fill" style={{ width: '0%' }} />
-                </div>
+              <div className="assignment-actions">
+                <button
+                  className="assignment-action-btn"
+                  style={{ '--assign-color': color } as React.CSSProperties}
+                  onClick={() => onSelect(a)}
+                >
+                  BY STUDENT
+                </button>
+                <button
+                  className="assignment-action-btn"
+                  style={{ '--assign-color': color } as React.CSSProperties}
+                  onClick={() => onGradeByQuestion(a)}
+                >
+                  BY QUESTION
+                </button>
               </div>
             </div>
-          </button>
+          </div>
         ))}
       </div>
     </div>

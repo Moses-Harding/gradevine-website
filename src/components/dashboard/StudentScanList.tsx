@@ -7,6 +7,7 @@ interface StudentScanListProps {
   assignment: QuestionAssignment;
   courseColor?: string;
   onSelectScan: (entry: StudentScanEntry, allEntries: StudentScanEntry[]) => void;
+  onGradeByQuestion: () => void;
   onBack: () => void;
 }
 
@@ -31,7 +32,7 @@ function initial(name: string | undefined): string {
   return name.charAt(0).toUpperCase();
 }
 
-export function StudentScanList({ assignment, courseColor, onSelectScan, onBack }: StudentScanListProps) {
+export function StudentScanList({ assignment, courseColor, onSelectScan, onGradeByQuestion, onBack }: StudentScanListProps) {
   const { entries, isLoading, error, refresh } = useStudentScans(assignment.id);
 
   const totalPointsPossible = useMemo(
@@ -88,6 +89,9 @@ export function StudentScanList({ assignment, courseColor, onSelectScan, onBack 
       </div>
 
       <div className="list-header-actions" style={{ marginBottom: 12 }}>
+        <button onClick={onGradeByQuestion} className="btn-secondary btn-sm">
+          GRADE BY QUESTION
+        </button>
         <CsvExport assignment={assignment} entries={sortedEntries} />
         <button onClick={refresh} className="btn-icon" title="Refresh">&#x21bb;</button>
       </div>
