@@ -41,3 +41,13 @@ export function useScanPages(scanID: string | null): UseScanPagesReturn {
 
   return { pages, isLoading, error, refresh: useCallback(() => load(true), [load]) };
 }
+
+/**
+ * Prefetch scan pages for upcoming students (fire-and-forget).
+ * Call this with the next student's scan ID to warm the cache.
+ */
+export function prefetchScanPages(scanID: string): void {
+  fetchScanPages(scanID, false).catch(() => {
+    // Silently ignore prefetch errors
+  });
+}

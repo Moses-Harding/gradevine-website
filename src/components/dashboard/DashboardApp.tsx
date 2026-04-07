@@ -8,6 +8,7 @@ import { StudentScanList } from './StudentScanList';
 import { ScanViewer } from './ScanViewer';
 import type { Course, QuestionAssignment } from '../../types/cloudkit';
 import type { StudentScanEntry } from '../../hooks/useStudentScans';
+import { KeyboardShortcutsOverlay } from './KeyboardShortcuts';
 
 type View =
   | { type: 'courses' }
@@ -23,6 +24,8 @@ export function DashboardApp() {
 
   return (
     <>
+      <KeyboardShortcutsOverlay />
+
       {/* CloudKit JS button containers — must always be in the DOM */}
       <div
         id="apple-sign-in-button"

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useStudentScans, type StudentScanEntry } from '../../hooks/useStudentScans';
 import type { QuestionAssignment } from '../../types/cloudkit';
+import { CsvExport } from './CsvExport';
 
 interface StudentScanListProps {
   assignment: QuestionAssignment;
@@ -83,7 +84,10 @@ export function StudentScanList({ assignment, onSelectScan, onBack }: StudentSca
             {gradedCount} / {sortedEntries.length} graded
           </p>
         </div>
-        <button onClick={refresh} className="btn-icon" title="Refresh">↻</button>
+        <div className="list-header-actions">
+          <CsvExport assignment={assignment} entries={sortedEntries} />
+          <button onClick={refresh} className="btn-icon" title="Refresh">↻</button>
+        </div>
       </div>
 
       <div className="progress-bar-container">

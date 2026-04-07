@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { useScanPages } from '../../hooks/useScanPages';
+import { useState, useCallback, useEffect } from 'react';
+import { useScanPages, prefetchScanPages } from '../../hooks/useScanPages';
 import type { Scan, QuestionAssignment } from '../../types/cloudkit';
 import type { StudentScanEntry } from '../../hooks/useStudentScans';
 import { GradingPanel } from './GradingPanel';
@@ -7,7 +7,6 @@ import { GradingPanel } from './GradingPanel';
 interface ScanViewerProps {
   entry: StudentScanEntry;
   assignment: QuestionAssignment;
-  /** All entries for prev/next navigation */
   allEntries: StudentScanEntry[];
   onBack: () => void;
   onNavigate: (entry: StudentScanEntry) => void;
@@ -23,10 +22,22 @@ export function ScanViewer({ entry, assignment, allEntries, onBack, onNavigate }
 
   const studentName = entry.student?.name ?? 'Unknown Student';
 
-  // Student navigation
   const currentIndex = allEntries.findIndex((e) => e.scan.id === entry.scan.id);
   const hasPrev = currentIndex > 0;
   const hasNext = currentIndex < allEntries.length - 1;
+
+  // Prefetch next/prev student's scan pages
+  useEffect(() => {
+    if (hasNext) prefetchScanPages(allEntries[currentIndex + 1].scan.id);
+    if (hasPrev) prefetchScanPages(allEntries[currentIndex - 1].scan.id);
+  }, [currentIndex, allEntries, hasNext, hasPrev]);
+
+  // Reset page state when student changes
+  useEffect(() => {
+    setCurrentPage(0);
+    setImgFailed(false);
+    setCurrentScan(entry.scan);
+  }, [entry.scan.id]);
 
   const handlePrevStudent = useCallback(() => {
     if (hasPrev) onNavigate(allEntries[currentIndex - 1]);
@@ -36,19 +47,21 @@ export function ScanViewer({ entry, assignment, allEntries, onBack, onNavigate }
     if (hasNext) onNavigate(allEntries[currentIndex + 1]);
   }, [hasNext, allEntries, currentIndex, onNavigate]);
 
-  // Keyboard navigation
-  const handleKeyDown = useCallback(
-    (e: React.KeyboardEvent) => {
+  // Global keyboard navigation (arrow keys for students, Esc to go back)
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
-      if (e.key === 'ArrowLeft' && hasPrev) handlePrevStudent();
-      if (e.key === 'ArrowRight' && hasNext) handleNextStudent();
-    },
-    [hasPrev, hasNext, handlePrevStudent, handleNextStudent],
-  );
+      if (e.key === 'ArrowLeft' && hasPrev) { e.preventDefault(); handlePrevStudent(); }
+      if (e.key === 'ArrowRight' && hasNext) { e.preventDefault(); handleNextStudent(); }
+      if (e.key === 'Escape') { e.preventDefault(); onBack(); }
+    }
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [hasPrev, hasNext, handlePrevStudent, handleNextStudent, onBack]);
 
   const handlePagePrev = useCallback(() => { setCurrentPage((p) => Math.max(0, p - 1)); setImgFailed(false); }, []);
   const handlePageNext = useCallback(
-    () => setCurrentPage((p) => Math.min(pages.length - 1, p + 1)),
+    () => { setCurrentPage((p) => Math.min(pages.length - 1, p + 1)); setImgFailed(false); },
     [pages.length],
   );
   const handleZoomIn = useCallback(() => setZoom((z) => Math.min(3, z + 0.25)), []);
@@ -80,7 +93,7 @@ export function ScanViewer({ entry, assignment, allEntries, onBack, onNavigate }
   const page = pages[currentPage];
 
   return (
-    <div className="scan-viewer" onKeyDown={handleKeyDown} tabIndex={0}>
+    <div className="scan-viewer">
       {/* Student navigation bar */}
       <div className="student-nav-bar">
         <button onClick={handlePrevStudent} disabled={!hasPrev} className="btn-secondary btn-sm">
