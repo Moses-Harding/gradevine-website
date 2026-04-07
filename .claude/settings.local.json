@@ -16,7 +16,8 @@
       "WebFetch(domain:fibr.ai)",
       "WebFetch(domain:instapage.com)",
       "WebFetch(domain:lovable.dev)",
-      "Bash(open:*)"
+      "Bash(open:*)",
+      "Bash(gh run:*)"
     ]
   }
 }
