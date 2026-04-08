@@ -57,6 +57,15 @@ export interface AssignmentQuestion {
   gradingKeyLastModified: string | null;
 }
 
+export interface QuickFeedbackItem {
+  id: string;
+  questionID: string;
+  text: string;
+  createdDate: string;
+  lastModifiedDate: string;
+  lastUsedDate: string | null;
+}
+
 export interface QuestionAssignment {
   id: string;
   title: string;
@@ -73,6 +82,7 @@ export interface QuestionAssignment {
   updatedDate: string;
   description: string | null;
   criteria: string;
+  quickFeedback: QuickFeedbackItem[];
 }
 
 // ---------------------------------------------------------------------------

@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useStudentScans, type StudentScanEntry } from '../../hooks/useStudentScans';
 import { useScanPages, prefetchScanPages } from '../../hooks/useScanPages';
-import type { Scan, QuestionAssignment, AssignmentQuestion, ScanQuestionResponse, ScanPage } from '../../types/cloudkit';
-import { saveGrades, type SaveStatus } from '../../lib/cloudkit/save';
+import type { Scan, QuestionAssignment, AssignmentQuestion, ScanQuestionResponse, ScanPage, QuickFeedbackItem } from '../../types/cloudkit';
+import { saveGrades, saveAssignmentQuickFeedback, type SaveStatus } from '../../lib/cloudkit/save';
 
 function swiftTimestamp(): number {
   return (Date.now() / 1000) - 978307200;
@@ -25,11 +25,6 @@ interface GradeByQuestionViewProps {
   assignment: QuestionAssignment;
   courseColor?: string;
   onBack: () => void;
-}
-
-interface QuickFeedbackItem {
-  id: string;
-  text: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -66,24 +61,17 @@ function getResponseForQuestion(scan: Scan, questionID: string): ScanQuestionRes
 }
 
 // ---------------------------------------------------------------------------
-// Quick Feedback — localStorage persistence
+// Quick Feedback — helpers
 // ---------------------------------------------------------------------------
 
-function quickFeedbackKey(assignmentID: string, questionID: string): string {
-  return `gbq-feedback-${assignmentID}-${questionID}`;
-}
-
-function loadQuickFeedback(assignmentID: string, questionID: string): QuickFeedbackItem[] {
-  try {
-    const raw = localStorage.getItem(quickFeedbackKey(assignmentID, questionID));
-    return raw ? JSON.parse(raw) : [];
-  } catch {
-    return [];
-  }
-}
-
-function saveQuickFeedback(assignmentID: string, questionID: string, items: QuickFeedbackItem[]): void {
-  localStorage.setItem(quickFeedbackKey(assignmentID, questionID), JSON.stringify(items));
+function getQuickFeedbackForQuestion(assignment: QuestionAssignment, questionID: string): QuickFeedbackItem[] {
+  return assignment.quickFeedback
+    .filter((item) => item.questionID === questionID)
+    .sort((a, b) => {
+      const aDate = a.lastUsedDate ?? a.createdDate;
+      const bDate = b.lastUsedDate ?? b.createdDate;
+      return bDate.localeCompare(aDate); // descending
+    });
 }
 
 // ---------------------------------------------------------------------------
@@ -509,10 +497,10 @@ function StudentQuestionCard({
     // Prefetch is handled via the parent — but we can trigger for neighbors
   }, [studentIndex]);
 
-  // Load quick feedback from localStorage
+  // Load quick feedback from assignment (synced via CloudKit)
   useEffect(() => {
-    setQuickFeedbackItems(loadQuickFeedback(assignment.id, question.id));
-  }, [assignment.id, question.id]);
+    setQuickFeedbackItems(getQuickFeedbackForQuestion(assignment, question.id));
+  }, [assignment.id, assignment.quickFeedback, question.id]);
 
   // Reset local state when student/question changes
   useEffect(() => {
@@ -620,21 +608,35 @@ function StudentQuestionCard({
   const handleSaveAsQuickFeedback = useCallback(() => {
     const trimmed = localFeedback.trim();
     if (!trimmed) return;
-    // Don't save duplicates
     if (quickFeedbackItems.some((item) => item.text === trimmed)) return;
-    const newItem: QuickFeedbackItem = { id: crypto.randomUUID(), text: trimmed };
-    const updated = [...quickFeedbackItems, newItem];
-    setQuickFeedbackItems(updated);
-    saveQuickFeedback(assignment.id, question.id, updated);
-  }, [localFeedback, quickFeedbackItems, assignment.id, question.id]);
+    const now = new Date().toISOString();
+    const newItem: QuickFeedbackItem = {
+      id: crypto.randomUUID(),
+      questionID: question.id,
+      text: trimmed,
+      createdDate: now,
+      lastModifiedDate: now,
+      lastUsedDate: null,
+    };
+    const updatedForQuestion = [...quickFeedbackItems, newItem];
+    setQuickFeedbackItems(updatedForQuestion);
+    // Write the full assignment quickFeedback array (other questions' items + this question's updated items)
+    const otherItems = assignment.quickFeedback.filter((item) => item.questionID !== question.id);
+    const fullArray = [...otherItems, ...updatedForQuestion];
+    assignment.quickFeedback = fullArray;
+    saveAssignmentQuickFeedback(assignment.id, fullArray);
+  }, [localFeedback, quickFeedbackItems, assignment, question.id]);
 
   const handleDeleteQuickFeedback = useCallback(
     (id: string) => {
-      const updated = quickFeedbackItems.filter((item) => item.id !== id);
-      setQuickFeedbackItems(updated);
-      saveQuickFeedback(assignment.id, question.id, updated);
+      const updatedForQuestion = quickFeedbackItems.filter((item) => item.id !== id);
+      setQuickFeedbackItems(updatedForQuestion);
+      const otherItems = assignment.quickFeedback.filter((item) => item.questionID !== question.id);
+      const fullArray = [...otherItems, ...updatedForQuestion];
+      assignment.quickFeedback = fullArray;
+      saveAssignmentQuickFeedback(assignment.id, fullArray);
     },
-    [quickFeedbackItems, assignment.id, question.id],
+    [quickFeedbackItems, assignment, question.id],
   );
 
   // Grade chips

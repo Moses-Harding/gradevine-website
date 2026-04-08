@@ -7,7 +7,7 @@
 
 import { CLOUDKIT_ZONE } from './config';
 import { getContainer, type CKJSRecord } from './auth';
-import type { Scan, ScanQuestionResponse } from '../../types/cloudkit';
+import type { Scan, ScanQuestionResponse, QuickFeedbackItem } from '../../types/cloudkit';
 import { invalidateCachePrefix } from './cache';
 
 export type SaveStatus = 'idle' | 'saving' | 'saved' | 'error' | 'conflict';
@@ -82,6 +82,53 @@ export async function saveGrades(
     return {
       success: false,
       error: ckErr.reason ?? (err instanceof Error ? err.message : 'Save failed'),
+    };
+  }
+}
+
+/**
+ * Save updated quick feedback for an assignment back to CloudKit.
+ *
+ * Writes the full quickFeedback array as a JSON blob (BYTES field)
+ * on the Assignment record. Last-write-wins — no per-item merge.
+ */
+export async function saveAssignmentQuickFeedback(
+  assignmentRecordName: string,
+  quickFeedback: QuickFeedbackItem[],
+): Promise<{ success: boolean; error?: string }> {
+  const db = getContainer().privateCloudDatabase;
+
+  const feedbackJson = JSON.stringify(quickFeedback);
+  const feedbackBytes = new TextEncoder().encode(feedbackJson);
+  const feedbackBase64 = btoa(String.fromCharCode(...feedbackBytes));
+
+  const recordToSave = {
+    recordName: assignmentRecordName,
+    recordType: 'Assignment',
+    fields: {
+      quickFeedbackData: { value: feedbackBase64, type: 'BYTES' },
+      updatedDate: { value: Date.now(), type: 'TIMESTAMP' },
+    },
+  };
+
+  try {
+    const response = await db.saveRecords(recordToSave, {
+      zoneID: { zoneName: CLOUDKIT_ZONE },
+    });
+
+    if (response.hasErrors) {
+      const errorRecord = response.records.find((r: CKJSRecord) => r.serverErrorCode);
+      if (errorRecord) {
+        return { success: false, error: errorRecord.reason ?? 'Save failed' };
+      }
+    }
+
+    invalidateCachePrefix('assignments-');
+    return { success: true };
+  } catch (err: unknown) {
+    return {
+      success: false,
+      error: err instanceof Error ? err.message : 'Save failed',
     };
   }
 }

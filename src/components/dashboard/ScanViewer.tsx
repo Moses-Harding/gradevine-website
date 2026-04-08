@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useScanPages, prefetchScanPages } from '../../hooks/useScanPages';
-import type { Scan, QuestionAssignment, ScanQuestionResponse } from '../../types/cloudkit';
+import type { Scan, QuestionAssignment, ScanQuestionResponse, QuickFeedbackItem } from '../../types/cloudkit';
 import type { StudentScanEntry } from '../../hooks/useStudentScans';
-import { saveGrades, type SaveStatus } from '../../lib/cloudkit/save';
+import { saveGrades, saveAssignmentQuickFeedback, type SaveStatus } from '../../lib/cloudkit/save';
 
 function swiftTimestamp(): number {
   return (Date.now() / 1000) - 978307200;
@@ -62,18 +62,15 @@ function statusClass(status: StudentScanEntry['gradingStatus']): string {
   }
 }
 
-// Quick feedback — localStorage
-function qfKey(assignmentID: string, questionID: string): string {
-  return `gbs-feedback-${assignmentID}-${questionID}`;
-}
-function loadQF(assignmentID: string, questionID: string): { id: string; text: string }[] {
-  try {
-    const raw = localStorage.getItem(qfKey(assignmentID, questionID));
-    return raw ? JSON.parse(raw) : [];
-  } catch { return []; }
-}
-function persistQF(assignmentID: string, questionID: string, items: { id: string; text: string }[]): void {
-  localStorage.setItem(qfKey(assignmentID, questionID), JSON.stringify(items));
+// Quick feedback — backed by CloudKit via assignment.quickFeedback
+function getQFForQuestion(assignment: QuestionAssignment, questionID: string): QuickFeedbackItem[] {
+  return assignment.quickFeedback
+    .filter((item) => item.questionID === questionID)
+    .sort((a, b) => {
+      const aDate = a.lastUsedDate ?? a.createdDate;
+      const bDate = b.lastUsedDate ?? b.createdDate;
+      return bDate.localeCompare(aDate);
+    });
 }
 
 // ---------------------------------------------------------------------------
@@ -394,7 +391,7 @@ export function ScanViewer({ entry, assignment, allEntries, courseColor, onBack,
                   question={q}
                   response={resp}
                   chipColor={chipColor}
-                  assignmentID={assignment.id}
+                  assignment={assignment}
                   onGradeChange={(val) => handleGradeChange(q.id, val)}
                   onFeedbackChange={(val) => handleFeedbackChange(q.id, val)}
                 />
@@ -432,30 +429,30 @@ function QuestionCard({
   question,
   response,
   chipColor,
-  assignmentID,
+  assignment,
   onGradeChange,
   onFeedbackChange,
 }: {
   question: { id: string; label: string; prompt: string; pointValue: number; gradingKey: string | null };
   response: ScanQuestionResponse | null;
   chipColor: string;
-  assignmentID: string;
+  assignment: QuestionAssignment;
   onGradeChange: (value: number | null) => void;
   onFeedbackChange: (value: string) => void;
 }) {
   const [fullPointsOnly, setFullPointsOnly] = useState(true);
   const [localFeedback, setLocalFeedback] = useState(response?.feedback ?? '');
-  const [qfItems, setQfItems] = useState<{ id: string; text: string }[]>([]);
+  const [qfItems, setQfItems] = useState<QuickFeedbackItem[]>([]);
 
   // Sync feedback from parent
   useEffect(() => {
     setLocalFeedback(response?.feedback ?? '');
   }, [response?.feedback]);
 
-  // Load quick feedback
+  // Load quick feedback from assignment (synced via CloudKit)
   useEffect(() => {
-    setQfItems(loadQF(assignmentID, question.id));
-  }, [assignmentID, question.id]);
+    setQfItems(getQFForQuestion(assignment, question.id));
+  }, [assignment.id, assignment.quickFeedback, question.id]);
 
   const ai = response?.aiEvaluation;
   const showAI = ai && ai.confidence >= AI_CONFIDENCE_THRESHOLD;
@@ -486,16 +483,30 @@ function QuestionCard({
     const trimmed = localFeedback.trim();
     if (!trimmed) return;
     if (qfItems.some((item) => item.text === trimmed)) return;
-    const newItem = { id: crypto.randomUUID(), text: trimmed };
-    const updated = [...qfItems, newItem];
-    setQfItems(updated);
-    persistQF(assignmentID, question.id, updated);
+    const now = new Date().toISOString();
+    const newItem: QuickFeedbackItem = {
+      id: crypto.randomUUID(),
+      questionID: question.id,
+      text: trimmed,
+      createdDate: now,
+      lastModifiedDate: now,
+      lastUsedDate: null,
+    };
+    const updatedForQuestion = [...qfItems, newItem];
+    setQfItems(updatedForQuestion);
+    const otherItems = assignment.quickFeedback.filter((item) => item.questionID !== question.id);
+    const fullArray = [...otherItems, ...updatedForQuestion];
+    assignment.quickFeedback = fullArray;
+    saveAssignmentQuickFeedback(assignment.id, fullArray);
   };
 
   const handleDeleteQF = (id: string) => {
-    const updated = qfItems.filter((item) => item.id !== id);
-    setQfItems(updated);
-    persistQF(assignmentID, question.id, updated);
+    const updatedForQuestion = qfItems.filter((item) => item.id !== id);
+    setQfItems(updatedForQuestion);
+    const otherItems = assignment.quickFeedback.filter((item) => item.questionID !== question.id);
+    const fullArray = [...otherItems, ...updatedForQuestion];
+    assignment.quickFeedback = fullArray;
+    saveAssignmentQuickFeedback(assignment.id, fullArray);
   };
 
   const transcription = response?.fragments

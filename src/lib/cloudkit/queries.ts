@@ -71,6 +71,7 @@ function parseAssignment(record: CKJSRecord): QuestionAssignment {
     updatedDate: timestampField(record, 'updatedDate') ?? new Date().toISOString(),
     description: stringField(record, 'description'),
     criteria: stringField(record, 'criteria') ?? '',
+    quickFeedback: parseBinaryJsonField<QuestionAssignment['quickFeedback']>(record, 'quickFeedbackData') ?? [],
   };
 }
 
