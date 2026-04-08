@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthGate } from './AuthGate';
 import { Breadcrumb } from './Breadcrumb';
@@ -50,21 +50,10 @@ export function DashboardApp() {
         <AuthGate />
       ) : (
         <div className="dashboard">
-          <header className="dashboard-header">
-            <div className="dashboard-header-inner">
-              <div className="header-brand">
-                <span className="header-logo">G</span>
-                <span className="header-title">GRADEVINE</span>
-              </div>
-              <div className="header-right">
-                <span className="header-user">{(auth.displayName ?? 'Teacher').toUpperCase()}</span>
-                <div id="apple-sign-out-button" />
-              </div>
-            </div>
-          </header>
+          <DashboardHeader displayName={auth.displayName ?? 'Teacher'} />
 
           <main className="dashboard-main">
-            {breadcrumbItems.length > 1 && <Breadcrumb items={breadcrumbItems} />}
+            <Breadcrumb items={breadcrumbItems} />
 
             {view.type === 'courses' && (
               <CourseList
@@ -110,6 +99,23 @@ export function DashboardApp() {
     </>
   );
 }
+
+const DashboardHeader = memo(function DashboardHeader({ displayName }: { displayName: string }) {
+  return (
+    <header className="dashboard-header">
+      <div className="dashboard-header-inner">
+        <div className="header-brand">
+          <span className="header-logo">G</span>
+          <span className="header-title">GRADEVINE</span>
+        </div>
+        <div className="header-right">
+          <span className="header-user">{displayName.toUpperCase()}</span>
+          {/* apple-sign-out-button lives in Astro template, positioned here via CSS */}
+        </div>
+      </div>
+    </header>
+  );
+});
 
 function buildBreadcrumb(view: View, setView: (v: View) => void) {
   const items = [{ label: 'COURSES', onClick: () => setView({ type: 'courses' }) }];

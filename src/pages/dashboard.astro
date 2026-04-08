@@ -10,6 +10,9 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
   <!-- CloudKit JS for Apple ID authentication only -->
   <script is:inline src="https://cdn.apple-cloudkit.com/ck/2/cloudkit.js"></script>
 
+  <!-- Sign-out button lives OUTSIDE React so reconciliation never touches it -->
+  <div id="apple-sign-out-button"></div>
+
   <div id="dashboard-root">
     <DashboardApp client:only="react" />
   </div>
@@ -35,6 +38,7 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     position: sticky;
     top: 0;
     z-index: 10;
+    /* Anchor for the sign-out button positioned from Astro template */
   }
 
   .dashboard-header-inner {
@@ -85,6 +89,11 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
   }
 
   #apple-sign-out-button {
+    /* Positioned inside .dashboard-header via fixed positioning */
+    position: fixed;
+    top: 8px;
+    right: 24px;
+    z-index: 11;
     display: flex;
     align-items: center;
     transform: scale(0.8);
