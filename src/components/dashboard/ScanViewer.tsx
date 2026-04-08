@@ -67,9 +67,9 @@ function getQFForQuestion(assignment: QuestionAssignment, questionID: string): Q
   return assignment.quickFeedback
     .filter((item) => item.questionID === questionID)
     .sort((a, b) => {
-      const aDate = a.lastUsedDate ?? a.createdDate;
-      const bDate = b.lastUsedDate ?? b.createdDate;
-      return bDate.localeCompare(aDate);
+      const aDate = new Date(a.lastUsedDate ?? a.createdDate).getTime();
+      const bDate = new Date(b.lastUsedDate ?? b.createdDate).getTime();
+      return bDate - aDate;
     });
 }
 
@@ -497,7 +497,9 @@ function QuestionCard({
     const otherItems = assignment.quickFeedback.filter((item) => item.questionID !== question.id);
     const fullArray = [...otherItems, ...updatedForQuestion];
     assignment.quickFeedback = fullArray;
-    saveAssignmentQuickFeedback(assignment.id, fullArray);
+    saveAssignmentQuickFeedback(assignment.id, assignment.recordChangeTag, fullArray).then((result) => {
+      if (result.newChangeTag) assignment.recordChangeTag = result.newChangeTag;
+    });
   };
 
   const handleDeleteQF = (id: string) => {
@@ -506,7 +508,9 @@ function QuestionCard({
     const otherItems = assignment.quickFeedback.filter((item) => item.questionID !== question.id);
     const fullArray = [...otherItems, ...updatedForQuestion];
     assignment.quickFeedback = fullArray;
-    saveAssignmentQuickFeedback(assignment.id, fullArray);
+    saveAssignmentQuickFeedback(assignment.id, assignment.recordChangeTag, fullArray).then((result) => {
+      if (result.newChangeTag) assignment.recordChangeTag = result.newChangeTag;
+    });
   };
 
   const transcription = response?.fragments

@@ -68,9 +68,9 @@ function getQuickFeedbackForQuestion(assignment: QuestionAssignment, questionID:
   return assignment.quickFeedback
     .filter((item) => item.questionID === questionID)
     .sort((a, b) => {
-      const aDate = a.lastUsedDate ?? a.createdDate;
-      const bDate = b.lastUsedDate ?? b.createdDate;
-      return bDate.localeCompare(aDate); // descending
+      const aDate = new Date(a.lastUsedDate ?? a.createdDate).getTime();
+      const bDate = new Date(b.lastUsedDate ?? b.createdDate).getTime();
+      return bDate - aDate; // descending
     });
 }
 
@@ -624,7 +624,9 @@ function StudentQuestionCard({
     const otherItems = assignment.quickFeedback.filter((item) => item.questionID !== question.id);
     const fullArray = [...otherItems, ...updatedForQuestion];
     assignment.quickFeedback = fullArray;
-    saveAssignmentQuickFeedback(assignment.id, fullArray);
+    saveAssignmentQuickFeedback(assignment.id, assignment.recordChangeTag, fullArray).then((result) => {
+      if (result.newChangeTag) assignment.recordChangeTag = result.newChangeTag;
+    });
   }, [localFeedback, quickFeedbackItems, assignment, question.id]);
 
   const handleDeleteQuickFeedback = useCallback(
@@ -634,7 +636,9 @@ function StudentQuestionCard({
       const otherItems = assignment.quickFeedback.filter((item) => item.questionID !== question.id);
       const fullArray = [...otherItems, ...updatedForQuestion];
       assignment.quickFeedback = fullArray;
-      saveAssignmentQuickFeedback(assignment.id, fullArray);
+      saveAssignmentQuickFeedback(assignment.id, assignment.recordChangeTag, fullArray).then((result) => {
+        if (result.newChangeTag) assignment.recordChangeTag = result.newChangeTag;
+      });
     },
     [quickFeedbackItems, assignment, question.id],
   );

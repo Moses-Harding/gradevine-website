@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import { useAuth } from '../../hooks/useAuth';
 import { AuthGate } from './AuthGate';
 import { Breadcrumb } from './Breadcrumb';
-import { CourseList } from './CourseList';
+import { HomeView } from './HomeView';
 import { AssignmentList } from './AssignmentList';
 import { GradeByStudentView } from './GradeByStudentView';
 import { GradeByQuestionView } from './GradeByQuestionView';
@@ -56,8 +56,14 @@ export function DashboardApp() {
             <Breadcrumb items={breadcrumbItems} />
 
             {view.type === 'courses' && (
-              <CourseList
-                onSelect={(course) => setView({ type: 'assignments', course })}
+              <HomeView
+                onSelectCourse={(course) => setView({ type: 'assignments', course })}
+                onSelectAssignment={(course, assignment) =>
+                  setView({ type: 'gradeByStudent', course, assignment })
+                }
+                onGradeByQuestion={(course, assignment) =>
+                  setView({ type: 'gradeByQuestion', course, assignment })
+                }
               />
             )}
 

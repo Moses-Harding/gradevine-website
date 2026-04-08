@@ -83,6 +83,7 @@ export interface QuestionAssignment {
   description: string | null;
   criteria: string;
   quickFeedback: QuickFeedbackItem[];
+  recordChangeTag: string;
 }
 
 // ---------------------------------------------------------------------------

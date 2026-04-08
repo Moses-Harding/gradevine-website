@@ -94,8 +94,9 @@ export async function saveGrades(
  */
 export async function saveAssignmentQuickFeedback(
   assignmentRecordName: string,
+  recordChangeTag: string,
   quickFeedback: QuickFeedbackItem[],
-): Promise<{ success: boolean; error?: string }> {
+): Promise<{ success: boolean; newChangeTag?: string; error?: string }> {
   const db = getContainer().privateCloudDatabase;
 
   const feedbackJson = JSON.stringify(quickFeedback);
@@ -105,6 +106,7 @@ export async function saveAssignmentQuickFeedback(
   const recordToSave = {
     recordName: assignmentRecordName,
     recordType: 'Assignment',
+    recordChangeTag,
     fields: {
       quickFeedbackData: { value: feedbackBase64, type: 'BYTES' },
       updatedDate: { value: Date.now(), type: 'TIMESTAMP' },
@@ -124,7 +126,8 @@ export async function saveAssignmentQuickFeedback(
     }
 
     invalidateCachePrefix('assignments-');
-    return { success: true };
+    const savedRecord = response.records[0];
+    return { success: true, newChangeTag: savedRecord?.recordChangeTag };
   } catch (err: unknown) {
     return {
       success: false,

@@ -1,0 +1,643 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="GradeVine — Home View Fusion"
+  description="Fused home view: table courses, recent assignments with actions, activity feed."
+>
+  <div class="hv-page">
+    <header class="hv-header">
+      <h1>Home View — Fused Design</h1>
+      <p class="hv-subtitle">Table-style courses (C) · Recent assignments with action buttons (D+E) · Activity feed sidebar (B) · Enriched assignment cards apply after selecting a course (A)</p>
+    </header>
+
+    <!-- ================================================================== -->
+    <!-- FUSED: Full-width mock                                              -->
+    <!-- ================================================================== -->
+    <div class="hv-mock">
+      <!-- Dashboard header -->
+      <div class="hv-dash-header">
+        <div class="hv-dash-header-inner">
+          <div class="hv-brand"><span class="hv-logo">G</span><span class="hv-brand-name">GRADEVINE</span></div>
+          <span class="hv-user">MOSES HARDING</span>
+        </div>
+      </div>
+
+      <div class="hv-dash-main">
+        <nav class="hv-breadcrumb"><span class="hv-breadcrumb-current">COURSES</span></nav>
+
+        <div class="f-layout">
+          <!-- ============================================================ -->
+          <!-- LEFT: Courses table + Recent Assignments                      -->
+          <!-- ============================================================ -->
+          <div class="f-main">
+
+            <!-- Courses table (from C, without graded/progress) -->
+            <div class="f-courses-section">
+              <div class="f-section-bar">YOUR COURSES</div>
+              <table class="f-table">
+                <thead>
+                  <tr>
+                    <th class="f-th-narrow"></th>
+                    <th class="f-th-left">CLASS</th>
+                    <th>STUDENTS</th>
+                    <th>ASSIGNMENTS</th>
+                    <th>AVG</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><span class="f-dot" style="background: #15B392"></span></td>
+                    <td class="f-td-name">Biology 101</td>
+                    <td>28</td>
+                    <td>5</td>
+                    <td class="f-td-avg">75%</td>
+                  </tr>
+                  <tr>
+                    <td><span class="f-dot" style="background: #1565C0"></span></td>
+                    <td class="f-td-name">AP Chemistry</td>
+                    <td>32</td>
+                    <td>4</td>
+                    <td class="f-td-avg">84%</td>
+                  </tr>
+                  <tr>
+                    <td><span class="f-dot" style="background: #E41749"></span></td>
+                    <td class="f-td-name">English 9</td>
+                    <td>24</td>
+                    <td>3</td>
+                    <td class="f-td-avg f-td-muted">&mdash;</td>
+                  </tr>
+                  <tr>
+                    <td><span class="f-dot" style="background: #534C98"></span></td>
+                    <td class="f-td-name">World History</td>
+                    <td>30</td>
+                    <td>5</td>
+                    <td class="f-td-avg">91%</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Recent Assignments (D rows + E action buttons) -->
+            <div class="f-assignments-section">
+              <div class="f-section-bar">RECENT ASSIGNMENTS</div>
+              <div class="f-assignment-list">
+
+                <!-- Row 1: urgent / ungraded -->
+                <div class="f-assign-row f-assign-urgent">
+                  <span class="f-assign-dot" style="background: #9e9e9e"></span>
+                  <div class="f-assign-accent" style="background: #E41749"></div>
+                  <div class="f-assign-info">
+                    <div class="f-assign-name">Essay: The Great Gatsby</div>
+                    <div class="f-assign-course">English 9</div>
+                  </div>
+                  <div class="f-assign-status">
+                    <span class="f-status-tag f-status-new">NEW</span>
+                  </div>
+                  <div class="f-assign-grade">
+                    <span class="f-assign-pct f-muted">&mdash;</span>
+                    <span class="f-assign-count">0/24</span>
+                  </div>
+                  <span class="f-assign-time">1d ago</span>
+                  <button class="f-assign-btn">GRADE NOW</button>
+                </div>
+
+                <!-- Row 2: in progress -->
+                <div class="f-assign-row">
+                  <span class="f-assign-dot" style="background: #946800"></span>
+                  <div class="f-assign-accent" style="background: #1565C0"></div>
+                  <div class="f-assign-info">
+                    <div class="f-assign-name">Periodic Table Quiz</div>
+                    <div class="f-assign-course">AP Chemistry · 84% avg</div>
+                  </div>
+                  <div class="f-assign-status">
+                    <span class="f-status-tag f-status-progress">IN PROGRESS</span>
+                  </div>
+                  <div class="f-assign-grade">
+                    <span class="f-assign-pct">84%</span>
+                    <span class="f-assign-count">15/32</span>
+                  </div>
+                  <span class="f-assign-time">5h ago</span>
+                  <button class="f-assign-btn">CONTINUE</button>
+                </div>
+
+                <!-- Row 3: in progress -->
+                <div class="f-assign-row">
+                  <span class="f-assign-dot" style="background: #946800"></span>
+                  <div class="f-assign-accent" style="background: #15B392"></div>
+                  <div class="f-assign-info">
+                    <div class="f-assign-name">Chapter 5 — Cell Division</div>
+                    <div class="f-assign-course">Biology 101 · 75% avg</div>
+                  </div>
+                  <div class="f-assign-status">
+                    <span class="f-status-tag f-status-progress">IN PROGRESS</span>
+                  </div>
+                  <div class="f-assign-grade">
+                    <span class="f-assign-pct">75%</span>
+                    <span class="f-assign-count">22/28</span>
+                  </div>
+                  <span class="f-assign-time">2h ago</span>
+                  <button class="f-assign-btn">CONTINUE</button>
+                </div>
+
+                <!-- Row 4: complete -->
+                <div class="f-assign-row">
+                  <span class="f-assign-dot" style="background: #248a3d"></span>
+                  <div class="f-assign-accent" style="background: #534C98"></div>
+                  <div class="f-assign-info">
+                    <div class="f-assign-name">WWI Map Analysis</div>
+                    <div class="f-assign-course">World History · 91% avg</div>
+                  </div>
+                  <div class="f-assign-status">
+                    <span class="f-status-tag f-status-done">COMPLETE</span>
+                  </div>
+                  <div class="f-assign-grade">
+                    <span class="f-assign-pct">91%</span>
+                    <span class="f-assign-count">30/30</span>
+                  </div>
+                  <span class="f-assign-time">3d ago</span>
+                  <button class="f-assign-btn f-btn-review">REVIEW</button>
+                </div>
+
+                <!-- Row 5: complete -->
+                <div class="f-assign-row">
+                  <span class="f-assign-dot" style="background: #248a3d"></span>
+                  <div class="f-assign-accent" style="background: #15B392"></div>
+                  <div class="f-assign-info">
+                    <div class="f-assign-name">Lab Report: Osmosis</div>
+                    <div class="f-assign-course">Biology 101 · 72% avg</div>
+                  </div>
+                  <div class="f-assign-status">
+                    <span class="f-status-tag f-status-done">COMPLETE</span>
+                  </div>
+                  <div class="f-assign-grade">
+                    <span class="f-assign-pct">72%</span>
+                    <span class="f-assign-count">28/28</span>
+                  </div>
+                  <span class="f-assign-time">5d ago</span>
+                  <button class="f-assign-btn f-btn-review">REVIEW</button>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- ============================================================ -->
+          <!-- RIGHT: Activity feed (from B)                                 -->
+          <!-- ============================================================ -->
+          <aside class="f-sidebar">
+            <div class="f-sidebar-label">RECENT ACTIVITY</div>
+            <div class="f-feed">
+              <div class="f-feed-item">
+                <div class="f-feed-dot" style="background: #248a3d"></div>
+                <div class="f-feed-content">
+                  <div class="f-feed-text">Finished grading <strong>Cell Division</strong></div>
+                  <div class="f-feed-time">2 hours ago</div>
+                </div>
+              </div>
+              <div class="f-feed-item">
+                <div class="f-feed-dot" style="background: #1565C0"></div>
+                <div class="f-feed-content">
+                  <div class="f-feed-text">Scanned 32 papers for <strong>Periodic Table Quiz</strong></div>
+                  <div class="f-feed-time">5 hours ago</div>
+                </div>
+              </div>
+              <div class="f-feed-item">
+                <div class="f-feed-dot" style="background: #6F00FF"></div>
+                <div class="f-feed-content">
+                  <div class="f-feed-text">Added 3 students to <strong>English 9</strong></div>
+                  <div class="f-feed-time">1 day ago</div>
+                </div>
+              </div>
+              <div class="f-feed-item">
+                <div class="f-feed-dot" style="background: #534C98"></div>
+                <div class="f-feed-content">
+                  <div class="f-feed-text"><strong>WWI Map Analysis</strong> fully graded — 91% avg</div>
+                  <div class="f-feed-time">3 days ago</div>
+                </div>
+              </div>
+              <div class="f-feed-item">
+                <div class="f-feed-dot" style="background: #9e9e9e"></div>
+                <div class="f-feed-content">
+                  <div class="f-feed-text">Synced all data to iCloud</div>
+                  <div class="f-feed-time">3 days ago</div>
+                </div>
+              </div>
+              <div class="f-feed-item">
+                <div class="f-feed-dot" style="background: #E41749"></div>
+                <div class="f-feed-content">
+                  <div class="f-feed-text">Created assignment <strong>Great Gatsby Essay</strong></div>
+                  <div class="f-feed-time">4 days ago</div>
+                </div>
+              </div>
+              <div class="f-feed-item">
+                <div class="f-feed-dot" style="background: #15B392"></div>
+                <div class="f-feed-content">
+                  <div class="f-feed-text">Exported <strong>Biology 101</strong> grades to Drive</div>
+                  <div class="f-feed-time">5 days ago</div>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- NOTE: What the assignment list looks like AFTER selecting a course   -->
+    <!-- Uses enriched card style from Variation A                           -->
+    <!-- ================================================================== -->
+    <section class="hv-section" style="margin-top: 48px;">
+      <div class="hv-section-label">AFTER SELECTING A COURSE</div>
+      <h2>Assignment Cards (Variation A style)</h2>
+      <p class="hv-desc">Once a user clicks into a course, assignments use the richer card layout with grading progress bars, avg/range/ungraded stats, and action buttons.</p>
+
+      <div class="hv-mock">
+        <div class="hv-dash-header">
+          <div class="hv-dash-header-inner">
+            <div class="hv-brand"><span class="hv-logo">G</span><span class="hv-brand-name">GRADEVINE</span></div>
+            <span class="hv-user">MOSES HARDING</span>
+          </div>
+        </div>
+
+        <div class="hv-dash-main">
+          <nav class="hv-breadcrumb">
+            <span class="hv-breadcrumb-link">COURSES</span>
+            <span class="hv-breadcrumb-sep">/</span>
+            <span class="hv-breadcrumb-current">BIOLOGY 101</span>
+          </nav>
+
+          <div class="hv-section-label-inline">ASSIGNMENTS — 5 TOTAL</div>
+
+          <div class="a2-card-list">
+
+            <!-- Card 1: in progress -->
+            <div class="a2-card" style="--cc: #15B392">
+              <div class="a2-card-header">
+                <div class="a2-header-left">
+                  <div class="a2-card-accent"></div>
+                  <div>
+                    <div class="a2-card-name">Chapter 5 — Cell Division</div>
+                    <div class="a2-card-sub">12 questions · 120 points · 28 scanned</div>
+                  </div>
+                </div>
+                <div class="a2-header-right">
+                  <button class="a2-action-btn">BY STUDENT</button>
+                  <button class="a2-action-btn a2-action-primary">BY QUESTION</button>
+                </div>
+              </div>
+              <div class="a2-card-body">
+                <div class="a2-progress-row">
+                  <span class="a2-progress-label">GRADING</span>
+                  <div class="a2-progress-bar"><div class="a2-progress-fill" style="width: 78%"></div></div>
+                  <span class="a2-progress-value">22 / 28</span>
+                </div>
+                <div class="a2-stats-row">
+                  <span class="a2-mini-stat">AVG <strong>75%</strong></span>
+                  <span class="a2-mini-stat">RANGE <strong>52–94%</strong></span>
+                  <span class="a2-mini-stat">UNGRADED <strong>6</strong></span>
+                  <span class="a2-mini-stat a2-stat-right">Updated 2h ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2: new -->
+            <div class="a2-card a2-card-new" style="--cc: #15B392">
+              <div class="a2-card-header">
+                <div class="a2-header-left">
+                  <div class="a2-card-accent"></div>
+                  <div>
+                    <div class="a2-card-name">Lab Report: Osmosis</div>
+                    <div class="a2-card-sub">8 questions · 80 points · 28 scanned</div>
+                  </div>
+                </div>
+                <div class="a2-header-right">
+                  <button class="a2-action-btn">BY STUDENT</button>
+                  <button class="a2-action-btn a2-action-primary">BY QUESTION</button>
+                </div>
+              </div>
+              <div class="a2-card-body">
+                <div class="a2-progress-row">
+                  <span class="a2-progress-label">GRADING</span>
+                  <div class="a2-progress-bar"><div class="a2-progress-fill" style="width: 100%"></div></div>
+                  <span class="a2-progress-value">28 / 28</span>
+                </div>
+                <div class="a2-stats-row">
+                  <span class="a2-mini-stat">AVG <strong>72%</strong></span>
+                  <span class="a2-mini-stat">RANGE <strong>45–96%</strong></span>
+                  <span class="a2-mini-stat">UNGRADED <strong>0</strong></span>
+                  <span class="a2-mini-stat a2-stat-right">Updated 5d ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: not yet scanned -->
+            <div class="a2-card a2-card-empty" style="--cc: #15B392">
+              <div class="a2-card-header">
+                <div class="a2-header-left">
+                  <div class="a2-card-accent"></div>
+                  <div>
+                    <div class="a2-card-name">Genetics Worksheet</div>
+                    <div class="a2-card-sub">6 questions · 50 points · 0 scanned</div>
+                  </div>
+                </div>
+                <div class="a2-header-right">
+                  <span class="a2-empty-label">NO SCANS YET</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style is:global>
+  /* ================================================================== */
+  /* Page Shell                                                          */
+  /* ================================================================== */
+
+  .hv-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  .hv-header { margin-bottom: 36px; }
+  .hv-header h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin: 0 0 8px; }
+  .hv-subtitle { font-size: 13px; color: #757575; margin: 0; line-height: 1.5; }
+
+  .hv-section { margin-top: 48px; }
+  .hv-section h2 { font-size: 20px; font-weight: 700; margin: 4px 0 6px; }
+  .hv-desc { font-size: 13px; color: #757575; margin: 0 0 24px; line-height: 1.5; }
+
+  .hv-section-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #9e9e9e;
+  }
+  .hv-section-label-inline {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #9e9e9e; margin-bottom: 12px;
+  }
+
+  /* Shared mock container */
+  .hv-mock {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #f5f5f5;
+  }
+
+  /* Shared mock header */
+  .hv-dash-header { background: #1a1a1a; padding: 10px 20px; }
+  .hv-dash-header-inner { display: flex; align-items: center; justify-content: space-between; }
+  .hv-brand { display: flex; align-items: center; gap: 8px; }
+  .hv-logo {
+    width: 24px; height: 24px; background: #5002F7; color: white;
+    font-size: 14px; font-weight: 800; display: flex; align-items: center;
+    justify-content: center; border-radius: 4px;
+  }
+  .hv-brand-name { font-size: 11px; font-weight: 800; letter-spacing: 3px; color: white; }
+  .hv-user { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; color: #9e9e9e; }
+
+  .hv-dash-main { padding: 24px 20px; }
+
+  .hv-breadcrumb {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+    margin-bottom: 20px; color: #424242;
+  }
+  .hv-breadcrumb-current { color: #424242; }
+  .hv-breadcrumb-link { color: #5002F7; cursor: pointer; }
+  .hv-breadcrumb-link:hover { text-decoration: underline; }
+  .hv-breadcrumb-sep { margin: 0 10px; color: #bdbdbd; }
+
+  /* ================================================================== */
+  /* FUSED LAYOUT                                                        */
+  /* ================================================================== */
+
+  .f-layout {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    gap: 24px;
+    align-items: start;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Courses table                                                       */
+  /* ------------------------------------------------------------------ */
+
+  .f-courses-section { margin-bottom: 28px; }
+
+  .f-section-bar {
+    background: #1a1a1a; color: white;
+    font-size: 10px; font-weight: 800; letter-spacing: 3px;
+    padding: 8px 16px;
+    border-radius: 8px 8px 0 0;
+  }
+
+  .f-table {
+    width: 100%; border-collapse: collapse; background: white;
+    border: 1px solid #e0e0e0; border-top: none;
+    border-radius: 0 0 8px 8px; overflow: hidden;
+    font-size: 12px;
+  }
+  .f-table th {
+    font-size: 9px; font-weight: 800; letter-spacing: 1.5px; color: #9e9e9e;
+    padding: 8px 12px; text-align: center; border-bottom: 1px solid #e0e0e0;
+    background: #fafafa;
+  }
+  .f-th-left { text-align: left !important; }
+  .f-th-narrow { width: 28px; }
+  .f-table td {
+    padding: 12px 12px; border-bottom: 1px solid #f5f5f5; text-align: center;
+    color: #424242; font-variant-numeric: tabular-nums;
+  }
+  .f-table tr:last-child td { border-bottom: none; }
+  .f-table tbody tr { cursor: pointer; transition: background 0.1s; }
+  .f-table tbody tr:hover { background: #fafafa; }
+
+  .f-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .f-td-name { font-weight: 700; text-align: left; color: #212121; }
+  .f-td-avg { font-weight: 700; }
+  .f-td-muted { color: #bdbdbd; }
+
+  /* ------------------------------------------------------------------ */
+  /* Recent Assignments (D rows + E action buttons)                      */
+  /* ------------------------------------------------------------------ */
+
+  .f-assignments-section { }
+
+  .f-assignment-list {
+    background: white; border: 1px solid #e0e0e0; border-top: none;
+    border-radius: 0 0 8px 8px; overflow: hidden;
+  }
+
+  .f-assign-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 12px 16px; border-bottom: 1px solid #f5f5f5;
+    transition: background 0.1s;
+  }
+  .f-assign-row:last-child { border-bottom: none; }
+  .f-assign-row:hover { background: #fafafa; }
+
+  .f-assign-urgent { background: #fffdf7; border-bottom-color: #fff3e0; }
+  .f-assign-urgent:hover { background: #fff8e1; }
+
+  .f-assign-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+  .f-assign-accent { width: 3px; height: 28px; border-radius: 1px; flex-shrink: 0; }
+
+  .f-assign-info { flex: 1; min-width: 0; }
+  .f-assign-name {
+    font-size: 13px; font-weight: 700; color: #212121;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .f-assign-course { font-size: 11px; color: #9e9e9e; letter-spacing: 0.3px; }
+
+  .f-assign-status { flex-shrink: 0; }
+  .f-status-tag {
+    font-size: 9px; font-weight: 800; letter-spacing: 1px;
+    padding: 3px 8px; border-radius: 3px; white-space: nowrap;
+  }
+  .f-status-new { background: #f5f5f5; color: #9e9e9e; }
+  .f-status-progress { background: #fff8e1; color: #946800; }
+  .f-status-done { background: #e8f5e9; color: #248a3d; }
+
+  .f-assign-grade { text-align: right; flex-shrink: 0; width: 50px; }
+  .f-assign-pct {
+    font-size: 13px; font-weight: 700; color: #212121; display: block;
+    font-variant-numeric: tabular-nums;
+  }
+  .f-assign-count { font-size: 10px; color: #9e9e9e; font-variant-numeric: tabular-nums; }
+  .f-muted { color: #bdbdbd !important; }
+
+  .f-assign-time {
+    font-size: 10px; color: #bdbdbd; flex-shrink: 0; width: 46px; text-align: right;
+  }
+
+  .f-assign-btn {
+    font-size: 9px; font-weight: 800; letter-spacing: 1px;
+    padding: 5px 12px; border-radius: 6px;
+    background: #1a1a1a; color: white; border: none;
+    cursor: pointer; font-family: inherit; white-space: nowrap;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+  .f-assign-btn:hover { background: #424242; }
+  .f-btn-review {
+    background: white; color: #424242; border: 1px solid #e0e0e0;
+  }
+  .f-btn-review:hover { background: #fafafa; border-color: #424242; }
+
+  /* ------------------------------------------------------------------ */
+  /* Activity feed sidebar (from B)                                      */
+  /* ------------------------------------------------------------------ */
+
+  .f-sidebar {
+    background: white; border: 1px solid #e0e0e0; border-radius: 10px;
+    padding: 16px; position: sticky; top: 24px;
+  }
+  .f-sidebar-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #9e9e9e;
+    margin-bottom: 14px;
+  }
+
+  .f-feed { display: flex; flex-direction: column; }
+  .f-feed-item {
+    display: flex; gap: 10px; padding: 10px 0;
+    border-bottom: 1px solid #f5f5f5;
+  }
+  .f-feed-item:last-child { border-bottom: none; }
+  .f-feed-dot {
+    width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px;
+  }
+  .f-feed-text { font-size: 12px; color: #424242; line-height: 1.4; }
+  .f-feed-text strong { font-weight: 700; }
+  .f-feed-time { font-size: 10px; color: #bdbdbd; margin-top: 2px; }
+
+  /* ================================================================== */
+  /* ASSIGNMENT CARDS (A style — shown after selecting a course)         */
+  /* ================================================================== */
+
+  .a2-card-list { display: flex; flex-direction: column; gap: 10px; }
+
+  .a2-card {
+    background: white; border: 1px solid #e0e0e0; border-radius: 12px;
+    overflow: hidden; transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .a2-card:hover { border-color: #bdbdbd; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  .a2-card-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 16px; gap: 12px;
+  }
+  .a2-header-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+  .a2-header-right { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .a2-card-accent { width: 3px; height: 32px; border-radius: 1px; background: var(--cc); flex-shrink: 0; }
+  .a2-card-name { font-size: 14px; font-weight: 700; color: #212121; }
+  .a2-card-sub { font-size: 11px; color: #9e9e9e; margin-top: 2px; letter-spacing: 0.3px; }
+
+  .a2-action-btn {
+    font-size: 9px; font-weight: 800; letter-spacing: 1px;
+    padding: 6px 14px; border-radius: 6px;
+    background: white; color: #424242; border: 1px solid #e0e0e0;
+    cursor: pointer; font-family: inherit; white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .a2-action-btn:hover { border-color: var(--cc); color: var(--cc); background: #fafafa; }
+  .a2-action-primary {
+    background: #1a1a1a; color: white; border-color: #1a1a1a;
+  }
+  .a2-action-primary:hover { background: #424242; border-color: #424242; color: white; }
+
+  .a2-empty-label {
+    font-size: 10px; font-weight: 800; letter-spacing: 1.5px; color: #bdbdbd;
+  }
+
+  .a2-card-body {
+    padding: 0 16px 14px; border-top: 1px solid #f5f5f5; padding-top: 10px;
+  }
+
+  .a2-progress-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .a2-progress-label {
+    font-size: 9px; font-weight: 800; letter-spacing: 1.5px; color: #9e9e9e;
+    width: 52px; flex-shrink: 0;
+  }
+  .a2-progress-bar {
+    flex: 1; height: 4px; background: #eeeeee; border-radius: 2px; overflow: hidden;
+  }
+  .a2-progress-fill {
+    height: 100%; background: var(--cc); border-radius: 2px; transition: width 0.3s ease;
+  }
+  .a2-progress-value {
+    font-size: 11px; font-weight: 700; color: #424242;
+    width: 50px; text-align: right; font-variant-numeric: tabular-nums;
+  }
+
+  .a2-stats-row { display: flex; gap: 14px; }
+  .a2-mini-stat {
+    font-size: 10px; color: #9e9e9e; font-weight: 600; letter-spacing: 0.5px;
+  }
+  .a2-mini-stat strong { color: #424242; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .a2-stat-right { margin-left: auto; font-weight: 500; }
+
+  .a2-card-empty .a2-card-header { opacity: 0.6; }
+
+  /* ================================================================== */
+  /* Responsive                                                          */
+  /* ================================================================== */
+
+  @media (max-width: 900px) {
+    .f-layout { grid-template-columns: 1fr; }
+    .f-sidebar { position: static; }
+    .f-assign-time { display: none; }
+  }
+
+  @media (max-width: 600px) {
+    .hv-page { padding: 24px 16px 60px; }
+    .f-assign-status { display: none; }
+    .a2-header-right { flex-direction: column; }
+    .a2-stats-row { flex-wrap: wrap; }
+  }
+</style>

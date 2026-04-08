@@ -17,7 +17,8 @@
       "WebFetch(domain:instapage.com)",
       "WebFetch(domain:lovable.dev)",
       "Bash(open:*)",
-      "Bash(gh run:*)"
+      "Bash(gh run:*)",
+      "Bash(sips:*)"
     ]
   }
 }

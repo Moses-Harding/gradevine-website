@@ -1,5 +1,15 @@
 # Change Log - April 2026
 
+### Dashboard Home View Redesign (2026-04-08)
+
+Redesigned courses/home view with two-column layout for richer visual hierarchy and functionality. Created new HomeView component featuring: courses table with color indicators (name, student count, assignment count), recent assignments section with enriched card design showing metadata and direct grading access (BY STUDENT / BY QUESTION action buttons), and activity feed sidebar tracking recent assignment changes. Implemented new `useAllAssignments()` hook to fetch assignments across all courses, supporting the recent assignments widget. Updated AssignmentList component to use enriched card style with visible statistics row (scans, questions, points, update time) instead of dark header design. Action buttons intelligently hide when no scans exist, showing "NO SCANS YET" label instead. Responsive grid layout collapses sidebar on smaller viewports.
+
+**Files created:** `src/components/dashboard/HomeView.tsx` (new), `src/hooks/useAllAssignments.ts` (new)
+
+**Files modified:** `src/components/dashboard/DashboardApp.tsx`, `src/components/dashboard/AssignmentList.tsx`, `src/lib/cloudkit/queries.ts`, `src/pages/dashboard.astro` (~400 lines of styling added)
+
+---
+
 ### Support Page & FAQ (2026-04-07)
 
 Added `/support` page with collapsible FAQ section covering 7 categories from in-app help content: Getting Started, Courses & Sections, Assignments, Importing & Scanning, Student Matching, Grading, and Students. Consolidated 40+ FAQs into organized accordion-style interface. Updated homepage footer with "Help & FAQ" link. Changed support email from `support@gradevine.app` to `moses.harding.dev@gmail.com`.

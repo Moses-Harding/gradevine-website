@@ -72,6 +72,7 @@ function parseAssignment(record: CKJSRecord): QuestionAssignment {
     description: stringField(record, 'description'),
     criteria: stringField(record, 'criteria') ?? '',
     quickFeedback: parseBinaryJsonField<QuestionAssignment['quickFeedback']>(record, 'quickFeedbackData') ?? [],
+    recordChangeTag: record.recordChangeTag ?? '',
   };
 }
 
@@ -204,6 +205,22 @@ export async function fetchAllStudents(forceRefresh = false): Promise<Student[]>
   const students = records.map(parseStudent);
   setCache(cacheKey, students);
   return students;
+}
+
+/**
+ * Fetch all assignments across all courses (no courseID filter).
+ */
+export async function fetchAllAssignments(forceRefresh = false): Promise<QuestionAssignment[]> {
+  const cacheKey = 'all-assignments';
+  if (!forceRefresh) {
+    const cached = getCache<QuestionAssignment[]>(cacheKey);
+    if (cached) return cached;
+  }
+
+  const records = await queryRecords(RecordTypes.Assignment);
+  const assignments = records.map(parseAssignment).filter((a) => !a.isArchived);
+  setCache(cacheKey, assignments);
+  return assignments;
 }
 
 /**
