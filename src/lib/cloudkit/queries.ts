@@ -77,12 +77,23 @@ function parseAssignment(record: CKJSRecord): QuestionAssignment {
 }
 
 function parseScan(record: CKJSRecord): Scan {
+  const responses =
+    parseBinaryJsonField<ScanQuestionResponse[]>(record, 'questionResponsesData') ?? [];
+  // Migrate legacy `earnedPoints` (Int?) → `pointsEarned` (Double?) on load.
+  // iOS does this via `migratePointsIfNeeded()`; older records may still only
+  // carry the legacy field, which would otherwise make them appear ungraded.
+  for (const r of responses) {
+    const legacy = (r as unknown as { earnedPoints?: number | null }).earnedPoints;
+    if (r.pointsEarned == null && legacy != null) {
+      r.pointsEarned = legacy;
+    }
+  }
   return {
     id: record.recordName,
     assignmentID: stringField(record, 'assignmentID') ?? '',
     studentID: stringField(record, 'studentID'),
     courseID: stringField(record, 'courseID'),
-    questionResponses: parseBinaryJsonField<ScanQuestionResponse[]>(record, 'questionResponsesData') ?? [],
+    questionResponses: responses,
     feedback: stringField(record, 'feedback'),
     lastModifiedDate: timestampField(record, 'lastModifiedDate'),
     createdDate: timestampField(record, 'createdDate') ?? new Date().toISOString(),

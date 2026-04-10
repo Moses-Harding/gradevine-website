@@ -1,15 +1,16 @@
 import { useAssignments } from '../../hooks/useAssignments';
+import {
+  useAssignmentGradingStatuses,
+  type AssignmentGradingStatus,
+} from '../../hooks/useAssignmentGradingStatuses';
 import type { QuestionAssignment, Course } from '../../types/cloudkit';
 
 interface AssignmentListProps {
   course: Course;
-  onSelect: (assignment: QuestionAssignment) => void;
+  onSelectAssignment: (assignment: QuestionAssignment) => void;
+  onGradeByStudent: (assignment: QuestionAssignment) => void;
   onGradeByQuestion: (assignment: QuestionAssignment) => void;
   onBack: () => void;
-}
-
-function totalPoints(assignment: QuestionAssignment): number {
-  return assignment.questions.reduce((sum, q) => sum + q.pointValue, 0);
 }
 
 function courseColor(colorHex: string | null): string {
@@ -17,22 +18,19 @@ function courseColor(colorHex: string | null): string {
   return colorHex.startsWith('#') ? colorHex : `#${colorHex}`;
 }
 
-function timeAgo(dateStr: string): string {
-  const now = Date.now();
-  const date = new Date(dateStr).getTime();
-  const diffMs = now - date;
-  const diffMin = Math.floor(diffMs / 60000);
-  if (diffMin < 60) return `${diffMin}m ago`;
-  const diffHrs = Math.floor(diffMin / 60);
-  if (diffHrs < 24) return `${diffHrs}h ago`;
-  const diffDays = Math.floor(diffHrs / 24);
-  if (diffDays < 30) return `${diffDays}d ago`;
-  return `${Math.floor(diffDays / 30)}mo ago`;
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  const month = date.toLocaleString('en-US', { month: 'short' });
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const currentYear = new Date().getFullYear();
+  return year === currentYear ? `${month} ${day}` : `${month} ${day}, ${year}`;
 }
 
-export function AssignmentList({ course, onSelect, onGradeByQuestion, onBack }: AssignmentListProps) {
+export function AssignmentList({ course, onSelectAssignment, onGradeByStudent, onGradeByQuestion, onBack }: AssignmentListProps) {
   const { assignments, isLoading, error, refresh } = useAssignments(course.id);
   const color = courseColor(course.colorHex);
+  const gradingStatuses = useAssignmentGradingStatuses(assignments);
 
   if (isLoading) {
     return (
@@ -71,73 +69,87 @@ export function AssignmentList({ course, onSelect, onGradeByQuestion, onBack }: 
         {assignments.map((a) => {
           const scanCount = a.scanIDs.length;
           const questionCount = a.questions.length;
-          const points = totalPoints(a);
           const hasScanData = scanCount > 0;
 
           return (
             <div
               key={a.id}
-              className={`acard ${!hasScanData ? 'acard-empty' : ''}`}
+              className={`acard acard-clickable ${!hasScanData ? 'acard-empty' : ''}`}
               style={{ '--cc': color } as React.CSSProperties}
+              onClick={() => onSelectAssignment(a)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onSelectAssignment(a);
+                }
+              }}
             >
-              {/* Header: accent + title + actions */}
-              <div className="acard-header">
-                <div className="acard-header-left">
-                  <div className="acard-accent" />
-                  <div className="acard-title-block">
-                    <div className="acard-name">{a.title}</div>
-                    <div className="acard-sub">
-                      {questionCount} question{questionCount !== 1 ? 's' : ''}
-                      {' · '}{points} points
-                      {' · '}{scanCount} scan{scanCount !== 1 ? 's' : ''}
+              {/* Row 1: Title + metadata */}
+              <div className="acard-row-top">
+                <div className="acard-accent" />
+                <div className="acard-top-content">
+                  <div className="acard-top-line1">
+                    <span className="acard-name">{a.title}</span>
+                    <div className="acard-top-meta">
+                      <span className="acard-meta-item">{scanCount} scan{scanCount !== 1 ? 's' : ''}</span>
+                      <span className="acard-meta-item">Created {formatDate(a.createdDate)}</span>
+                      <span className="acard-meta-item">Modified {formatDate(a.updatedDate)}</span>
                     </div>
                   </div>
-                </div>
-                <div className="acard-header-right">
-                  {hasScanData ? (
-                    <>
-                      <button
-                        className="acard-action-btn"
-                        onClick={() => onSelect(a)}
-                      >
-                        BY STUDENT
-                      </button>
-                      <button
-                        className="acard-action-btn acard-action-primary"
-                        onClick={() => onGradeByQuestion(a)}
-                      >
-                        BY QUESTION
-                      </button>
-                    </>
-                  ) : (
-                    <span className="acard-empty-label">NO SCANS YET</span>
-                  )}
+                  <div className="acard-top-line2">
+                    <span className="acard-course-name">{a.courseName}</span>
+                    <span className="acard-meta-item">{questionCount} question{questionCount !== 1 ? 's' : ''}</span>
+                  </div>
                 </div>
               </div>
 
-              {/* Body: progress + stats (only if scans exist) */}
-              {hasScanData && (
-                <div className="acard-body">
-                  <div className="acard-stats-row">
-                    <span className="acard-mini-stat">
-                      SCANS <strong>{scanCount}</strong>
-                    </span>
-                    <span className="acard-mini-stat">
-                      QUESTIONS <strong>{questionCount}</strong>
-                    </span>
-                    <span className="acard-mini-stat">
-                      POINTS <strong>{points}</strong>
-                    </span>
-                    <span className="acard-mini-stat acard-stat-right">
-                      Updated {timeAgo(a.updatedDate)}
-                    </span>
-                  </div>
+              {/* Row 2: Status + actions */}
+              <div className="acard-row-bottom">
+                <div className="acard-status-area">
+                  <StatusBadge
+                    status={gradingStatuses.get(a.id) ?? (hasScanData ? 'loading' : 'new')}
+                  />
                 </div>
-              )}
+                {hasScanData && (
+                  <div className="acard-actions">
+                    <button
+                      className="acard-action-btn"
+                      onClick={(e) => { e.stopPropagation(); onGradeByStudent(a); }}
+                    >
+                      GRADE BY STUDENT
+                    </button>
+                    <button
+                      className="acard-action-btn acard-action-primary"
+                      onClick={(e) => { e.stopPropagation(); onGradeByQuestion(a); }}
+                    >
+                      GRADE BY QUESTION
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           );
         })}
       </div>
     </div>
   );
+}
+
+// ---------------------------------------------------------------------------
+// Status badge (shared between list views)
+// ---------------------------------------------------------------------------
+
+export function StatusBadge({ status }: { status: AssignmentGradingStatus }) {
+  switch (status) {
+    case 'new':
+      return <span className="acard-empty-label">NO SCANS YET</span>;
+    case 'loading':
+      return <span className="acard-status-badge acard-status-loading">LOADING…</span>;
+    case 'done':
+      return <span className="acard-status-badge acard-status-done">COMPLETE</span>;
+    case 'progress':
+      return <span className="acard-status-badge">IN PROGRESS</span>;
+  }
 }

@@ -41,14 +41,34 @@ export function useAuth(): UseAuthReturn {
       await initialize();
 
       // If ?login=1 param is present, auto-click the Apple sign-in button
+      // once CloudKit JS has rendered it into #apple-sign-in-button.
       const params = new URLSearchParams(window.location.search);
       if (params.get('login') === '1') {
         // Clean up the URL
         window.history.replaceState({}, '', window.location.pathname);
-        // CloudKit JS renders an anchor inside #apple-sign-in-button — click it
-        const signInBtn = document.querySelector('#apple-sign-in-button a, #apple-sign-in-button button') as HTMLElement | null;
-        if (signInBtn) {
-          signInBtn.click();
+
+        // CloudKit JS renders the Apple sign-in control asynchronously into
+        // #apple-sign-in-button. Poll until it appears, then trigger the click.
+        const container = document.getElementById('apple-sign-in-button');
+        if (!container) return;
+
+        const tryClick = (): boolean => {
+          const btn = container.querySelector('a, button') as HTMLElement | null;
+          if (btn) {
+            btn.click();
+            return true;
+          }
+          return false;
+        };
+
+        if (!tryClick()) {
+          // Poll every 100ms for up to 5 seconds
+          const start = Date.now();
+          const interval = window.setInterval(() => {
+            if (tryClick() || Date.now() - start > 5000) {
+              window.clearInterval(interval);
+            }
+          }, 100);
         }
       }
     });

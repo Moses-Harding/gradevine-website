@@ -116,63 +116,294 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     padding: 32px 24px;
   }
 
+  /* Dev-mode label showing the current view component name */
+  .view-name-label {
+    display: inline-block;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #9e9e9e;
+    background: #f5f5f5;
+    border: 1px dashed #e0e0e0;
+    border-radius: 4px;
+    padding: 3px 8px;
+    margin-bottom: 8px;
+  }
+
   /* ------------------------------------------------------------------ */
   /* Auth gate                                                           */
+  /* ------------------------------------------------------------------ */
+
+  /* ------------------------------------------------------------------ */
+  /* Auth gate — two-column sign-in landing                              */
   /* ------------------------------------------------------------------ */
 
   .auth-gate {
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
     padding: 24px;
-    background: linear-gradient(135deg, var(--color-purple-50) 0%, white 50%);
+    background:
+      radial-gradient(circle at 15% 15%, rgba(112, 2, 247, 0.08), transparent 45%),
+      radial-gradient(circle at 85% 85%, rgba(80, 2, 247, 0.06), transparent 40%),
+      linear-gradient(180deg, #fafafa 0%, #f0e6ff 100%);
+  }
+
+  .auth-shell {
+    width: 100%;
+    max-width: 1120px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 48px;
+    align-items: stretch;
+  }
+
+  /* Left: hero / brand pitch */
+  .auth-hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 32px 8px;
+    color: var(--color-gray-900);
+  }
+
+  .auth-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--color-gray-900);
+    margin-bottom: 40px;
+    width: fit-content;
+  }
+
+  .auth-brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--color-purple-deep);
+    color: white;
+    font-weight: 900;
+    font-size: 18px;
+    letter-spacing: 0;
+  }
+
+  .auth-brand-text {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 2px;
+  }
+
+  .auth-hero-body {
+    max-width: 520px;
+  }
+
+  .auth-hero-title {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -1px;
+    margin: 0 0 20px;
+    color: var(--color-gray-900);
+  }
+
+  .auth-hero-accent {
+    background: linear-gradient(90deg, var(--color-purple-deep), var(--color-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .auth-hero-sub {
+    font-size: 17px;
+    line-height: 1.55;
+    color: var(--color-gray-700);
+    margin: 0 0 32px;
+  }
+
+  .auth-feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .auth-feature-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-gray-800);
+  }
+
+  .auth-feature-bullet {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 28px;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 8px;
+    background: white;
+    color: var(--color-purple-deep);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(80, 2, 247, 0.15);
+  }
+
+  .auth-hero-footer {
+    margin-top: 32px;
+    padding-top: 24px;
+  }
+
+  .auth-hero-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--color-gray-600);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .auth-hero-link:hover {
+    color: var(--color-purple-deep);
+  }
+
+  /* Right: sign-in panel */
+  .auth-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
   }
 
   .auth-card {
     background: white;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    padding: 48px 40px;
-    max-width: 420px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 20px 60px -20px rgba(80, 2, 247, 0.25), 0 8px 24px rgba(0, 0, 0, 0.06);
+    padding: 40px 36px;
     width: 100%;
+  }
+
+  .auth-card-eyebrow {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--color-purple-deep);
+    margin-bottom: 12px;
+  }
+
+  .auth-card-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-gray-900);
+    margin: 0 0 10px;
+    letter-spacing: -0.4px;
+  }
+
+  .auth-card-sub {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--color-gray-600);
+    margin: 0;
+  }
+
+  .auth-card-divider {
+    height: 1px;
+    background: var(--color-gray-200);
+    margin: 24px 0;
+  }
+
+  .auth-apple-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .auth-apple-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .auth-card-hint {
+    font-size: 12px;
+    color: var(--color-gray-500);
+    margin: 0;
     text-align: center;
   }
 
-  .auth-logo { margin-bottom: 16px; }
-  .auth-logo img { margin: 0 auto; border-radius: var(--radius-card); }
-
-  .auth-card h1 {
-    font-size: 24px;
-    font-weight: 700;
-    color: var(--color-gray-900);
-    margin-bottom: 8px;
-  }
-
-  .auth-subtitle {
-    font-size: 15px;
-    color: var(--color-gray-600);
-    margin-bottom: 24px;
+  .auth-card-privacy {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 12px;
     line-height: 1.5;
+    color: var(--color-gray-600);
   }
 
-  .auth-instructions {
-    font-size: 14px;
-    color: var(--color-gray-700);
-    margin-bottom: 24px;
+  .auth-card-privacy svg {
+    color: var(--color-purple-deep);
+    flex-shrink: 0;
+    margin-top: 1px;
   }
 
+  .auth-app-store {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    padding: 16px;
+    font-size: 13px;
+    color: var(--color-gray-600);
+  }
+
+  .auth-app-link {
+    font-weight: 700;
+    color: var(--color-purple-deep);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+
+  .auth-app-link:hover {
+    color: var(--color-purple);
+  }
+
+  /* Unused legacy styles — preserved to avoid breaking any leftover markup */
   .auth-button-container {
-    margin: 24px auto;
     display: flex;
     justify-content: center;
   }
 
-  .auth-note {
-    font-size: 12px;
-    color: var(--color-gray-500);
-    margin-top: 16px;
-    line-height: 1.5;
+  @media (max-width: 960px) {
+    .auth-shell {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 540px;
+    }
+    .auth-hero {
+      padding: 16px 8px 0;
+      text-align: center;
+    }
+    .auth-brand { margin: 0 auto 24px; }
+    .auth-hero-title { font-size: 34px; }
+    .auth-feature-list li { text-align: left; }
+    .auth-hero-footer { display: none; }
   }
 
   /* ------------------------------------------------------------------ */
@@ -493,49 +724,111 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 
-  .acard-header {
+  /* Row 1: accent bar + title block */
+  .acard-row-top {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
     gap: 12px;
-  }
-
-  .acard-header-left {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .acard-header-right {
-    display: flex;
-    gap: 6px;
-    flex-shrink: 0;
+    padding: 14px 16px 8px;
   }
 
   .acard-accent {
     width: 3px;
-    height: 32px;
+    align-self: stretch;
     border-radius: 1px;
     background: var(--cc);
     flex-shrink: 0;
   }
 
-  .acard-title-block { min-width: 0; }
+  .acard-top-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .acard-top-line1 {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
 
   .acard-name {
     font-size: 14px;
     font-weight: 700;
     color: #212121;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .acard-sub {
+  .acard-top-meta {
+    display: flex;
+    gap: 12px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  .acard-meta-item {
     font-size: 11px;
     color: #9e9e9e;
-    margin-top: 2px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+  }
+
+  .acard-top-line2 {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .acard-course-name {
+    font-size: 11px;
+    color: var(--cc);
+    font-weight: 700;
     letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  /* Row 2: status + action buttons */
+  .acard-row-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 12px;
+    border-top: 1px solid #f5f5f5;
+    margin-top: 2px;
+  }
+
+  .acard-status-area {
+    display: flex;
+    align-items: center;
+  }
+
+  .acard-status-badge {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #946800;
+    background: rgba(255, 210, 76, 0.2);
+    padding: 3px 10px;
+    border-radius: 4px;
+  }
+
+  .acard-status-badge.acard-status-done {
+    color: #248a3d;
+    background: rgba(52, 199, 89, 0.15);
+  }
+
+  .acard-status-badge.acard-status-loading {
+    color: #9e9e9e;
+    background: #f5f5f5;
+  }
+
+  .acard-actions {
+    display: flex;
+    gap: 6px;
   }
 
   .acard-action-btn {
@@ -578,36 +871,567 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     color: #bdbdbd;
   }
 
-  .acard-body {
-    padding: 0 16px 14px;
-    border-top: 1px solid #f5f5f5;
-    padding-top: 10px;
+  .acard-empty .acard-row-top { opacity: 0.6; }
+
+  .acard-clickable {
+    cursor: pointer;
   }
 
-  .acard-stats-row {
+  .acard-clickable:focus-visible {
+    outline: 2px solid var(--cc, #5002F7);
+    outline-offset: 2px;
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Assignment Detail View                                              */
+  /* ------------------------------------------------------------------ */
+
+  .adv-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .adv-header {
+    display: flex;
+    gap: 16px;
+    padding: 24px 28px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+    align-items: flex-start;
+  }
+
+  .adv-header-accent {
+    width: 4px;
+    align-self: stretch;
+    border-radius: 2px;
+    background: var(--cc);
+  }
+
+  .adv-header-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .adv-header-top {
+    display: flex;
+    align-items: center;
+  }
+
+  .adv-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #212121;
+    margin: 0;
+    letter-spacing: -0.3px;
+  }
+
+  .adv-header-meta,
+  .adv-header-dates {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #9e9e9e;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    flex-wrap: wrap;
+  }
+
+  .adv-course-name {
+    font-size: 11px;
+    color: var(--cc);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+
+  .adv-meta-item { white-space: nowrap; }
+  .adv-meta-sep { color: #e0e0e0; }
+
+  .adv-header-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  /* Progress bar — iOS-style card */
+  .adv-progress-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+  }
+
+  .adv-progress-stat {
+    background: white;
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    border-right: 1px solid rgba(142, 142, 147, 0.15);
+  }
+
+  .adv-progress-stat:last-child {
+    border-right: none;
+  }
+
+  .adv-progress-value {
+    font-size: 26px;
+    font-weight: 700;
+    color: #212121;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .adv-progress-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #8e8e93;
+  }
+
+  /* Section — iOS-style card with soft shadow */
+  .adv-section {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+    padding: 20px 20px 18px;
+  }
+
+  .adv-section-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+
+  .adv-section-bar > span:first-child {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212121;
+    letter-spacing: -0.2px;
+    text-transform: none;
+  }
+
+  .adv-section-trailing {
+    display: flex;
+    align-items: center;
+  }
+
+  .adv-threshold-select {
+    background: #f5f5f5;
+    color: #007AFF;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--font-family);
+    cursor: pointer;
+  }
+
+  .adv-threshold-select:focus {
+    outline: 2px solid #007AFF;
+    outline-offset: 1px;
+  }
+
+  .adv-section-body {
+    /* padding handled by parent .adv-section now */
+  }
+
+  .adv-empty-hint {
+    font-size: 13px;
+    color: #9e9e9e;
+    margin: 4px 0;
+  }
+
+  /* Summary Statistics — stat row list (iOS-style) */
+  .adv-stat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .adv-stat-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+
+  .adv-stat-row-label {
+    color: #8e8e93;
+  }
+
+  .adv-stat-row-value {
+    font-weight: 600;
+    color: #212121;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .adv-stat-row-secondary {
+    color: #8e8e93;
+    font-weight: 500;
+  }
+
+  /* Struggling students */
+  .adv-struggling-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 149, 0, 0.1);
+    border-radius: 12px;
+    padding: 12px 14px;
+    color: #FF9500;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .adv-struggling-banner svg {
+    flex-shrink: 0;
+  }
+
+  .adv-struggling-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .adv-struggling-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: white;
+    border: 1px solid rgba(255, 149, 0, 0.2);
+    border-radius: 12px;
+    padding: 12px 14px;
+    width: 100%;
+    cursor: pointer;
+    font-family: var(--font-family);
+    text-align: left;
+    transition: background 0.15s, border-color 0.15s;
+  }
+
+  .adv-struggling-row:hover {
+    background: #fffaf2;
+    border-color: rgba(255, 149, 0, 0.4);
+  }
+
+  .adv-struggling-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .adv-struggling-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #212121;
+    margin-bottom: 2px;
+  }
+
+  .adv-struggling-meta {
+    font-size: 12px;
+    color: #8e8e93;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .adv-struggling-pct {
+    color: #FF9500;
+    font-weight: 600;
+  }
+
+  .adv-struggling-chevron {
+    color: #c7c7cc;
+    font-size: 22px;
+    font-weight: 300;
+  }
+
+  /* Grade distribution — iOS-style with letter badge circle */
+  .adv-distribution-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .adv-dist-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .adv-dist-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .adv-dist-range {
+    width: 70px;
+    font-size: 14px;
+    color: #8e8e93;
+    flex-shrink: 0;
+  }
+
+  .adv-dist-bar-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(142, 142, 147, 0.12);
+    border-radius: 4px;
+    overflow: hidden;
+    min-width: 60px;
+  }
+
+  .adv-dist-bar-fill {
+    height: 100%;
+    opacity: 0.6;
+    border-radius: 4px;
+    transition: width 0.3s;
+  }
+
+  .adv-dist-count {
+    width: 30px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #212121;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Ring chart grid — matches iOS AvgPointsRing layout */
+  .adv-ring-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 20px 16px;
+    padding: 4px 0;
+  }
+
+  .adv-ring-cell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .adv-ring-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .adv-ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .adv-ring-avg {
+    font-size: 16px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .adv-ring-possible {
+    font-size: 10px;
+    color: #8e8e93;
+    margin-top: 2px;
+  }
+
+  .adv-ring-na {
+    font-size: 18px;
+    color: #c7c7cc;
+    font-weight: 500;
+  }
+
+  .adv-ring-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #8e8e93;
+    text-align: center;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Questions list */
+  .adv-questions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .adv-question-row {
     display: flex;
     gap: 14px;
   }
 
-  .acard-mini-stat {
-    font-size: 10px;
-    color: #9e9e9e;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+  .adv-question-badge {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 13px;
   }
 
-  .acard-mini-stat strong {
-    color: #424242;
+  .adv-question-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .adv-question-label-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+
+  .adv-question-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #212121;
+  }
+
+  .adv-question-pts {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8e8e93;
+    white-space: nowrap;
+  }
+
+  .adv-question-prompt {
+    font-size: 13px;
+    color: #616161;
+    line-height: 1.5;
+  }
+
+  /* Grade matrix */
+  .adv-matrix-wrap {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid rgba(142, 142, 147, 0.15);
+  }
+
+  .adv-matrix {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 12px;
+  }
+
+  .adv-matrix th {
+    background: #fafafa;
+    color: #9e9e9e;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 10px 8px;
+    border-bottom: 1px solid #e0e0e0;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .adv-matrix-student-h {
+    text-align: left !important;
+    position: sticky;
+    left: 0;
+    background: #fafafa !important;
+    z-index: 2;
+    padding-left: 12px !important;
+  }
+
+  .adv-matrix-q-h { min-width: 48px; }
+  .adv-matrix-total-h { min-width: 120px; }
+
+  .adv-matrix-avg-row td {
+    background: #f5f5f5;
+    border-bottom: 2px solid #e0e0e0;
     font-weight: 700;
+    color: #616161;
+    font-size: 11px;
+  }
+
+  .adv-matrix-avg-label {
+    text-align: left;
+    padding-left: 12px !important;
+    letter-spacing: 1px;
+  }
+
+  .adv-matrix tbody tr:hover td {
+    background: #fafafa;
+  }
+
+  .adv-matrix-student {
+    padding: 10px 12px;
+    text-align: left;
+    font-weight: 600;
+    color: #212121;
+    border-bottom: 1px solid #f5f5f5;
+    position: sticky;
+    left: 0;
+    background: white;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  .adv-matrix-cell {
+    padding: 10px 8px;
+    text-align: center;
+    color: #424242;
+    border-bottom: 1px solid #f5f5f5;
     font-variant-numeric: tabular-nums;
   }
 
-  .acard-stat-right {
-    margin-left: auto;
-    font-weight: 500;
+  .adv-matrix-empty { color: #e0e0e0; }
+
+  .adv-matrix-total {
+    font-weight: 700;
+    color: #212121;
+    white-space: nowrap;
   }
 
-  .acard-empty .acard-header { opacity: 0.6; }
+  .adv-matrix-total-pct {
+    font-size: 10px;
+    color: #9e9e9e;
+    font-weight: 600;
+  }
+
+  .adv-matrix-avg {
+    font-weight: 700;
+  }
+
+  @media (max-width: 900px) {
+    .adv-header { flex-direction: column; }
+    .adv-header-actions { width: 100%; }
+    .adv-progress-bar { grid-template-columns: repeat(2, 1fr); }
+  }
 
   /* ------------------------------------------------------------------ */
   /* Student scan list                                                    */
@@ -1756,6 +2580,7 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     box-shadow: var(--shadow-md);
   }
 
+
   .gbq-grade-panel {
     /* scrolls with page */
   }
@@ -1936,6 +2761,27 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     border-top: none;
     border-radius: 0 0 8px 8px;
     overflow: hidden;
+  }
+
+  /* When .acard sits inside the recent-assignments list, drop its own
+     border + rounded corners so it stacks flush within the container */
+  .home-assignment-list .acard {
+    border: none;
+    border-radius: 0;
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  .home-assignment-list .acard:last-child {
+    border-bottom: none;
+  }
+
+  .home-assignment-list .acard:hover {
+    border-color: transparent;
+    box-shadow: none;
+    background: #fafafa;
+  }
+  .home-assignment-list .acard:hover:not(:last-child) {
+    border-bottom-color: #f5f5f5;
   }
 
   .home-assign-loading {

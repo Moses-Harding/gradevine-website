@@ -2,6 +2,8 @@ import { useMemo } from 'react';
 import { useCourses } from '../../hooks/useCourses';
 import { useAllAssignments } from '../../hooks/useAllAssignments';
 import { useAuth } from '../../hooks/useAuth';
+import { useAssignmentGradingStatuses } from '../../hooks/useAssignmentGradingStatuses';
+import { StatusBadge } from './AssignmentList';
 import type { Course, QuestionAssignment } from '../../types/cloudkit';
 
 function courseColor(colorHex: string | null): string {
@@ -9,13 +11,23 @@ function courseColor(colorHex: string | null): string {
   return colorHex.startsWith('#') ? colorHex : `#${colorHex}`;
 }
 
+function formatDate(dateStr: string): string {
+  const date = new Date(dateStr);
+  const month = date.toLocaleString('en-US', { month: 'short' });
+  const day = date.getDate();
+  const year = date.getFullYear();
+  const currentYear = new Date().getFullYear();
+  return year === currentYear ? `${month} ${day}` : `${month} ${day}, ${year}`;
+}
+
 interface HomeViewProps {
   onSelectCourse: (course: Course) => void;
   onSelectAssignment: (course: Course, assignment: QuestionAssignment) => void;
+  onGradeByStudent: (course: Course, assignment: QuestionAssignment) => void;
   onGradeByQuestion: (course: Course, assignment: QuestionAssignment) => void;
 }
 
-export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByQuestion }: HomeViewProps) {
+export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByStudent, onGradeByQuestion }: HomeViewProps) {
   const { auth } = useAuth();
   const { courses, isLoading: coursesLoading, error: coursesError, errorType, refresh: refreshCourses } = useCourses(auth.isSignedIn);
   const { assignments, isLoading: assignmentsLoading, error: assignmentsError } = useAllAssignments(auth.isSignedIn);
@@ -33,6 +45,9 @@ export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByQuestion
       .sort((a, b) => new Date(b.updatedDate).getTime() - new Date(a.updatedDate).getTime())
       .slice(0, 10);
   }, [assignments]);
+
+  // Load grading status for the recent assignments list
+  const gradingStatuses = useAssignmentGradingStatuses(recentAssignments);
 
   // Count assignments per course
   const assignmentCounts = useMemo(() => {
@@ -86,11 +101,16 @@ export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByQuestion
         <RecentAssignments
           assignments={recentAssignments}
           courseMap={courseMap}
+          gradingStatuses={gradingStatuses}
           isLoading={assignmentsLoading}
           error={assignmentsError}
-          onGradeByStudent={(a) => {
+          onSelectAssignment={(a) => {
             const course = a.courseID ? courseMap.get(a.courseID) : undefined;
             if (course) onSelectAssignment(course, a);
+          }}
+          onGradeByStudent={(a) => {
+            const course = a.courseID ? courseMap.get(a.courseID) : undefined;
+            if (course) onGradeByStudent(course, a);
           }}
           onGradeByQuestion={(a) => {
             const course = a.courseID ? courseMap.get(a.courseID) : undefined;
@@ -165,28 +185,6 @@ function CoursesTable({
 // Recent Assignments
 // ---------------------------------------------------------------------------
 
-function gradingStatus(a: QuestionAssignment): 'new' | 'progress' | 'done' {
-  if (a.scanIDs.length === 0) return 'new';
-  // We don't have scan data here, so use scanIDs count vs 0 as a proxy
-  // A more accurate check would need scan grading data
-  return 'progress';
-}
-
-function statusLabel(status: string): string {
-  switch (status) {
-    case 'new': return 'NEW';
-    case 'done': return 'COMPLETE';
-    default: return 'IN PROGRESS';
-  }
-}
-
-function statusClass(status: string): string {
-  switch (status) {
-    case 'new': return 'home-status-new';
-    case 'done': return 'home-status-done';
-    default: return 'home-status-progress';
-  }
-}
 
 function timeAgo(dateStr: string): string {
   const now = Date.now();
@@ -204,15 +202,19 @@ function timeAgo(dateStr: string): string {
 function RecentAssignments({
   assignments,
   courseMap,
+  gradingStatuses,
   isLoading,
   error,
+  onSelectAssignment,
   onGradeByStudent,
   onGradeByQuestion,
 }: {
   assignments: QuestionAssignment[];
   courseMap: Map<string, Course>;
+  gradingStatuses: Map<string, import('../../hooks/useAssignmentGradingStatuses').AssignmentGradingStatus>;
   isLoading: boolean;
   error: string | null;
+  onSelectAssignment: (a: QuestionAssignment) => void;
   onGradeByStudent: (a: QuestionAssignment) => void;
   onGradeByQuestion: (a: QuestionAssignment) => void;
 }) {
@@ -237,54 +239,65 @@ function RecentAssignments({
           assignments.map((a) => {
             const course = a.courseID ? courseMap.get(a.courseID) : undefined;
             const color = course ? courseColor(course.colorHex) : '#5002F7';
-            const status = gradingStatus(a);
+            const status = gradingStatuses.get(a.id) ?? (a.scanIDs.length === 0 ? 'new' : 'loading');
             const scanCount = a.scanIDs.length;
             const questionCount = a.questions.length;
 
             return (
               <div
                 key={a.id}
-                className={`home-assign-row ${status === 'new' && scanCount === 0 ? 'home-assign-urgent' : ''}`}
+                className="acard acard-clickable"
+                style={{ '--cc': color } as React.CSSProperties}
+                onClick={() => onSelectAssignment(a)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onSelectAssignment(a);
+                  }
+                }}
               >
-                <span
-                  className="home-assign-dot"
-                  style={{
-                    background:
-                      status === 'done' ? '#248a3d' :
-                      status === 'new' ? '#9e9e9e' : '#946800',
-                  }}
-                />
-                <div className="home-assign-accent" style={{ background: color }} />
-                <div className="home-assign-info">
-                  <div className="home-assign-name">{a.title}</div>
-                  <div className="home-assign-course">
-                    {a.courseName}
-                    {questionCount > 0 && ` · ${questionCount} questions`}
+                {/* Row 1: Title + metadata */}
+                <div className="acard-row-top">
+                  <div className="acard-accent" />
+                  <div className="acard-top-content">
+                    <div className="acard-top-line1">
+                      <span className="acard-name">{a.title}</span>
+                      <div className="acard-top-meta">
+                        <span className="acard-meta-item">{scanCount} scan{scanCount !== 1 ? 's' : ''}</span>
+                        <span className="acard-meta-item">Created {formatDate(a.createdDate)}</span>
+                        <span className="acard-meta-item">Modified {formatDate(a.updatedDate)}</span>
+                      </div>
+                    </div>
+                    <div className="acard-top-line2">
+                      <span className="acard-course-name">{a.courseName}</span>
+                      <span className="acard-meta-item">{questionCount} question{questionCount !== 1 ? 's' : ''}</span>
+                    </div>
                   </div>
                 </div>
-                <div className="home-assign-status">
-                  <span className={`home-status-tag ${statusClass(status)}`}>
-                    {statusLabel(status)}
-                  </span>
-                </div>
-                <div className="home-assign-scans">
-                  <span className="home-assign-scan-count">{scanCount}</span>
-                  <span className="home-assign-scan-label">SCANS</span>
-                </div>
-                <span className="home-assign-time">{timeAgo(a.updatedDate)}</span>
-                <div className="home-assign-actions">
-                  <button
-                    className="home-assign-btn"
-                    onClick={(e) => { e.stopPropagation(); onGradeByStudent(a); }}
-                  >
-                    BY STUDENT
-                  </button>
-                  <button
-                    className="home-assign-btn home-assign-btn-primary"
-                    onClick={(e) => { e.stopPropagation(); onGradeByQuestion(a); }}
-                  >
-                    BY QUESTION
-                  </button>
+
+                {/* Row 2: Status + actions */}
+                <div className="acard-row-bottom">
+                  <div className="acard-status-area">
+                    <StatusBadge status={status} />
+                  </div>
+                  {scanCount > 0 && (
+                    <div className="acard-actions">
+                      <button
+                        className="acard-action-btn"
+                        onClick={(e) => { e.stopPropagation(); onGradeByStudent(a); }}
+                      >
+                        GRADE BY STUDENT
+                      </button>
+                      <button
+                        className="acard-action-btn acard-action-primary"
+                        onClick={(e) => { e.stopPropagation(); onGradeByQuestion(a); }}
+                      >
+                        GRADE BY QUESTION
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             );

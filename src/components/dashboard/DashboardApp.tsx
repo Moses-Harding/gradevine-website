@@ -4,6 +4,7 @@ import { AuthGate } from './AuthGate';
 import { Breadcrumb } from './Breadcrumb';
 import { HomeView } from './HomeView';
 import { AssignmentList } from './AssignmentList';
+import { AssignmentDetailView } from './AssignmentDetailView';
 import { GradeByStudentView } from './GradeByStudentView';
 import { GradeByQuestionView } from './GradeByQuestionView';
 import type { Course, QuestionAssignment } from '../../types/cloudkit';
@@ -12,6 +13,7 @@ import { KeyboardShortcutsOverlay } from './KeyboardShortcuts';
 type View =
   | { type: 'courses' }
   | { type: 'assignments'; course: Course }
+  | { type: 'assignmentDetail'; course: Course; assignment: QuestionAssignment }
   | { type: 'gradeByStudent'; course: Course; assignment: QuestionAssignment }
   | { type: 'gradeByQuestion'; course: Course; assignment: QuestionAssignment };
 
@@ -20,6 +22,7 @@ export function DashboardApp() {
   const [view, setView] = useState<View>({ type: 'courses' });
 
   const breadcrumbItems = buildBreadcrumb(view, setView);
+  const viewName = viewNameFor(view);
 
   // Extract course color for theming
   const courseColor = (view.type !== 'courses' ? view.course.colorHex : null);
@@ -53,12 +56,16 @@ export function DashboardApp() {
           <DashboardHeader displayName={auth.displayName ?? 'Teacher'} />
 
           <main className="dashboard-main">
+            <div className="view-name-label">{viewName}</div>
             <Breadcrumb items={breadcrumbItems} />
 
             {view.type === 'courses' && (
               <HomeView
                 onSelectCourse={(course) => setView({ type: 'assignments', course })}
                 onSelectAssignment={(course, assignment) =>
+                  setView({ type: 'assignmentDetail', course, assignment })
+                }
+                onGradeByStudent={(course, assignment) =>
                   setView({ type: 'gradeByStudent', course, assignment })
                 }
                 onGradeByQuestion={(course, assignment) =>
@@ -70,7 +77,10 @@ export function DashboardApp() {
             {view.type === 'assignments' && (
               <AssignmentList
                 course={view.course}
-                onSelect={(assignment) =>
+                onSelectAssignment={(assignment) =>
+                  setView({ type: 'assignmentDetail', course: view.course, assignment })
+                }
+                onGradeByStudent={(assignment) =>
                   setView({ type: 'gradeByStudent', course: view.course, assignment })
                 }
                 onGradeByQuestion={(assignment) =>
@@ -80,12 +90,25 @@ export function DashboardApp() {
               />
             )}
 
+            {view.type === 'assignmentDetail' && (
+              <AssignmentDetailView
+                assignment={view.assignment}
+                courseColor={courseColorCss}
+                onGradeByStudent={() =>
+                  setView({ type: 'gradeByStudent', course: view.course, assignment: view.assignment })
+                }
+                onGradeByQuestion={() =>
+                  setView({ type: 'gradeByQuestion', course: view.course, assignment: view.assignment })
+                }
+              />
+            )}
+
             {view.type === 'gradeByStudent' && (
               <GradeByStudentView
                 assignment={view.assignment}
                 courseColor={courseColorCss}
                 onBack={() =>
-                  setView({ type: 'assignments', course: view.course })
+                  setView({ type: 'assignmentDetail', course: view.course, assignment: view.assignment })
                 }
               />
             )}
@@ -95,7 +118,7 @@ export function DashboardApp() {
                 assignment={view.assignment}
                 courseColor={courseColorCss}
                 onBack={() =>
-                  setView({ type: 'assignments', course: view.course })
+                  setView({ type: 'assignmentDetail', course: view.course, assignment: view.assignment })
                 }
               />
             )}
@@ -123,8 +146,20 @@ const DashboardHeader = memo(function DashboardHeader({ displayName }: { display
   );
 });
 
+function viewNameFor(view: View): string {
+  switch (view.type) {
+    case 'courses': return 'HomeView';
+    case 'assignments': return 'AssignmentList';
+    case 'assignmentDetail': return 'AssignmentDetailView';
+    case 'gradeByStudent': return 'GradeByStudentView';
+    case 'gradeByQuestion': return 'GradeByQuestionView';
+  }
+}
+
 function buildBreadcrumb(view: View, setView: (v: View) => void) {
-  const items = [{ label: 'COURSES', onClick: () => setView({ type: 'courses' }) }];
+  const items: Array<{ label: string; onClick?: () => void }> = [
+    { label: 'COURSES', onClick: () => setView({ type: 'courses' }) },
+  ];
 
   if (view.type !== 'courses') {
     items.push({
@@ -133,18 +168,27 @@ function buildBreadcrumb(view: View, setView: (v: View) => void) {
     });
   }
 
-  if (view.type === 'gradeByStudent' || view.type === 'gradeByQuestion') {
+  if (
+    view.type === 'assignmentDetail' ||
+    view.type === 'gradeByStudent' ||
+    view.type === 'gradeByQuestion'
+  ) {
     items.push({
       label: view.assignment.title.toUpperCase(),
+      onClick: () => setView({ type: 'assignmentDetail', course: view.course, assignment: view.assignment }),
     });
+  }
+
+  if (view.type === 'gradeByStudent') {
+    items.push({ label: 'GRADE BY STUDENT' });
+  } else if (view.type === 'gradeByQuestion') {
+    items.push({ label: 'GRADE BY QUESTION' });
   }
 
   // Last item has no onClick (it's the current page)
   if (items.length > 0) {
     const last = items[items.length - 1];
-    if (view.type === 'courses') {
-      delete (last as { onClick?: () => void }).onClick;
-    }
+    delete last.onClick;
   }
 
   return items;
