@@ -1,5 +1,27 @@
 # Change Log - April 2026
 
+### Assignment Detail View, Analytics, and Grading Status Fixes (2026-04-10)
+
+Added a full AssignmentDetailView as the landing page when tapping an assignment card. Previously, clicking an assignment only exposed the GRADE BY STUDENT / GRADE BY QUESTION buttons — tapping the card itself did nothing. Now, clicking an assignment opens a dedicated detail view with header metadata, progress summary (Fully Graded / In Progress / Ungraded / Total Scans), questions list, struggling students section with configurable threshold (50/60/70%) persisted in localStorage, grade distribution with iOS-style circular letter badges, ring charts for average points per question (matching the iOS `AvgPointsRing` component), and a full grade matrix with sticky student column and per-question averages row. All analytics styling mirrors the iOS app (white card sections with soft drop shadows, iOS system colors, pill badges).
+
+Fixed a major status bug: assignment cards in both AssignmentList and HomeView's Recent Assignments were hardcoded to display `IN PROGRESS` whenever any scans existed, regardless of whether grading was actually complete. Created a new `useAssignmentGradingStatuses` hook that loads scans per assignment (using the existing cache, so it's cheap on repeat visits) and computes real status: `new` / `loading` / `progress` / `done`. Cards now correctly display `NO SCANS YET`, `LOADING…`, `IN PROGRESS` (amber), or `COMPLETE` (green).
+
+Fixed a silent data migration bug in the web parser: iOS's `ScanQuestionResponse` model has a deprecated `earnedPoints: Int?` legacy field that iOS migrates to `pointsEarned: Double?` via `migratePointsIfNeeded()` on load. The web dashboard's `parseScan` wasn't running this migration, so scans originally graded on older iOS versions (with only the legacy field still populated in CloudKit) were appearing as ungraded in the web UI. Added the migration in `parseScan` so grades now display correctly. Also added a code-cleanup roadmap item to eventually remove the legacy field once all CloudKit records have been migrated.
+
+Redesigned the dashboard's auth gate (shown when not signed in) with a two-column layout: brand pitch on the left (gradient-accented "Grade faster on the big screen." headline, feature bullet list, back link) and sign-in card on the right (teacher login eyebrow, privacy note with shield icon, App Store download link). The CloudKit-rendered Apple sign-in button is physically moved into the card slot via `useEffect` + `appendChild` DOM re-parenting, preserving CloudKit JS internal state. Changed the landing page button from "Login" to "Log into web dashboard" and made the `?login=1` auto-click more reliable by polling for the Apple button to appear (up to 5s) rather than firing once immediately after `initAuth()`.
+
+Assignment card layout restructured into a two-row format: title + `scans / created / modified` metadata on the top row, course name + question count on a second sub-line, and status badge + action buttons on a bottom divider row. The Recent Assignments section in HomeView applies the same card pattern, with overrides to make nested cards sit flush (no double-rounded borders inside the container). Renamed action buttons from `BY STUDENT` / `BY QUESTION` to `GRADE BY STUDENT` / `GRADE BY QUESTION`. Cards are now fully clickable (keyboard accessible) and navigate to the detail view; buttons stop event propagation so they still jump directly to grading.
+
+Added a small monospace dev label (`HomeView` / `AssignmentList` / `AssignmentDetailView` / `GradeByStudentView` / `GradeByQuestionView`) above the breadcrumb in DashboardApp so it's easy to reference the current view when describing issues. The breadcrumb itself now includes the assignment title as a clickable segment and a trailing `GRADE BY STUDENT` / `GRADE BY QUESTION` segment when inside a grading view, so back navigation returns to the assignment detail view instead of jumping two levels up.
+
+**Files created:** `src/components/dashboard/AssignmentDetailView.tsx` (new), `src/hooks/useAssignmentGradingStatuses.ts` (new)
+
+**Files modified:** `src/components/dashboard/AssignmentList.tsx`, `src/components/dashboard/AuthGate.tsx`, `src/components/dashboard/DashboardApp.tsx`, `src/components/dashboard/HomeView.tsx`, `src/hooks/useAuth.ts`, `src/lib/cloudkit/queries.ts`, `src/pages/dashboard.astro`, `src/pages/index.astro`
+
+**Commit:** 122c018
+
+---
+
 ### Dashboard Home View Redesign (2026-04-08)
 
 Redesigned courses/home view with two-column layout for richer visual hierarchy and functionality. Created new HomeView component featuring: courses table with color indicators (name, student count, assignment count), recent assignments section with enriched card design showing metadata and direct grading access (BY STUDENT / BY QUESTION action buttons), and activity feed sidebar tracking recent assignment changes. Implemented new `useAllAssignments()` hook to fetch assignments across all courses, supporting the recent assignments widget. Updated AssignmentList component to use enriched card style with visible statistics row (scans, questions, points, update time) instead of dark header design. Action buttons intelligently hide when no scans exist, showing "NO SCANS YET" label instead. Responsive grid layout collapses sidebar on smaller viewports.
