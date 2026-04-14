@@ -92,7 +92,7 @@ export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByStudent,
     <div className="home-layout">
       {/* Main column: courses table + recent assignments */}
       <div className="home-main">
-        <CoursesTable
+        <CoursesCards
           courses={courses}
           assignmentCounts={assignmentCounts}
           onSelect={onSelectCourse}
@@ -126,10 +126,10 @@ export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByStudent,
 }
 
 // ---------------------------------------------------------------------------
-// Courses Table
+// Courses Cards
 // ---------------------------------------------------------------------------
 
-function CoursesTable({
+function CoursesCards({
   courses,
   assignmentCounts,
   onSelect,
@@ -140,20 +140,15 @@ function CoursesTable({
 }) {
   return (
     <div className="home-courses-section">
-      <div className="home-section-bar">YOUR COURSES</div>
-      <table className="home-table">
-        <thead>
-          <tr>
-            <th className="home-th-narrow"></th>
-            <th className="home-th-left">CLASS</th>
-            <th>STUDENTS</th>
-            <th>ASSIGNMENTS</th>
-          </tr>
-        </thead>
-        <tbody>
-          {courses.map((course) => (
-            <tr
+      <div className="home-section-bar">CLASSES</div>
+      <div className="home-courses-grid">
+        {courses.map((course) => {
+          const color = courseColor(course.colorHex);
+          const aCount = assignmentCounts.get(course.id) ?? 0;
+          return (
+            <div
               key={course.id}
+              className="home-course-card"
               onClick={() => onSelect(course)}
               role="button"
               tabIndex={0}
@@ -164,19 +159,25 @@ function CoursesTable({
                 }
               }}
             >
-              <td>
-                <span
-                  className="home-dot"
-                  style={{ background: courseColor(course.colorHex) }}
-                />
-              </td>
-              <td className="home-td-name">{course.name}</td>
-              <td>{course.studentIDs.length}</td>
-              <td>{assignmentCounts.get(course.id) ?? 0}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              <div className="home-course-card-stripe" style={{ background: color }} />
+              <div className="home-course-card-body">
+                <div className="home-course-card-name">{course.name}</div>
+                <div className="home-course-card-stats">
+                  <div className="home-course-card-stat">
+                    <div className="home-course-card-stat-value">{course.studentIDs.length}</div>
+                    <div className="home-course-card-stat-label">STUDENTS</div>
+                  </div>
+                  <div className="home-course-card-stat-divider" />
+                  <div className="home-course-card-stat">
+                    <div className="home-course-card-stat-value">{aCount}</div>
+                    <div className="home-course-card-stat-label">ASSIGNMENTS</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

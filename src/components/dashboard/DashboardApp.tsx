@@ -158,7 +158,7 @@ function viewNameFor(view: View): string {
 
 function buildBreadcrumb(view: View, setView: (v: View) => void) {
   const items: Array<{ label: string; onClick?: () => void }> = [
-    { label: 'COURSES', onClick: () => setView({ type: 'courses' }) },
+    { label: 'HOME', onClick: () => setView({ type: 'courses' }) },
   ];
 
   if (view.type !== 'courses') {
