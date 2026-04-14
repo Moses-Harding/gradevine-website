@@ -716,12 +716,13 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     overflow: hidden;
-    transition: border-color 0.15s, box-shadow 0.15s;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
   }
 
   .acard:hover {
     border-color: #bdbdbd;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+    transform: translateY(-1px);
   }
 
   /* Row 1: accent bar + title block */
@@ -963,8 +964,16 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 4px;
+    padding: 10px 8px;
     border-bottom: 1px solid #fafafa;
+    border-radius: 8px;
+    border-left: 3px solid transparent;
+    transition: background 0.15s, border-left-color 0.15s;
+  }
+
+  .cd-student-row:hover {
+    background: rgba(0, 0, 0, 0.015);
+    border-left-color: var(--cc, #c7c7cc);
   }
 
   .cd-student-row:last-child {
@@ -982,6 +991,8 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     font-weight: 700;
     color: white;
     flex-shrink: 0;
+    box-shadow: 0 2px 6px color-mix(in srgb, var(--cc, #888) 35%, transparent);
+    background-image: linear-gradient(145deg, color-mix(in srgb, var(--cc, #888) 100%, white), color-mix(in srgb, var(--cc, #888) 80%, #000));
   }
 
   .cd-student-info {
@@ -1055,6 +1066,7 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     min-width: 20px;
     text-align: center;
   }
+
 
   .cd-attention-list {
     display: flex;
@@ -1266,8 +1278,14 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 10px 0;
+    padding: 10px 8px;
     border-bottom: 1px solid #fafafa;
+    border-radius: 8px;
+    transition: background 0.15s;
+  }
+
+  .cd-timeline-row:hover {
+    background: rgba(0, 0, 0, 0.015);
   }
 
   .cd-timeline-row:last-child {
@@ -1279,6 +1297,16 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     height: 10px;
     border-radius: 50%;
     flex-shrink: 0;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--dot-color, #e0e0e0) 20%, transparent);
+  }
+
+  .cd-timeline-dot-pulse {
+    animation: timelinePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes timelinePulse {
+    0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--dot-color) 20%, transparent); }
+    50% { box-shadow: 0 0 0 6px color-mix(in srgb, var(--dot-color) 10%, transparent); }
   }
 
   .cd-timeline-info {
@@ -1299,6 +1327,369 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     font-size: 11px;
     color: #9e9e9e;
     font-weight: 500;
+  }
+
+  /* Course Toolbar Menu */
+  .cd-toolbar-menu {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .cd-toolbar-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 10px;
+    background: white;
+    color: #616161;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .cd-toolbar-btn:hover {
+    border-color: var(--cc);
+    color: var(--cc);
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .cd-toolbar-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    min-width: 200px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e8e8e8;
+    padding: 6px;
+    z-index: 20;
+  }
+
+  .cd-toolbar-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #212121;
+    background: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.1s;
+    font-family: var(--font-family);
+  }
+
+  .cd-toolbar-dropdown-item:hover {
+    background: #f5f5f5;
+  }
+
+  .cd-toolbar-dropdown-item:disabled {
+    color: #c7c7cc;
+    cursor: not-allowed;
+  }
+
+  .cd-toolbar-dropdown-item:disabled:hover {
+    background: none;
+  }
+
+  /* Roster Reminder Banner */
+  .cd-roster-banner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: white;
+    border-radius: 12px;
+    border: 1.5px solid var(--cc, #e0e0e0);
+    border-left: 4px solid var(--cc);
+  }
+
+  .cd-roster-banner-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--cc);
+    flex-shrink: 0;
+  }
+
+  .cd-roster-banner-content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .cd-roster-banner-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #212121;
+  }
+
+  .cd-roster-banner-subtitle {
+    font-size: 12px;
+    color: #757575;
+  }
+
+  .cd-roster-banner-dismiss {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    border-radius: 6px;
+    color: #9e9e9e;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.1s;
+  }
+
+  .cd-roster-banner-dismiss:hover {
+    background: #f5f5f5;
+    color: #616161;
+  }
+
+  /* Students toolbar (sort + select) */
+  .cd-students-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cd-sort-btn,
+  .cd-select-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #757575;
+    background: #f5f5f5;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--font-family);
+  }
+
+  .cd-sort-btn:hover,
+  .cd-select-btn:hover {
+    background: #eeeeee;
+  }
+
+  .cd-sort-btn-active {
+    background: rgba(0, 0, 0, 0.04);
+    color: var(--cc, #212121);
+    border-color: var(--cc, #e0e0e0);
+  }
+
+  .cd-select-btn-active {
+    background: var(--cc, var(--color-purple));
+    color: white;
+    border-color: var(--cc, var(--color-purple));
+  }
+
+  .cd-select-btn-active:hover {
+    opacity: 0.9;
+    background: var(--cc, var(--color-purple));
+  }
+
+  /* Selection bar */
+  .cd-selection-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+  }
+
+  .cd-selection-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--cc, #212121);
+  }
+
+  .cd-selection-clear {
+    font-size: 12px;
+    font-weight: 600;
+    color: #757575;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-family: var(--font-family);
+  }
+
+  .cd-selection-clear:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  /* Student row — selection mode */
+  .cd-student-row-selectable {
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.1s;
+  }
+
+  .cd-student-row-selectable:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .cd-student-row-selected {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  .cd-student-checkbox {
+    width: 22px;
+    height: 22px;
+    border: 2px solid #c7c7cc;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+  }
+
+  .cd-student-checkbox-checked {
+    background: var(--cc, var(--color-purple));
+    border-color: var(--cc, var(--color-purple));
+  }
+
+  .cd-section-select-all {
+    font-size: 11px;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: auto;
+    font-family: var(--font-family);
+  }
+
+  .cd-section-select-all:hover {
+    background: rgba(0, 0, 0, 0.04);
+  }
+
+  /* Empty states */
+  .cd-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 32px 16px;
+    text-align: center;
+  }
+
+  .cd-empty-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #424242;
+    margin: 4px 0 0;
+  }
+
+  .cd-empty-subtitle {
+    font-size: 13px;
+    color: #9e9e9e;
+    margin: 0;
+    max-width: 280px;
+  }
+
+  /* Multi-line trend chart */
+  .cd-trend-chart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cd-trend-chart-svg {
+    width: 100%;
+    height: auto;
+    max-height: 240px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.008) 0%, rgba(0,0,0,0) 100%);
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  .cd-trend-chart-svg polyline {
+    cursor: pointer;
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+  }
+
+  .cd-trend-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .cd-trend-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.1s;
+    font-family: var(--font-family);
+  }
+
+  .cd-trend-legend-item:hover,
+  .cd-trend-legend-item-active {
+    background: #f5f5f5;
+    border-color: #e0e0e0;
+  }
+
+  .cd-trend-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .cd-trend-legend-name {
+    font-size: 11px;
+    font-weight: 600;
+    color: #424242;
+    white-space: nowrap;
+  }
+
+  .cd-trend-legend-score {
+    font-size: 11px;
+    font-weight: 500;
+    color: #9e9e9e;
+  }
+
+  .cd-trend-legend-toggle {
+    font-size: 11px;
+    font-weight: 700;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 10px;
+    font-family: var(--font-family);
+  }
+
+  .cd-trend-legend-toggle:hover {
+    text-decoration: underline;
   }
 
   /* ------------------------------------------------------------------ */
@@ -1390,30 +1781,54 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
 
   .adv-progress-stat {
     background: white;
-    padding: 18px 20px;
+    padding: 20px 20px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    border-right: 1px solid rgba(142, 142, 147, 0.15);
+    gap: 6px;
+    border-right: 1px solid rgba(142, 142, 147, 0.12);
+    position: relative;
   }
 
   .adv-progress-stat:last-child {
     border-right: none;
   }
 
+  .adv-progress-stat-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+  }
+
   .adv-progress-value {
-    font-size: 26px;
-    font-weight: 700;
+    font-size: 28px;
+    font-weight: 800;
     color: #212121;
     font-variant-numeric: tabular-nums;
+    line-height: 1;
   }
 
   .adv-progress-label {
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
     color: #8e8e93;
+  }
+
+  .adv-progress-stat::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 3px;
+    border-radius: 3px;
+    background: var(--stat-color, var(--cc));
+    opacity: 0.3;
   }
 
   /* Widget row — two sections side by side */

@@ -1,5 +1,35 @@
 # Change Log - April 2026
 
+### CourseDetailView Feature & Visual Overhaul (2026-04-14)
+
+Major enhancement of the CourseDetailView with 7 functional improvements and 6 visual polish changes, bringing it closer to iOS feature parity.
+
+**Functional improvements:**
+- **Course toolbar menu** — three-dot menu in header with "Export Roster (CSV)" download (client-side Blob generation with proper CSV escaping)
+- **Per-course student scan counts** — previously showed total scans across all courses; now intersects student scanIDs with course assignment scanIDs for accurate per-course counts
+- **Assignment sorting** — cards now sorted by `updatedDate` descending (newest first), matching iOS; timeline retains chronological order
+- **Bulk student selection mode** — "Select" toggle in Students toolbar, checkboxes on rows, section-level "Select All / Deselect All", selection count bar with clear action
+- **Interactive multi-line trend chart** — SVG chart with per-student lines, 60% threshold, hover-to-highlight with data point dots, bidirectional legend-chart hover sync, expandable legend
+- **Roster import reminder banner** — shows when <3 students enrolled, dismissible, course-color accent
+- **Sortable students** — A-Z / Scans toggle sorts within section groups
+
+**Layout changes:**
+- Grading Progress and Needs Attention now sit side by side (widget row); Students by Section fills right slot when no at-risk students exist
+- Needs Attention section now uses the same struggling-students pattern as AssignmentDetailView (warning banner + row list with percentage, severity badge, trend tag, sparklines)
+- Richer empty states with SVG illustrations for both Assignments and Students sections
+
+**Visual polish:**
+- Progress bar stats now include colored icon badges and colored underline accents
+- Student avatars have gradient fill and course-color drop shadow
+- Assignment cards lift on hover (`translateY(-1px)` + deeper shadow)
+- Student rows highlight with course-color left border on hover
+- Trend chart has subtle background tint and drop shadow on lines
+- Timeline dots for in-progress assignments pulse with an animated ring
+
+**Files modified:** `src/components/dashboard/CourseDetailView.tsx` (+615 lines), `src/pages/dashboard.astro` (+439 lines CSS)
+
+---
+
 ### No-Scan Filtering in Grade by Student View (2026-04-14)
 
 Extended the no-scan filtering (already in Grade by Question) to Grade by Student. Students whose scan records have no uploaded pages are now excluded from navigation (Prev/Next, keyboard arrows) and shown in a collapsible "NO SCAN" section at the bottom of the student sidebar in both grading views. Matches the iOS `BUG-022` filter (`scan.pages.isEmpty`).
