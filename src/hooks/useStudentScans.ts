@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { Scan, Student } from '../types/cloudkit';
-import { fetchScansForAssignment, fetchAllStudents } from '../lib/cloudkit/queries';
+import { fetchScansForAssignment, fetchAllStudents, fetchScanPages } from '../lib/cloudkit/queries';
 
 export interface StudentScanEntry {
   scan: Scan;
@@ -8,10 +8,12 @@ export interface StudentScanEntry {
   gradingStatus: 'ungraded' | 'partial' | 'graded';
   pointsEarned: number;
   pointsPossible: number;
+  hasPages: boolean; // false = scan exists but no uploaded work
 }
 
 interface UseStudentScansReturn {
   entries: StudentScanEntry[];
+  students: Student[];
   isLoading: boolean;
   error: string | null;
   refresh: () => void;
@@ -40,6 +42,7 @@ function computeGradingStatus(
 export function useStudentScans(assignmentID: string | null): UseStudentScansReturn {
   const [scans, setScans] = useState<Scan[]>([]);
   const [students, setStudents] = useState<Student[]>([]);
+  const [scanPageCounts, setScanPageCounts] = useState<Map<string, number>>(new Map());
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -55,6 +58,20 @@ export function useStudentScans(assignmentID: string | null): UseStudentScansRet
         ]);
         setScans(scanData);
         setStudents(studentData);
+
+        // Batch-check page existence for all scans (also prefetches for grading)
+        const pageCounts = new Map<string, number>();
+        await Promise.all(
+          scanData.map(async (scan) => {
+            try {
+              const pages = await fetchScanPages(scan.id, false);
+              pageCounts.set(scan.id, pages.length);
+            } catch {
+              pageCounts.set(scan.id, 0);
+            }
+          }),
+        );
+        setScanPageCounts(pageCounts);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to load submissions');
       } finally {
@@ -80,10 +97,11 @@ export function useStudentScans(assignmentID: string | null): UseStudentScansRet
         student,
         gradingStatus: status,
         pointsEarned: earned,
-        pointsPossible: 0, // Will be enriched by the component using assignment.questions
+        pointsPossible: 0,
+        hasPages: (scanPageCounts.get(scan.id) ?? 0) > 0,
       };
     });
-  }, [scans, students]);
+  }, [scans, students, scanPageCounts]);
 
-  return { entries, isLoading, error, refresh: useCallback(() => load(true), [load]) };
+  return { entries, students, isLoading, error, refresh: useCallback(() => load(true), [load]) };
 }

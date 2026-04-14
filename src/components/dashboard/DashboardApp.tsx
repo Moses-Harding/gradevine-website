@@ -3,7 +3,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { AuthGate } from './AuthGate';
 import { Breadcrumb } from './Breadcrumb';
 import { HomeView } from './HomeView';
-import { AssignmentList } from './AssignmentList';
+import { CourseDetailView } from './CourseDetailView';
 import { AssignmentDetailView } from './AssignmentDetailView';
 import { GradeByStudentView } from './GradeByStudentView';
 import { GradeByQuestionView } from './GradeByQuestionView';
@@ -12,7 +12,7 @@ import { KeyboardShortcutsOverlay } from './KeyboardShortcuts';
 
 type View =
   | { type: 'courses' }
-  | { type: 'assignments'; course: Course }
+  | { type: 'courseDetail'; course: Course }
   | { type: 'assignmentDetail'; course: Course; assignment: QuestionAssignment }
   | { type: 'gradeByStudent'; course: Course; assignment: QuestionAssignment }
   | { type: 'gradeByQuestion'; course: Course; assignment: QuestionAssignment };
@@ -61,7 +61,7 @@ export function DashboardApp() {
 
             {view.type === 'courses' && (
               <HomeView
-                onSelectCourse={(course) => setView({ type: 'assignments', course })}
+                onSelectCourse={(course) => setView({ type: 'courseDetail', course })}
                 onSelectAssignment={(course, assignment) =>
                   setView({ type: 'assignmentDetail', course, assignment })
                 }
@@ -74,8 +74,8 @@ export function DashboardApp() {
               />
             )}
 
-            {view.type === 'assignments' && (
-              <AssignmentList
+            {view.type === 'courseDetail' && (
+              <CourseDetailView
                 course={view.course}
                 onSelectAssignment={(assignment) =>
                   setView({ type: 'assignmentDetail', course: view.course, assignment })
@@ -149,7 +149,7 @@ const DashboardHeader = memo(function DashboardHeader({ displayName }: { display
 function viewNameFor(view: View): string {
   switch (view.type) {
     case 'courses': return 'HomeView';
-    case 'assignments': return 'AssignmentList';
+    case 'courseDetail': return 'CourseDetailView';
     case 'assignmentDetail': return 'AssignmentDetailView';
     case 'gradeByStudent': return 'GradeByStudentView';
     case 'gradeByQuestion': return 'GradeByQuestionView';
@@ -164,7 +164,7 @@ function buildBreadcrumb(view: View, setView: (v: View) => void) {
   if (view.type !== 'courses') {
     items.push({
       label: view.course.name.toUpperCase(),
-      onClick: () => setView({ type: 'assignments', course: view.course }),
+      onClick: () => setView({ type: 'courseDetail', course: view.course }),
     });
   }
 

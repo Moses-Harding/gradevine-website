@@ -84,6 +84,7 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
   const [currentStudentIndex, setCurrentStudentIndex] = useState(0);
   const [filter, setFilter] = useState<GradingFilter>('all');
   const [scansDict, setScansDict] = useState<Map<string, Scan>>(new Map());
+  const [showMissingScans, setShowMissingScans] = useState(false);
 
   const questions = assignment.questions;
   const currentQuestion = questions[selectedQuestionIndex] ?? null;
@@ -107,13 +108,22 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
     });
   }, [entries]);
 
-  // Compute question stats
+  // Split entries: those with uploaded pages vs those without (matches iOS BUG-022 filter)
+  const entriesWithPages = useMemo(() => {
+    return sortedEntries.filter((e) => e.hasPages);
+  }, [sortedEntries]);
+
+  const entriesWithoutPages = useMemo(() => {
+    return sortedEntries.filter((e) => !e.hasPages);
+  }, [sortedEntries]);
+
+  // Compute question stats (only for entries with uploaded pages)
   const questionStats = useMemo(() => {
     const stats = new Map<string, QuestionStats>();
     for (const q of questions) {
       let gradedCount = 0;
       let submittedCount = 0;
-      for (const entry of sortedEntries) {
+      for (const entry of entriesWithPages) {
         const scan = scansDict.get(entry.scan.id) ?? entry.scan;
         const resp = getResponseForQuestion(scan, q.id);
         if (resp) {
@@ -124,17 +134,17 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
       stats.set(q.id, {
         gradedCount,
         submittedCount,
-        totalCount: sortedEntries.length,
+        totalCount: entriesWithPages.length,
         isComplete: submittedCount > 0 && submittedCount === gradedCount,
       });
     }
     return stats;
-  }, [questions, sortedEntries, scansDict]);
+  }, [questions, entriesWithPages, scansDict]);
 
-  // Filter entries for current question
+  // Filter entries for current question (only entries with pages)
   const filteredEntries = useMemo(() => {
     if (!currentQuestion) return [];
-    return sortedEntries.filter((entry) => {
+    return entriesWithPages.filter((entry) => {
       const scan = scansDict.get(entry.scan.id) ?? entry.scan;
       const resp = getResponseForQuestion(scan, currentQuestion.id);
       if (!resp) return filter === 'all';
@@ -359,6 +369,31 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
               );
             })}
           </div>
+
+          {/* Missing scans section — students with scan records but no uploaded pages */}
+          {entriesWithoutPages.length > 0 && (
+            <>
+              <button
+                className="gbq-missing-header"
+                onClick={() => setShowMissingScans(!showMissingScans)}
+              >
+                <span>NO SCAN ({entriesWithoutPages.length})</span>
+                <span className="gbq-missing-chevron">{showMissingScans ? '▾' : '▸'}</span>
+              </button>
+              {showMissingScans && (
+                <div className="gbq-missing-list">
+                  {entriesWithoutPages.map((entry) => (
+                    <div key={entry.scan.id} className="gbq-missing-row">
+                      <div className="gbq-missing-avatar">
+                        {initial(entry.student?.name)}
+                      </div>
+                      <span className="gbq-missing-name">{entry.student?.name ?? 'Unknown Student'}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         {/* Right: student card */}

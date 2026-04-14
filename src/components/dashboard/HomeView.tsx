@@ -3,7 +3,7 @@ import { useCourses } from '../../hooks/useCourses';
 import { useAllAssignments } from '../../hooks/useAllAssignments';
 import { useAuth } from '../../hooks/useAuth';
 import { useAssignmentGradingStatuses } from '../../hooks/useAssignmentGradingStatuses';
-import { StatusBadge } from './AssignmentList';
+import { StatusBadge } from './CourseDetailView';
 import type { Course, QuestionAssignment } from '../../types/cloudkit';
 
 function courseColor(colorHex: string | null): string {

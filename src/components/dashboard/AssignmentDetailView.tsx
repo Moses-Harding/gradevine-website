@@ -55,6 +55,36 @@ function percentageScore(scan: Scan, questions: AssignmentQuestion[]): number | 
   return (earned / totalPossible) * 100;
 }
 
+function exportGradeMatrixCSV(
+  entries: { student?: { name: string } | null; scan: Scan }[],
+  questions: AssignmentQuestion[],
+  gradeMatrix: Map<string, Map<string, number | null>>,
+  totalPointsPossible: number,
+  assignmentTitle: string,
+) {
+  const escape = (s: string) => (/[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s);
+  const header = ['Student', ...questions.map((_, i) => `Q${i + 1}`), 'Total', 'Percentage'];
+  const rows = entries.map((entry) => {
+    const row = gradeMatrix.get(entry.scan.id);
+    const earned = pointsEarnedForScan(entry.scan);
+    const pct = totalPointsPossible > 0 ? ((earned / totalPointsPossible) * 100).toFixed(1) + '%' : '0%';
+    return [
+      escape(entry.student?.name ?? 'Unknown'),
+      ...questions.map((q) => { const v = row?.get(q.id); return v != null ? String(v) : ''; }),
+      `${earned}/${totalPointsPossible}`,
+      pct,
+    ];
+  });
+  const csv = [header.join(','), ...rows.map((r) => r.join(','))].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${assignmentTitle.replace(/[^a-zA-Z0-9 ]/g, '').trim()} - Grades.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 const STRUGGLING_THRESHOLD_KEY = 'gv-struggling-threshold';
 
 export function AssignmentDetailView({
@@ -179,6 +209,31 @@ export function AssignmentDetailView({
     };
   }, [sortedEntries, questions]);
 
+  // Grade matrix filter — multiple can be active at once
+  const [matrixFilters, setMatrixFilters] = useState({ graded: true, partial: true, ungraded: true });
+  const [highlightMatrix, setHighlightMatrix] = useState(true);
+
+  const toggleMatrixFilter = (key: keyof typeof matrixFilters) => {
+    setMatrixFilters((prev) => {
+      const next = { ...prev, [key]: !prev[key] };
+      // Don't allow all unchecked — re-enable the one being toggled
+      if (!next.graded && !next.partial && !next.ungraded) return prev;
+      return next;
+    });
+  };
+
+  const filteredEntries = useMemo(() => {
+    const allOn = matrixFilters.graded && matrixFilters.partial && matrixFilters.ungraded;
+    if (allOn) return sortedEntries;
+    return sortedEntries.filter((entry) => {
+      const fullyGraded = isScanFullyGraded(entry.scan, questions);
+      const hasAnyGrade = entry.scan.questionResponses.some((r) => r.pointsEarned != null);
+      if (fullyGraded) return matrixFilters.graded;
+      if (hasAnyGrade) return matrixFilters.partial;
+      return matrixFilters.ungraded;
+    });
+  }, [sortedEntries, questions, matrixFilters]);
+
   // Struggling students: fully graded + percentage below threshold, sorted ascending
   const strugglingStudents = useMemo(() => {
     return sortedEntries
@@ -259,6 +314,238 @@ export function AssignmentDetailView({
         </div>
       )}
 
+      {/* Row 1: Grade Distribution + Struggling Students */}
+      {analytics.fullyGradedCount > 0 && (
+        <div className="adv-widget-row">
+          <Section title="GRADE DISTRIBUTION">
+            <div className="adv-distribution-list">
+              <GradeDistRow letter="A" range="90-100%" count={analytics.distribution.A} total={analytics.fullyGradedCount} />
+              <GradeDistRow letter="B" range="80-89%" count={analytics.distribution.B} total={analytics.fullyGradedCount} />
+              <GradeDistRow letter="C" range="70-79%" count={analytics.distribution.C} total={analytics.fullyGradedCount} />
+              <GradeDistRow letter="D" range="60-69%" count={analytics.distribution.D} total={analytics.fullyGradedCount} />
+              <GradeDistRow letter="F" range="<60%" count={analytics.distribution.F} total={analytics.fullyGradedCount} />
+            </div>
+          </Section>
+
+          <Section
+            title={`STRUGGLING STUDENTS (<${strugglingThreshold}%)`}
+            trailing={
+              <select
+                className="adv-threshold-select"
+                value={strugglingThreshold}
+                onChange={(e) => updateThreshold(parseInt(e.target.value, 10))}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <option value={50}>50%</option>
+                <option value={60}>60%</option>
+                <option value={70}>70%</option>
+              </select>
+            }
+          >
+            {strugglingStudents.length === 0 ? (
+              <p className="adv-empty-hint">
+                No students scoring below {strugglingThreshold}%
+              </p>
+            ) : (
+              <>
+                <div className="adv-struggling-banner">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
+                    <line x1="12" y1="9" x2="12" y2="13" />
+                    <line x1="12" y1="17" x2="12.01" y2="17" />
+                  </svg>
+                  <span>
+                    {strugglingStudents.length} student{strugglingStudents.length !== 1 ? 's' : ''} need additional support
+                  </span>
+                </div>
+                <div className="adv-struggling-list">
+                  {strugglingStudents.map(({ entry, pct, earned }) => (
+                    <button
+                      key={entry.scan.id}
+                      className="adv-struggling-row"
+                      onClick={onGradeByStudent}
+                    >
+                      <div className="adv-struggling-info">
+                        <div className="adv-struggling-name">
+                          {entry.student?.name ?? 'Unknown'}
+                        </div>
+                        <div className="adv-struggling-meta">
+                          <span className="adv-struggling-pct">{Math.round(pct)}%</span>
+                          <span className="adv-meta-sep">•</span>
+                          <span>{earned} / {totalPointsPossible} pts</span>
+                        </div>
+                      </div>
+                      <span className="adv-struggling-chevron">›</span>
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+          </Section>
+        </div>
+      )}
+
+      {/* Row 2: Summary Statistics + Average Points per Question */}
+      <div className="adv-widget-row">
+        <Section title="SUMMARY STATISTICS">
+          <div className="adv-stat-list">
+            <StatRow label="Total Students" value={`${analytics.totalStudents}`} />
+            <StatRow
+              label="Students Graded"
+              value={
+                analytics.totalStudents > 0
+                  ? `${analytics.fullyGradedCount} (${Math.round((analytics.fullyGradedCount / analytics.totalStudents) * 100)}%)`
+                  : '0 (0%)'
+              }
+            />
+            <StatRow
+              label="Average Score"
+              value={analytics.average != null ? `${analytics.average.toFixed(1)}%` : 'N/A'}
+              secondary={analytics.average == null}
+            />
+            <StatRow
+              label="Median Score"
+              value={analytics.median != null ? `${analytics.median.toFixed(1)}%` : 'N/A'}
+              secondary={analytics.median == null}
+            />
+            <StatRow
+              label="Highest Score"
+              value={analytics.highest != null ? `${analytics.highest.toFixed(1)}%` : 'N/A'}
+              secondary={analytics.highest == null}
+            />
+            <StatRow
+              label="Lowest Score"
+              value={analytics.lowest != null ? `${analytics.lowest.toFixed(1)}%` : 'N/A'}
+              secondary={analytics.lowest == null}
+            />
+          </div>
+        </Section>
+
+        {questions.length > 0 && (
+          <Section title="Average Points per Question">
+            <div className="adv-ring-grid">
+              {questions.map((q) => {
+                const avgPoints = analytics.questionAvgPoints.get(q.id);
+                const ratio =
+                  avgPoints != null && q.pointValue > 0 ? avgPoints / q.pointValue : null;
+                return (
+                  <AvgPointsRing
+                    key={q.id}
+                    label={q.label}
+                    avgPoints={avgPoints}
+                    pointsPossible={q.pointValue}
+                    ratio={ratio}
+                  />
+                );
+              })}
+            </div>
+          </Section>
+        )}
+      </div>
+
+      {/* Grade matrix */}
+      {sortedEntries.length > 0 && questions.length > 0 && (
+        <Section
+          title="GRADE MATRIX"
+          trailing={
+            <div className="adv-matrix-filters">
+              <div className="adv-var-switch-group">
+                <button className={`adv-var-switch-btn ${matrixFilters.graded ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); toggleMatrixFilter('graded'); }} style={{ '--sw-color': chipColor } as React.CSSProperties}>
+                  <span className="adv-var-switch-track"><span className="adv-var-switch-knob" /></span>
+                  Graded
+                </button>
+                <button className={`adv-var-switch-btn ${matrixFilters.partial ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); toggleMatrixFilter('partial'); }} style={{ '--sw-color': chipColor } as React.CSSProperties}>
+                  <span className="adv-var-switch-track"><span className="adv-var-switch-knob" /></span>
+                  In Progress
+                </button>
+                <button className={`adv-var-switch-btn ${matrixFilters.ungraded ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); toggleMatrixFilter('ungraded'); }} style={{ '--sw-color': chipColor } as React.CSSProperties}>
+                  <span className="adv-var-switch-track"><span className="adv-var-switch-knob" /></span>
+                  Ungraded
+                </button>
+                <button className={`adv-var-switch-btn ${highlightMatrix ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setHighlightMatrix((v) => !v); }} style={{ '--sw-color': chipColor } as React.CSSProperties}>
+                  <span className="adv-var-switch-track"><span className="adv-var-switch-knob" /></span>
+                  Highlight
+                </button>
+              </div>
+              <div className="adv-var-divider" />
+              <button className="adv-var-export-outlined" onClick={(e) => { e.stopPropagation(); exportGradeMatrixCSV(filteredEntries, questions, gradeMatrix, totalPointsPossible, assignment.title); }}>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export CSV
+              </button>
+            </div>
+          }
+        >
+          {filteredEntries.length === 0 ? (
+            <p className="adv-empty-hint">No students match this filter</p>
+          ) : (
+            <div className="adv-matrix-wrap">
+              <table className="adv-matrix">
+                <thead>
+                  <tr>
+                    <th className="adv-matrix-student-h">STUDENT</th>
+                    {questions.map((q, i) => (
+                      <th key={q.id} className="adv-matrix-q-h" title={q.prompt}>
+                        Q{i + 1}
+                      </th>
+                    ))}
+                    <th className="adv-matrix-total-h">TOTAL</th>
+                  </tr>
+                  <tr className="adv-matrix-avg-row">
+                    <td className="adv-matrix-student adv-matrix-avg-label">AVG</td>
+                    {questions.map((q) => {
+                      const avg = analytics.questionAverages.get(q.id);
+                      return (
+                        <td key={q.id} className="adv-matrix-cell adv-matrix-avg">
+                          {avg != null ? `${avg.toFixed(0)}%` : '—'}
+                        </td>
+                      );
+                    })}
+                    <td className="adv-matrix-cell adv-matrix-avg">
+                      {analytics.average != null ? `${analytics.average.toFixed(0)}%` : '—'}
+                    </td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredEntries.map((entry) => {
+                    const row = gradeMatrix.get(entry.scan.id);
+                    const earned = pointsEarnedForScan(entry.scan);
+                    const pct = totalPointsPossible > 0 ? (earned / totalPointsPossible) * 100 : 0;
+                    return (
+                      <tr key={entry.scan.id}>
+                        <td className="adv-matrix-student">
+                          {entry.student?.name ?? 'Unknown'}
+                        </td>
+                        {questions.map((q) => {
+                          const val = row?.get(q.id);
+                          let hlClass = '';
+                          if (highlightMatrix) {
+                            if (val == null) hlClass = '';
+                            else if (val >= q.pointValue) hlClass = 'adv-hl-correct';
+                            else if (val <= 0) hlClass = 'adv-hl-incorrect';
+                            else hlClass = 'adv-hl-partial';
+                          }
+                          return (
+                            <td key={q.id} className={`adv-matrix-cell ${hlClass}`}>
+                              {val != null ? val : <span className="adv-matrix-empty">—</span>}
+                            </td>
+                          );
+                        })}
+                        <td className="adv-matrix-cell adv-matrix-total">
+                          {earned} / {totalPointsPossible}
+                          <span className="adv-matrix-total-pct">
+                            {` (${pct.toFixed(0)}%)`}
+                          </span>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </Section>
+      )}
+
       {/* Questions list */}
       <Section title="QUESTIONS">
         <div className="adv-questions-list">
@@ -278,198 +565,6 @@ export function AssignmentDetailView({
           ))}
         </div>
       </Section>
-
-      {/* Summary Statistics */}
-      <Section title="SUMMARY STATISTICS">
-        <div className="adv-stat-list">
-          <StatRow label="Total Students" value={`${analytics.totalStudents}`} />
-          <StatRow
-            label="Students Graded"
-            value={
-              analytics.totalStudents > 0
-                ? `${analytics.fullyGradedCount} (${Math.round((analytics.fullyGradedCount / analytics.totalStudents) * 100)}%)`
-                : '0 (0%)'
-            }
-          />
-          <StatRow
-            label="Average Score"
-            value={analytics.average != null ? `${analytics.average.toFixed(1)}%` : 'N/A'}
-            secondary={analytics.average == null}
-          />
-          <StatRow
-            label="Median Score"
-            value={analytics.median != null ? `${analytics.median.toFixed(1)}%` : 'N/A'}
-            secondary={analytics.median == null}
-          />
-          <StatRow
-            label="Highest Score"
-            value={analytics.highest != null ? `${analytics.highest.toFixed(1)}%` : 'N/A'}
-            secondary={analytics.highest == null}
-          />
-          <StatRow
-            label="Lowest Score"
-            value={analytics.lowest != null ? `${analytics.lowest.toFixed(1)}%` : 'N/A'}
-            secondary={analytics.lowest == null}
-          />
-        </div>
-      </Section>
-
-      {/* Struggling Students */}
-      {analytics.fullyGradedCount > 0 && (
-        <Section
-          title={`STRUGGLING STUDENTS (<${strugglingThreshold}%)`}
-          trailing={
-            <select
-              className="adv-threshold-select"
-              value={strugglingThreshold}
-              onChange={(e) => updateThreshold(parseInt(e.target.value, 10))}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <option value={50}>50%</option>
-              <option value={60}>60%</option>
-              <option value={70}>70%</option>
-            </select>
-          }
-        >
-          {strugglingStudents.length === 0 ? (
-            <p className="adv-empty-hint">
-              No students scoring below {strugglingThreshold}%
-            </p>
-          ) : (
-            <>
-              <div className="adv-struggling-banner">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="18" height="18">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" />
-                  <line x1="12" y1="9" x2="12" y2="13" />
-                  <line x1="12" y1="17" x2="12.01" y2="17" />
-                </svg>
-                <span>
-                  {strugglingStudents.length} student{strugglingStudents.length !== 1 ? 's' : ''} need additional support
-                </span>
-              </div>
-              <div className="adv-struggling-list">
-                {strugglingStudents.map(({ entry, pct, earned }) => (
-                  <button
-                    key={entry.scan.id}
-                    className="adv-struggling-row"
-                    onClick={onGradeByStudent}
-                  >
-                    <div className="adv-struggling-info">
-                      <div className="adv-struggling-name">
-                        {entry.student?.name ?? 'Unknown'}
-                      </div>
-                      <div className="adv-struggling-meta">
-                        <span className="adv-struggling-pct">{Math.round(pct)}%</span>
-                        <span className="adv-meta-sep">•</span>
-                        <span>{earned} / {totalPointsPossible} pts</span>
-                      </div>
-                    </div>
-                    <span className="adv-struggling-chevron">›</span>
-                  </button>
-                ))}
-              </div>
-            </>
-          )}
-        </Section>
-      )}
-
-      {/* Grade Distribution */}
-      {analytics.fullyGradedCount > 0 && (
-        <Section title="GRADE DISTRIBUTION">
-          <div className="adv-distribution-list">
-            <GradeDistRow letter="A" range="90-100%" count={analytics.distribution.A} total={analytics.fullyGradedCount} />
-            <GradeDistRow letter="B" range="80-89%" count={analytics.distribution.B} total={analytics.fullyGradedCount} />
-            <GradeDistRow letter="C" range="70-79%" count={analytics.distribution.C} total={analytics.fullyGradedCount} />
-            <GradeDistRow letter="D" range="60-69%" count={analytics.distribution.D} total={analytics.fullyGradedCount} />
-            <GradeDistRow letter="F" range="<60%" count={analytics.distribution.F} total={analytics.fullyGradedCount} />
-          </div>
-        </Section>
-      )}
-
-      {/* Question Performance — ring chart grid matching iOS AvgPointsRing */}
-      {questions.length > 0 && (
-        <Section title="Average Points per Question">
-          <div className="adv-ring-grid">
-            {questions.map((q) => {
-              const avgPoints = analytics.questionAvgPoints.get(q.id);
-              const ratio =
-                avgPoints != null && q.pointValue > 0 ? avgPoints / q.pointValue : null;
-              return (
-                <AvgPointsRing
-                  key={q.id}
-                  label={q.label}
-                  avgPoints={avgPoints}
-                  pointsPossible={q.pointValue}
-                  ratio={ratio}
-                />
-              );
-            })}
-          </div>
-        </Section>
-      )}
-
-      {/* Grade matrix */}
-      {sortedEntries.length > 0 && questions.length > 0 && (
-        <Section title="GRADE MATRIX">
-          <div className="adv-matrix-wrap">
-            <table className="adv-matrix">
-              <thead>
-                <tr>
-                  <th className="adv-matrix-student-h">STUDENT</th>
-                  {questions.map((q, i) => (
-                    <th key={q.id} className="adv-matrix-q-h" title={q.prompt}>
-                      Q{i + 1}
-                    </th>
-                  ))}
-                  <th className="adv-matrix-total-h">TOTAL</th>
-                </tr>
-                <tr className="adv-matrix-avg-row">
-                  <td className="adv-matrix-student adv-matrix-avg-label">AVG</td>
-                  {questions.map((q) => {
-                    const avg = analytics.questionAverages.get(q.id);
-                    return (
-                      <td key={q.id} className="adv-matrix-cell adv-matrix-avg">
-                        {avg != null ? `${avg.toFixed(0)}%` : '—'}
-                      </td>
-                    );
-                  })}
-                  <td className="adv-matrix-cell adv-matrix-avg">
-                    {analytics.average != null ? `${analytics.average.toFixed(0)}%` : '—'}
-                  </td>
-                </tr>
-              </thead>
-              <tbody>
-                {sortedEntries.map((entry) => {
-                  const row = gradeMatrix.get(entry.scan.id);
-                  const earned = pointsEarnedForScan(entry.scan);
-                  const pct = totalPointsPossible > 0 ? (earned / totalPointsPossible) * 100 : 0;
-                  return (
-                    <tr key={entry.scan.id}>
-                      <td className="adv-matrix-student">
-                        {entry.student?.name ?? 'Unknown'}
-                      </td>
-                      {questions.map((q) => {
-                        const val = row?.get(q.id);
-                        return (
-                          <td key={q.id} className="adv-matrix-cell">
-                            {val != null ? val : <span className="adv-matrix-empty">—</span>}
-                          </td>
-                        );
-                      })}
-                      <td className="adv-matrix-cell adv-matrix-total">
-                        {earned} / {totalPointsPossible}
-                        <span className="adv-matrix-total-pct">
-                          {` (${pct.toFixed(0)}%)`}
-                        </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </Section>
-      )}
     </div>
   );
 }
