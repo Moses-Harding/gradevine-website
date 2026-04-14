@@ -14,6 +14,7 @@ interface ScanViewerProps {
   entry: StudentScanEntry;
   assignment: QuestionAssignment;
   allEntries: StudentScanEntry[];
+  entriesWithoutPages?: StudentScanEntry[];
   courseColor?: string;
   onBack: () => void;
   onNavigate: (entry: StudentScanEntry) => void;
@@ -77,7 +78,7 @@ function getQFForQuestion(assignment: QuestionAssignment, questionID: string): Q
 // Main Component
 // ---------------------------------------------------------------------------
 
-export function ScanViewer({ entry, assignment, allEntries, courseColor, onBack, onNavigate }: ScanViewerProps) {
+export function ScanViewer({ entry, assignment, allEntries, entriesWithoutPages = [], courseColor, onBack, onNavigate }: ScanViewerProps) {
   const { pages, isLoading, error, refresh } = useScanPages(entry.scan.id);
   const [currentPage, setCurrentPage] = useState(0);
   const [viewMode, setViewMode] = useState<'image' | 'transcript' | 'both'>('image');
@@ -89,6 +90,7 @@ export function ScanViewer({ entry, assignment, allEntries, courseColor, onBack,
   const changeTagRef = useRef(entry.scan.recordChangeTag);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  const [showMissingScans, setShowMissingScans] = useState(false);
   // Scan-level feedback
   const [scanFeedback, setScanFeedback] = useState(entry.scan.feedback ?? '');
   // Per-question responses (local optimistic state)
@@ -301,6 +303,31 @@ export function ScanViewer({ entry, assignment, allEntries, courseColor, onBack,
               );
             })}
           </div>
+
+          {/* Missing scans section — students with scan records but no uploaded pages */}
+          {entriesWithoutPages.length > 0 && (
+            <>
+              <button
+                className="gbq-missing-header"
+                onClick={() => setShowMissingScans(!showMissingScans)}
+              >
+                <span>NO SCAN ({entriesWithoutPages.length})</span>
+                <span className="gbq-missing-chevron">{showMissingScans ? '▾' : '▸'}</span>
+              </button>
+              {showMissingScans && (
+                <div className="gbq-missing-list">
+                  {entriesWithoutPages.map((e) => (
+                    <div key={e.scan.id} className="gbq-missing-row">
+                      <div className="gbq-missing-avatar">
+                        {initial(e.student?.name)}
+                      </div>
+                      <span className="gbq-missing-name">{e.student?.name ?? 'Unknown Student'}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         {/* Center: Scan image */}

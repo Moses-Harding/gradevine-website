@@ -1,5 +1,13 @@
 # Change Log - April 2026
 
+### No-Scan Filtering in Grade by Student View (2026-04-14)
+
+Extended the no-scan filtering (already in Grade by Question) to Grade by Student. Students whose scan records have no uploaded pages are now excluded from navigation (Prev/Next, keyboard arrows) and shown in a collapsible "NO SCAN" section at the bottom of the student sidebar in both grading views. Matches the iOS `BUG-022` filter (`scan.pages.isEmpty`).
+
+**Files modified:** `src/components/dashboard/GradeByStudentView.tsx`, `src/components/dashboard/ScanViewer.tsx`
+
+---
+
 ### Assignment Detail View, Analytics, and Grading Status Fixes (2026-04-10)
 
 Added a full AssignmentDetailView as the landing page when tapping an assignment card. Previously, clicking an assignment only exposed the GRADE BY STUDENT / GRADE BY QUESTION buttons — tapping the card itself did nothing. Now, clicking an assignment opens a dedicated detail view with header metadata, progress summary (Fully Graded / In Progress / Ungraded / Total Scans), questions list, struggling students section with configurable threshold (50/60/70%) persisted in localStorage, grade distribution with iOS-style circular letter badges, ring charts for average points per question (matching the iOS `AvgPointsRing` component), and a full grade matrix with sticky student column and per-question averages row. All analytics styling mirrors the iOS app (white card sections with soft drop shadows, iOS system colors, pill badges).

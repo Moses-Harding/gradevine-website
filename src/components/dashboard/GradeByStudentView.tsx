@@ -32,10 +32,14 @@ export function GradeByStudentView({ assignment, courseColor, onBack }: GradeByS
       });
   }, [entries, totalPointsPossible]);
 
+  // Split: entries with uploaded pages vs without (matches iOS BUG-022 filter)
+  const entriesWithPages = useMemo(() => sortedEntries.filter((e) => e.hasPages), [sortedEntries]);
+  const entriesWithoutPages = useMemo(() => sortedEntries.filter((e) => !e.hasPages), [sortedEntries]);
+
   // Auto-select first entry once loaded
   const currentEntry = selectedEntry
-    ? sortedEntries.find((e) => e.scan.id === selectedEntry.scan.id) ?? sortedEntries[0] ?? null
-    : sortedEntries[0] ?? null;
+    ? entriesWithPages.find((e) => e.scan.id === selectedEntry.scan.id) ?? entriesWithPages[0] ?? null
+    : entriesWithPages[0] ?? null;
 
   const handleNavigate = useCallback((entry: StudentScanEntry) => {
     setSelectedEntry(entry);
@@ -59,7 +63,7 @@ export function GradeByStudentView({ assignment, courseColor, onBack }: GradeByS
     );
   }
 
-  if (sortedEntries.length === 0) {
+  if (entriesWithPages.length === 0) {
     return (
       <div className="list-empty">
         <p>No scans found for this assignment.</p>
@@ -72,7 +76,8 @@ export function GradeByStudentView({ assignment, courseColor, onBack }: GradeByS
     <ScanViewer
       entry={currentEntry!}
       assignment={assignment}
-      allEntries={sortedEntries}
+      allEntries={entriesWithPages}
+      entriesWithoutPages={entriesWithoutPages}
       courseColor={courseColor}
       onBack={onBack}
       onNavigate={handleNavigate}
