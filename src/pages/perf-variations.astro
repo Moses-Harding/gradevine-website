@@ -1,0 +1,529 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Student Performance — Design Variations" description="5 variations of the Student Performance section">
+<div class="pv-page">
+  <header class="pv-header">
+    <h1>Student Performance — Card + Sparkline Variations</h1>
+    <p>Exploring card-based layouts with sparklines for the student performance section.</p>
+  </header>
+
+  <!-- ================================================================== -->
+  <!-- VARIATION F: Card + Sparkline                                       -->
+  <!-- ================================================================== -->
+  <section class="pv-section">
+    <div class="pv-label">VARIATION F</div>
+    <h2>Card + Sparkline</h2>
+    <p class="pv-desc">Each student in their own card. Large score top-left, trend pill top-right, wide sparkline with area fill across the bottom. Cards have a subtle left accent in score color.</p>
+
+    <div class="pv-mock-bg">
+      <div class="vf-grid">
+        <!-- Sarah Chen: 92% improving -->
+        <div class="vf-card" style="--ac: #34C759;">
+          <div class="vf-card-accent"></div>
+          <div class="vf-card-body">
+            <div class="vf-card-top">
+              <div class="vf-card-left">
+                <span class="vf-card-score">92.0<span class="vf-card-pct">%</span></span>
+                <span class="vf-card-name">Sarah Chen</span>
+              </div>
+              <span class="vf-pill vf-pill-up">↑ +5.2%</span>
+            </div>
+            <svg class="vf-spark" viewBox="0 0 200 48" preserveAspectRatio="none">
+              <defs><linearGradient id="vf1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34C759" stop-opacity="0.2"/><stop offset="100%" stop-color="#34C759" stop-opacity="0.02"/></linearGradient></defs>
+              <path d="M0,40 L40,34 L80,36 L120,20 L160,10 L200,6 L200,48 L0,48Z" fill="url(#vf1)"/>
+              <polyline points="0,40 40,34 80,36 120,20 160,10 200,6" fill="none" stroke="#34C759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- James Wright: 85% stable -->
+        <div class="vf-card" style="--ac: #007AFF;">
+          <div class="vf-card-accent"></div>
+          <div class="vf-card-body">
+            <div class="vf-card-top">
+              <div class="vf-card-left">
+                <span class="vf-card-score">85.3<span class="vf-card-pct">%</span></span>
+                <span class="vf-card-name">James Wright</span>
+              </div>
+              <span class="vf-pill vf-pill-stable">→ +0.3%</span>
+            </div>
+            <svg class="vf-spark" viewBox="0 0 200 48" preserveAspectRatio="none">
+              <defs><linearGradient id="vf2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#007AFF" stop-opacity="0.2"/><stop offset="100%" stop-color="#007AFF" stop-opacity="0.02"/></linearGradient></defs>
+              <path d="M0,22 L40,26 L80,20 L120,24 L160,22 L200,21 L200,48 L0,48Z" fill="url(#vf2)"/>
+              <polyline points="0,22 40,26 80,20 120,24 160,22 200,21" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Aisha Patel: 78% improving -->
+        <div class="vf-card" style="--ac: #007AFF;">
+          <div class="vf-card-accent"></div>
+          <div class="vf-card-body">
+            <div class="vf-card-top">
+              <div class="vf-card-left">
+                <span class="vf-card-score">78.0<span class="vf-card-pct">%</span></span>
+                <span class="vf-card-name">Aisha Patel</span>
+              </div>
+              <span class="vf-pill vf-pill-up">↑ +3.7%</span>
+            </div>
+            <svg class="vf-spark" viewBox="0 0 200 48" preserveAspectRatio="none">
+              <defs><linearGradient id="vf3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#007AFF" stop-opacity="0.2"/><stop offset="100%" stop-color="#007AFF" stop-opacity="0.02"/></linearGradient></defs>
+              <path d="M0,38 L40,32 L80,26 L120,20 L160,16 L200,12 L200,48 L0,48Z" fill="url(#vf3)"/>
+              <polyline points="0,38 40,32 80,26 120,20 160,16 200,12" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Maria Lopez: 64% medium risk declining -->
+        <div class="vf-card vf-card-risk" style="--ac: #FF9500;">
+          <div class="vf-card-accent"></div>
+          <div class="vf-card-body">
+            <div class="vf-card-top">
+              <div class="vf-card-left">
+                <span class="vf-card-score" style="color:#FF9500;">64.2<span class="vf-card-pct">%</span></span>
+                <span class="vf-card-name">Maria Lopez</span>
+              </div>
+              <span class="vf-pill vf-pill-down">↓ -8.1%</span>
+            </div>
+            <svg class="vf-spark" viewBox="0 0 200 48" preserveAspectRatio="none">
+              <defs><linearGradient id="vf4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF9500" stop-opacity="0.2"/><stop offset="100%" stop-color="#FF9500" stop-opacity="0.02"/></linearGradient></defs>
+              <path d="M0,10 L40,14 L80,20 L120,28 L160,36 L200,42 L200,48 L0,48Z" fill="url(#vf4)"/>
+              <polyline points="0,10 40,14 80,20 120,28 160,36 200,42" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Tyler Brooks: 38% critical declining -->
+        <div class="vf-card vf-card-risk" style="--ac: #FF1C36;">
+          <div class="vf-card-accent"></div>
+          <div class="vf-card-body">
+            <div class="vf-card-top">
+              <div class="vf-card-left">
+                <span class="vf-card-score" style="color:#FF1C36;">38.0<span class="vf-card-pct">%</span></span>
+                <span class="vf-card-name">Tyler Brooks</span>
+              </div>
+              <span class="vf-pill vf-pill-down">↓ -12.4%</span>
+            </div>
+            <svg class="vf-spark" viewBox="0 0 200 48" preserveAspectRatio="none">
+              <defs><linearGradient id="vf5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF1C36" stop-opacity="0.2"/><stop offset="100%" stop-color="#FF1C36" stop-opacity="0.02"/></linearGradient></defs>
+              <path d="M0,8 L40,14 L80,24 L120,32 L160,38 L200,44 L200,48 L0,48Z" fill="url(#vf5)"/>
+              <polyline points="0,8 40,14 80,24 120,32 160,38 200,44" fill="none" stroke="#FF1C36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- VARIATION G: Full-Bleed Sparkline Background                        -->
+  <!-- ================================================================== -->
+  <section class="pv-section">
+    <div class="pv-label">VARIATION G</div>
+    <h2>Full-Bleed Sparkline Background</h2>
+    <p class="pv-desc">The sparkline becomes the card's background, rendered edge-to-edge behind the content. Score and delta overlay on top. Cards feel like mini stock tickers.</p>
+
+    <div class="pv-mock-bg">
+      <div class="vg-grid">
+        <div class="vg-card">
+          <svg class="vg-bg-spark" viewBox="0 0 300 80" preserveAspectRatio="none">
+            <defs><linearGradient id="vg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34C759" stop-opacity="0.12"/><stop offset="100%" stop-color="#34C759" stop-opacity="0.02"/></linearGradient></defs>
+            <path d="M0,65 L60,55 L120,58 L180,35 L240,18 L300,10 L300,80 L0,80Z" fill="url(#vg1)"/>
+            <polyline points="0,65 60,55 120,58 180,35 240,18 300,10" fill="none" stroke="#34C759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="vg-overlay">
+            <div class="vg-top"><span class="vg-name">Sarah Chen</span><span class="vg-pill vg-pill-up">↑ +5.2%</span></div>
+            <span class="vg-score">92.0%</span>
+          </div>
+        </div>
+        <div class="vg-card">
+          <svg class="vg-bg-spark" viewBox="0 0 300 80" preserveAspectRatio="none">
+            <defs><linearGradient id="vg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#007AFF" stop-opacity="0.12"/><stop offset="100%" stop-color="#007AFF" stop-opacity="0.02"/></linearGradient></defs>
+            <path d="M0,36 L60,42 L120,32 L180,38 L240,35 L300,34 L300,80 L0,80Z" fill="url(#vg2)"/>
+            <polyline points="0,36 60,42 120,32 180,38 240,35 300,34" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="vg-overlay">
+            <div class="vg-top"><span class="vg-name">James Wright</span><span class="vg-pill vg-pill-stable">→ +0.3%</span></div>
+            <span class="vg-score">85.3%</span>
+          </div>
+        </div>
+        <div class="vg-card">
+          <svg class="vg-bg-spark" viewBox="0 0 300 80" preserveAspectRatio="none">
+            <defs><linearGradient id="vg3b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#007AFF" stop-opacity="0.12"/><stop offset="100%" stop-color="#007AFF" stop-opacity="0.02"/></linearGradient></defs>
+            <path d="M0,62 L60,52 L120,42 L180,34 L240,26 L300,20 L300,80 L0,80Z" fill="url(#vg3b)"/>
+            <polyline points="0,62 60,52 120,42 180,34 240,26 300,20" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="vg-overlay">
+            <div class="vg-top"><span class="vg-name">Aisha Patel</span><span class="vg-pill vg-pill-up">↑ +3.7%</span></div>
+            <span class="vg-score">78.0%</span>
+          </div>
+        </div>
+        <div class="vg-card vg-card-risk">
+          <svg class="vg-bg-spark" viewBox="0 0 300 80" preserveAspectRatio="none">
+            <defs><linearGradient id="vg4b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF9500" stop-opacity="0.12"/><stop offset="100%" stop-color="#FF9500" stop-opacity="0.02"/></linearGradient></defs>
+            <path d="M0,16 L60,22 L120,34 L180,48 L240,60 L300,68 L300,80 L0,80Z" fill="url(#vg4b)"/>
+            <polyline points="0,16 60,22 120,34 180,48 240,60 300,68" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="vg-overlay">
+            <div class="vg-top"><span class="vg-name">Maria Lopez</span><span class="vg-pill vg-pill-down">↓ -8.1%</span></div>
+            <span class="vg-score" style="color:#FF9500;">64.2%</span>
+          </div>
+        </div>
+        <div class="vg-card vg-card-risk">
+          <svg class="vg-bg-spark" viewBox="0 0 300 80" preserveAspectRatio="none">
+            <defs><linearGradient id="vg5b" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF1C36" stop-opacity="0.12"/><stop offset="100%" stop-color="#FF1C36" stop-opacity="0.02"/></linearGradient></defs>
+            <path d="M0,12 L60,22 L120,38 L180,52 L240,62 L300,72 L300,80 L0,80Z" fill="url(#vg5b)"/>
+            <polyline points="0,12 60,22 120,38 180,52 240,62 300,72" fill="none" stroke="#FF1C36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+          </svg>
+          <div class="vg-overlay">
+            <div class="vg-top"><span class="vg-name">Tyler Brooks</span><span class="vg-pill vg-pill-down">↓ -12.4%</span></div>
+            <span class="vg-score" style="color:#FF1C36;">38.0%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- VARIATION H: Compact Row Cards with Ring + Spark                    -->
+  <!-- ================================================================== -->
+  <section class="pv-section">
+    <div class="pv-label">VARIATION H</div>
+    <h2>Row Cards with Ring + Spark</h2>
+    <p class="pv-desc">Full-width row cards. Left: mini ring chart. Center: name + assignment scores as dots. Right: sparkline + delta pill. Combines density with visual richness.</p>
+
+    <div class="pv-mock-bg">
+      <div class="vh-list">
+        <div class="vh-row">
+          <div class="vh-ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#f0f0f0" stroke-width="3.5"/><circle cx="20" cy="20" r="16" fill="none" stroke="#34C759" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="92.5 100.5" transform="rotate(-90 20 20)"/></svg><span class="vh-ring-val">92</span></div>
+          <div class="vh-info"><span class="vh-name">Sarah Chen</span><div class="vh-dots"><span class="vh-dot" style="background:#34C759;" title="88%"></span><span class="vh-dot" style="background:#34C759;" title="90%"></span><span class="vh-dot" style="background:#34C759;" title="95%"></span><span class="vh-dot" style="background:#34C759;" title="96%"></span></div></div>
+          <svg class="vh-spark" viewBox="0 0 80 28"><polyline points="2,22 20,18 40,20 60,10 78,4" fill="none" stroke="#34C759" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="vh-pill vh-pill-up">↑ +5.2%</span>
+        </div>
+        <div class="vh-row">
+          <div class="vh-ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#f0f0f0" stroke-width="3.5"/><circle cx="20" cy="20" r="16" fill="none" stroke="#007AFF" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="85.5 100.5" transform="rotate(-90 20 20)"/></svg><span class="vh-ring-val">85</span></div>
+          <div class="vh-info"><span class="vh-name">James Wright</span><div class="vh-dots"><span class="vh-dot" style="background:#007AFF;" title="84%"></span><span class="vh-dot" style="background:#007AFF;" title="86%"></span><span class="vh-dot" style="background:#007AFF;" title="85%"></span><span class="vh-dot" style="background:#007AFF;" title="86%"></span></div></div>
+          <svg class="vh-spark" viewBox="0 0 80 28"><polyline points="2,14 20,16 40,12 60,14 78,13" fill="none" stroke="#007AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="vh-pill vh-pill-stable">→ +0.3%</span>
+        </div>
+        <div class="vh-row">
+          <div class="vh-ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#f0f0f0" stroke-width="3.5"/><circle cx="20" cy="20" r="16" fill="none" stroke="#007AFF" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="78.5 100.5" transform="rotate(-90 20 20)"/></svg><span class="vh-ring-val">78</span></div>
+          <div class="vh-info"><span class="vh-name">Aisha Patel</span><div class="vh-dots"><span class="vh-dot" style="background:#FF9500;" title="72%"></span><span class="vh-dot" style="background:#FF9500;" title="74%"></span><span class="vh-dot" style="background:#007AFF;" title="80%"></span><span class="vh-dot" style="background:#34C759;" title="86%"></span></div></div>
+          <svg class="vh-spark" viewBox="0 0 80 28"><polyline points="2,24 20,20 40,16 60,12 78,8" fill="none" stroke="#007AFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="vh-pill vh-pill-up">↑ +3.7%</span>
+        </div>
+        <div class="vh-row vh-row-risk">
+          <div class="vh-ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#f0f0f0" stroke-width="3.5"/><circle cx="20" cy="20" r="16" fill="none" stroke="#FF9500" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="64.3 100.5" transform="rotate(-90 20 20)"/></svg><span class="vh-ring-val" style="color:#FF9500;">64</span></div>
+          <div class="vh-info"><span class="vh-name">Maria Lopez</span><div class="vh-dots"><span class="vh-dot" style="background:#007AFF;" title="72%"></span><span class="vh-dot" style="background:#FF9500;" title="68%"></span><span class="vh-dot" style="background:#FF1C36;" title="58%"></span><span class="vh-dot" style="background:#FF1C36;" title="55%"></span></div></div>
+          <svg class="vh-spark" viewBox="0 0 80 28"><polyline points="2,6 20,8 40,12 60,20 78,24" fill="none" stroke="#FF9500" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="vh-pill vh-pill-down">↓ -8.1%</span>
+        </div>
+        <div class="vh-row vh-row-risk">
+          <div class="vh-ring"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="16" fill="none" stroke="#f0f0f0" stroke-width="3.5"/><circle cx="20" cy="20" r="16" fill="none" stroke="#FF1C36" stroke-width="3.5" stroke-linecap="round" stroke-dasharray="38.2 100.5" transform="rotate(-90 20 20)"/></svg><span class="vh-ring-val" style="color:#FF1C36;">38</span></div>
+          <div class="vh-info"><span class="vh-name">Tyler Brooks</span><div class="vh-dots"><span class="vh-dot" style="background:#FF1C36;" title="45%"></span><span class="vh-dot" style="background:#FF1C36;" title="42%"></span><span class="vh-dot" style="background:#FF1C36;" title="30%"></span><span class="vh-dot" style="background:#FF1C36;" title="28%"></span></div></div>
+          <svg class="vh-spark" viewBox="0 0 80 28"><polyline points="2,4 20,8 40,16 60,20 78,24" fill="none" stroke="#FF1C36" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="vh-pill vh-pill-down">↓ -12.4%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- VARIATION I: Stacked Card with Score Bar + Spark Overlay            -->
+  <!-- ================================================================== -->
+  <section class="pv-section">
+    <div class="pv-label">VARIATION I</div>
+    <h2>Score Bar + Spark Overlay</h2>
+    <p class="pv-desc">Each card has a thick gradient score bar at the top (sized to percentage), with the sparkline overlaid on it. Name and delta sit below. The bar IS the sparkline background.</p>
+
+    <div class="pv-mock-bg">
+      <div class="vi-grid">
+        <div class="vi-card">
+          <div class="vi-bar-area">
+            <div class="vi-bar" style="width:92%; background: linear-gradient(90deg, #34C75966, #34C75922);"></div>
+            <svg class="vi-spark-overlay" viewBox="0 0 200 36" preserveAspectRatio="none"><polyline points="0,30 40,24 80,26 120,14 160,6 200,2" fill="none" stroke="#34C759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="vi-bottom"><span class="vi-name">Sarah Chen</span><span class="vi-score">92.0%</span><span class="vi-delta vi-up">↑ +5.2%</span></div>
+        </div>
+        <div class="vi-card">
+          <div class="vi-bar-area">
+            <div class="vi-bar" style="width:85%; background: linear-gradient(90deg, #007AFF66, #007AFF22);"></div>
+            <svg class="vi-spark-overlay" viewBox="0 0 200 36" preserveAspectRatio="none"><polyline points="0,18 40,22 80,14 120,20 160,17 200,16" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="vi-bottom"><span class="vi-name">James Wright</span><span class="vi-score">85.3%</span><span class="vi-delta vi-stable">→ +0.3%</span></div>
+        </div>
+        <div class="vi-card">
+          <div class="vi-bar-area">
+            <div class="vi-bar" style="width:78%; background: linear-gradient(90deg, #007AFF66, #007AFF22);"></div>
+            <svg class="vi-spark-overlay" viewBox="0 0 200 36" preserveAspectRatio="none"><polyline points="0,32 40,26 80,20 120,14 160,10 200,6" fill="none" stroke="#007AFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="vi-bottom"><span class="vi-name">Aisha Patel</span><span class="vi-score">78.0%</span><span class="vi-delta vi-up">↑ +3.7%</span></div>
+        </div>
+        <div class="vi-card vi-card-risk">
+          <div class="vi-bar-area">
+            <div class="vi-bar" style="width:64%; background: linear-gradient(90deg, #FF950066, #FF950022);"></div>
+            <svg class="vi-spark-overlay" viewBox="0 0 200 36" preserveAspectRatio="none"><polyline points="0,6 40,10 80,16 120,22 160,28 200,34" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="vi-bottom"><span class="vi-name">Maria Lopez</span><span class="vi-score" style="color:#FF9500;">64.2%</span><span class="vi-delta vi-down">↓ -8.1%</span></div>
+        </div>
+        <div class="vi-card vi-card-risk">
+          <div class="vi-bar-area">
+            <div class="vi-bar" style="width:38%; background: linear-gradient(90deg, #FF1C3666, #FF1C3622);"></div>
+            <svg class="vi-spark-overlay" viewBox="0 0 200 36" preserveAspectRatio="none"><polyline points="0,4 40,10 80,18 120,26 160,30 200,34" fill="none" stroke="#FF1C36" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="vi-bottom"><span class="vi-name">Tyler Brooks</span><span class="vi-score" style="color:#FF1C36;">38.0%</span><span class="vi-delta vi-down">↓ -12.4%</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== -->
+  <!-- VARIATION J: Wide Card with Assignment Labels on Sparkline          -->
+  <!-- ================================================================== -->
+  <section class="pv-section">
+    <div class="pv-label">VARIATION J</div>
+    <h2>Labeled Sparkline</h2>
+    <p class="pv-desc">Like F but wider (single column). The sparkline has labeled data points showing each assignment score, so you can see exactly what happened. Most informative variant.</p>
+
+    <div class="pv-mock-bg">
+      <div class="vj-list">
+        <div class="vj-card" style="--ac: #34C759;">
+          <div class="vj-card-accent"></div>
+          <div class="vj-card-body">
+            <div class="vj-top"><div class="vj-left"><span class="vj-score">92.0<span class="vj-pct">%</span></span><span class="vj-name">Sarah Chen</span></div><span class="vj-pill vj-pill-up">↑ +5.2%</span></div>
+            <div class="vj-spark-area">
+              <svg class="vj-spark" viewBox="0 0 400 56" preserveAspectRatio="none">
+                <defs><linearGradient id="vj1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#34C759" stop-opacity="0.15"/><stop offset="100%" stop-color="#34C759" stop-opacity="0"/></linearGradient></defs>
+                <path d="M40,44 L140,38 L260,40 L360,14 L360,56 L40,56Z" fill="url(#vj1)"/>
+                <polyline points="40,44 140,38 260,40 360,14" fill="none" stroke="#34C759" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="40" cy="44" r="3.5" fill="#34C759"/><circle cx="140" cy="38" r="3.5" fill="#34C759"/><circle cx="260" cy="40" r="3.5" fill="#34C759"/><circle cx="360" cy="14" r="3.5" fill="#34C759"/>
+              </svg>
+              <div class="vj-labels"><span style="left:40px;">88%<br><small>HW 1</small></span><span style="left:140px;">90%<br><small>HW 2</small></span><span style="left:260px;">95%<br><small>HW 3</small></span><span style="left:360px;">96%<br><small>Quiz</small></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="vj-card vj-card-risk" style="--ac: #FF9500;">
+          <div class="vj-card-accent"></div>
+          <div class="vj-card-body">
+            <div class="vj-top"><div class="vj-left"><span class="vj-score" style="color:#FF9500;">64.2<span class="vj-pct">%</span></span><span class="vj-name">Maria Lopez</span></div><span class="vj-pill vj-pill-down">↓ -8.1%</span></div>
+            <div class="vj-spark-area">
+              <svg class="vj-spark" viewBox="0 0 400 56" preserveAspectRatio="none">
+                <defs><linearGradient id="vj2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#FF9500" stop-opacity="0.15"/><stop offset="100%" stop-color="#FF9500" stop-opacity="0"/></linearGradient></defs>
+                <path d="M40,16 L140,24 L260,38 L360,44 L360,56 L40,56Z" fill="url(#vj2)"/>
+                <polyline points="40,16 140,24 260,38 360,44" fill="none" stroke="#FF9500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="40" cy="16" r="3.5" fill="#FF9500"/><circle cx="140" cy="24" r="3.5" fill="#FF9500"/><circle cx="260" cy="38" r="3.5" fill="#FF9500"/><circle cx="360" cy="44" r="3.5" fill="#FF9500"/>
+              </svg>
+              <div class="vj-labels"><span style="left:40px;">72%<br><small>HW 1</small></span><span style="left:140px;">68%<br><small>HW 2</small></span><span style="left:260px;">58%<br><small>HW 3</small></span><span style="left:360px;">55%<br><small>Quiz</small></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</Layout>
+
+<style is:global>
+  .pv-page { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+  .pv-header { margin-bottom: 48px; }
+  .pv-header h1 { font-size: 28px; font-weight: 800; color: #212121; margin: 0 0 8px; }
+  .pv-header p { font-size: 14px; color: #757575; margin: 0; }
+  .pv-section { margin-bottom: 56px; }
+  .pv-label { font-size: 10px; font-weight: 800; letter-spacing: 2px; color: #9e9e9e; margin-bottom: 6px; }
+  .pv-section h2 { font-size: 20px; font-weight: 700; color: #212121; margin: 0 0 4px; }
+  .pv-desc { font-size: 13px; color: #757575; margin: 0 0 16px; line-height: 1.5; }
+  .pv-mock-bg { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+  /* ================================================================== */
+  /* VARIATION G: Full-Bleed Sparkline Background                         */
+  /* ================================================================== */
+  .vg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .vg-card {
+    position: relative; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden;
+    min-height: 100px; transition: box-shadow 0.15s;
+  }
+  .vg-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .vg-card-risk { border-color: #ffd4cc; }
+  .vg-bg-spark { position: absolute; bottom: 0; left: 0; width: 100%; height: 80px; }
+  .vg-overlay { position: relative; z-index: 1; padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+  .vg-top { display: flex; justify-content: space-between; align-items: center; }
+  .vg-name { font-size: 13px; font-weight: 600; color: #424242; }
+  .vg-score { font-size: 32px; font-weight: 700; color: #212121; line-height: 1; font-variant-numeric: tabular-nums; }
+  .vg-pill { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+  .vg-pill-up { background: rgba(52,199,89,0.15); color: #34C759; }
+  .vg-pill-down { background: rgba(255,28,54,0.15); color: #FF1C36; }
+  .vg-pill-stable { background: rgba(158,158,158,0.12); color: #9e9e9e; }
+
+  /* ================================================================== */
+  /* VARIATION H: Row Cards with Ring + Spark                             */
+  /* ================================================================== */
+  .vh-list { display: flex; flex-direction: column; gap: 0; }
+  .vh-row {
+    display: flex; align-items: center; gap: 14px; padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .vh-row:last-child { border-bottom: none; }
+  .vh-row-risk { background: #fff8f5; margin: 0 -20px; padding: 12px 20px; }
+  .vh-ring { position: relative; width: 40px; height: 40px; flex-shrink: 0; }
+  .vh-ring svg { width: 40px; height: 40px; }
+  .vh-ring-val {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #212121;
+  }
+  .vh-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+  .vh-name { font-size: 13px; font-weight: 600; color: #212121; }
+  .vh-dots { display: flex; gap: 5px; }
+  .vh-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .vh-spark { width: 80px; height: 28px; flex-shrink: 0; }
+  .vh-pill { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; }
+  .vh-pill-up { background: rgba(52,199,89,0.12); color: #34C759; }
+  .vh-pill-down { background: rgba(255,28,54,0.12); color: #FF1C36; }
+  .vh-pill-stable { background: rgba(158,158,158,0.12); color: #9e9e9e; }
+
+  /* ================================================================== */
+  /* VARIATION I: Score Bar + Spark Overlay                                */
+  /* ================================================================== */
+  .vi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .vi-card {
+    border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+  .vi-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .vi-card-risk { border-color: #ffd4cc; }
+  .vi-bar-area { position: relative; height: 36px; background: #fafafa; }
+  .vi-bar { position: absolute; top: 0; left: 0; height: 100%; }
+  .vi-spark-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+  .vi-bottom {
+    display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+  }
+  .vi-name { font-size: 13px; font-weight: 600; color: #212121; flex: 1; }
+  .vi-score { font-size: 16px; font-weight: 700; color: #212121; font-variant-numeric: tabular-nums; }
+  .vi-delta { font-size: 11px; font-weight: 700; }
+  .vi-up { color: #34C759; }
+  .vi-down { color: #FF1C36; }
+  .vi-stable { color: #9e9e9e; }
+
+  /* ================================================================== */
+  /* VARIATION J: Labeled Sparkline                                       */
+  /* ================================================================== */
+  .vj-list { display: flex; flex-direction: column; gap: 14px; }
+  .vj-card {
+    display: flex; border: 1px solid #e8e8e8; border-radius: 12px; overflow: hidden;
+    transition: box-shadow 0.15s;
+  }
+  .vj-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+  .vj-card-risk { background: #fffbf8; }
+  .vj-card-accent { width: 4px; background: var(--ac); flex-shrink: 0; }
+  .vj-card-body { flex: 1; min-width: 0; }
+  .vj-top { display: flex; align-items: flex-start; justify-content: space-between; padding: 14px 16px 8px; }
+  .vj-left { display: flex; flex-direction: column; gap: 1px; }
+  .vj-score { font-size: 28px; font-weight: 700; color: #212121; line-height: 1; font-variant-numeric: tabular-nums; }
+  .vj-pct { font-size: 16px; font-weight: 500; opacity: 0.5; }
+  .vj-name { font-size: 13px; font-weight: 500; color: #757575; margin-top: 2px; }
+  .vj-pill { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; white-space: nowrap; margin-top: 2px; }
+  .vj-pill-up { background: rgba(52,199,89,0.12); color: #34C759; }
+  .vj-pill-down { background: rgba(255,28,54,0.12); color: #FF1C36; }
+  .vj-pill-stable { background: rgba(158,158,158,0.12); color: #9e9e9e; }
+  .vj-spark-area { position: relative; padding: 0 16px 8px; }
+  .vj-spark { width: 100%; height: 56px; display: block; }
+  .vj-labels {
+    position: absolute; top: 0; left: 16px; right: 16px; height: 56px;
+    pointer-events: none;
+  }
+  .vj-labels span {
+    position: absolute; transform: translateX(-50%);
+    font-size: 9px; font-weight: 700; color: #757575; text-align: center; line-height: 1.2;
+    bottom: -16px;
+  }
+  .vj-labels small { font-weight: 500; color: #bdbdbd; }
+
+  /* ================================================================== */
+  /* VARIATION F: Card + Sparkline                                        */
+  /* ================================================================== */
+  .vf-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+
+  .vf-card {
+    display: flex;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: box-shadow 0.15s, border-color 0.15s;
+  }
+  .vf-card:hover {
+    border-color: #d0d0d0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .vf-card-accent {
+    width: 4px;
+    background: var(--ac);
+    flex-shrink: 0;
+  }
+
+  .vf-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .vf-card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 14px 16px 8px;
+    gap: 8px;
+  }
+
+  .vf-card-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .vf-card-score {
+    font-size: 28px;
+    font-weight: 700;
+    color: #212121;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .vf-card-pct {
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 0.5;
+  }
+
+  .vf-card-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #757575;
+    margin-top: 2px;
+  }
+
+  .vf-pill {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .vf-pill-up { background: rgba(52,199,89,0.12); color: #34C759; }
+  .vf-pill-down { background: rgba(255,28,54,0.12); color: #FF1C36; }
+  .vf-pill-stable { background: rgba(158,158,158,0.12); color: #9e9e9e; }
+
+  .vf-spark {
+    width: 100%;
+    height: 48px;
+    display: block;
+  }
+
+  .vf-card-risk {
+    background: #fffbf8;
+  }
+</style>

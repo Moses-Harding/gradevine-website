@@ -416,49 +416,39 @@ function StudentPerformanceSection({
         ) : undefined
       }
     >
-      <div className="cd-perf-list">
+      <div className="cd-perf-grid">
         {displayTrends.map((student) => {
-          const barColor = student.riskSeverity
+          const sparkColor = student.riskSeverity
             ? severityColor(student.riskSeverity)
             : color;
+          const isRisk = !!student.riskSeverity;
 
           return (
-            <div key={student.studentID} className="cd-perf-row">
-              {/* Left: name + bar */}
-              <div className="cd-perf-left">
-                <div className="cd-perf-name-line">
-                  {student.riskSeverity && (
-                    <div
-                      className="cd-perf-dot"
-                      style={{ background: severityColor(student.riskSeverity) }}
-                    />
-                  )}
-                  <span className="cd-perf-name">{student.name}</span>
-                </div>
-                <div className="cd-perf-bar-track">
-                  <div
-                    className="cd-perf-bar-fill"
-                    style={{
-                      width: `${Math.min(100, student.overallAverage)}%`,
-                      background: barColor,
-                    }}
-                  />
-                </div>
-              </div>
+            <div
+              key={student.studentID}
+              className={`cd-perf-card ${isRisk ? 'cd-perf-card-risk' : ''}`}
+            >
+              {/* Background sparkline */}
+              {student.scores.length >= 2 && (
+                <PerfSparklineBg scores={student.scores.map((s) => s.percentage)} color={sparkColor} />
+              )}
 
-              {/* Right: score + delta */}
-              <div className="cd-perf-right">
+              {/* Foreground content */}
+              <div className="cd-perf-overlay">
+                <div className="cd-perf-top">
+                  <span className="cd-perf-name">{student.name}</span>
+                  {student.scores.length >= 2 && (
+                    <span className={`cd-perf-pill ${trendClass(student.trendDelta)}`}>
+                      {trendArrow(student.trendDelta)} {student.trendDelta > 0 ? '+' : ''}{student.trendDelta.toFixed(1)}%
+                    </span>
+                  )}
+                </div>
                 <span
                   className="cd-perf-score"
-                  style={student.riskSeverity ? { color: severityColor(student.riskSeverity) } : undefined}
+                  style={isRisk ? { color: sparkColor } : undefined}
                 >
                   {student.overallAverage.toFixed(1)}%
                 </span>
-                {student.scores.length >= 2 && (
-                  <span className={`cd-perf-delta ${trendClass(student.trendDelta)}`}>
-                    {trendArrow(student.trendDelta)} {student.trendDelta > 0 ? '+' : ''}{student.trendDelta.toFixed(1)}%
-                  </span>
-                )}
               </div>
             </div>
           );
@@ -544,6 +534,52 @@ function Sparkline({ scores, color }: { scores: number[]; color: string }) {
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Full-bleed sparkline background for performance cards
+// ---------------------------------------------------------------------------
+
+function PerfSparklineBg({ scores, color }: { scores: number[]; color: string }) {
+  const w = 300;
+  const h = 80;
+  const pad = 0;
+  const min = Math.min(...scores);
+  const max = Math.max(...scores);
+  const range = max - min || 1;
+
+  const coords = scores.map((s, i) => {
+    const x = pad + (i / (scores.length - 1)) * (w - pad * 2);
+    const y = h - 10 - ((s - min) / range) * (h - 20);
+    return { x, y };
+  });
+
+  const linePoints = coords.map((c) => `${c.x},${c.y}`).join(' ');
+  const areaPath = `M${coords[0].x},${coords[0].y} ${coords.slice(1).map((c) => `L${c.x},${c.y}`).join(' ')} L${w},${h} L0,${h}Z`;
+
+  // Unique gradient ID per student (use color hash to avoid collisions)
+  const gradId = `pfg-${color.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+  return (
+    <svg className="cd-perf-bg-spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none">
+      <defs>
+        <linearGradient id={gradId} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity="0.14" />
+          <stop offset="100%" stopColor={color} stopOpacity="0.02" />
+        </linearGradient>
+      </defs>
+      <path d={areaPath} fill={`url(#${gradId})`} />
+      <polyline
+        points={linePoints}
+        fill="none"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity="0.45"
       />
     </svg>
   );
