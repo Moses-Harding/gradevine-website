@@ -3636,6 +3636,349 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
   }
 
   /* ------------------------------------------------------------------ */
+  /* Student Jump Selector Modal                                         */
+  /* ------------------------------------------------------------------ */
+
+  .jump-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fade-in 0.15s ease;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .jump-modal {
+    background: white;
+    border-radius: 12px;
+    width: 420px;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+
+  .jump-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .jump-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #212121;
+    letter-spacing: 0.3px;
+  }
+
+  .jump-cancel {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9e9e9e;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family);
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: all 0.1s ease;
+  }
+
+  .jump-cancel:hover {
+    color: #616161;
+    background: #f5f5f5;
+  }
+
+  .jump-search {
+    padding: 10px 16px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .jump-search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: var(--font-family);
+    background: #fafafa;
+    outline: none;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    box-sizing: border-box;
+  }
+
+  .jump-search-input:focus {
+    border-color: #bdbdbd;
+    background: white;
+  }
+
+  .jump-list {
+    overflow-y: auto;
+    flex: 1;
+    padding: 4px 0;
+  }
+
+  .jump-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 8px 16px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family);
+    text-align: left;
+    transition: background 0.1s ease;
+  }
+
+  .jump-row:hover {
+    background: #f5f5f5;
+  }
+
+  .jump-row-current {
+    background: #f0f4ff;
+  }
+
+  .jump-row-current:hover {
+    background: #e8edff;
+  }
+
+  .jump-status {
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .jump-status-current {
+    color: #3880F4;
+    font-weight: 700;
+  }
+
+  .jump-status-graded {
+    color: #34c759;
+    font-weight: 600;
+  }
+
+  .jump-status-ungraded {
+    color: #bdbdbd;
+  }
+
+  .jump-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 600;
+    color: #212121;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .jump-right {
+    flex-shrink: 0;
+  }
+
+  .jump-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 2px 10px;
+    border-radius: 6px;
+  }
+
+  .jump-score {
+    font-size: 13px;
+    color: #9e9e9e;
+  }
+
+  .jump-ungraded {
+    font-size: 13px;
+    color: #bdbdbd;
+  }
+
+  .jump-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 32px 16px;
+    color: #9e9e9e;
+  }
+
+  .jump-empty-icon {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .jump-empty-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #616161;
+  }
+
+  .jump-empty-hint {
+    font-size: 13px;
+  }
+
+  /* Scan Image Zoom Lightbox */
+  .zoom-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 110;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    animation: fade-in 0.15s ease;
+  }
+
+  .zoom-controls {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 111;
+  }
+
+  .zoom-page-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.5px;
+  }
+
+  .zoom-close {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.1s ease;
+    font-family: var(--font-family);
+  }
+
+  .zoom-close:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .zoom-image {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+    border-radius: 4px;
+    cursor: default;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  }
+
+  .scan-image-clickable {
+    cursor: zoom-in;
+  }
+
+  /* Multi-page navigation */
+  .page-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .page-nav-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family);
+    transition: all 0.1s ease;
+    padding: 0;
+    line-height: 1;
+  }
+
+  .page-nav-btn:hover:not(:disabled) {
+    border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.1);
+  }
+
+  .page-nav-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .page-nav-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.5);
+  }
+
+  /* Keyword highlighting in transcription */
+  .kw-highlight {
+    padding: 1px 2px;
+    border-radius: 3px;
+    cursor: help;
+    transition: filter 0.1s ease;
+  }
+
+  .kw-highlight:hover {
+    filter: brightness(0.9);
+  }
+
+  /* Clickable student name in nav bar */
+  .nav-name-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-family: var(--font-family);
+    transition: background 0.1s ease;
+  }
+
+  .nav-name-btn:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* Active toggle state for top bar buttons */
+  .gbq-toggle-active {
+    background: color-mix(in srgb, var(--toggle-color, #5002F7) 15%, transparent) !important;
+    color: var(--toggle-color, #5002F7) !important;
+    border-color: var(--toggle-color, #5002F7) !important;
+  }
+
+  /* ------------------------------------------------------------------ */
   /* Assignment action buttons                                           */
   /* ------------------------------------------------------------------ */
 

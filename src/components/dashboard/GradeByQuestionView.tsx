@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import { useStudentScans, type StudentScanEntry } from '../../hooks/useStudentScans';
 import { useScanPages, prefetchScanPages } from '../../hooks/useScanPages';
 import type { Scan, QuestionAssignment, AssignmentQuestion, ScanQuestionResponse, ScanPage, QuickFeedbackItem } from '../../types/cloudkit';
+import { isAssignmentEditable } from '../../types/cloudkit';
 import { saveGrades, saveAssignmentQuickFeedback, type SaveStatus } from '../../lib/cloudkit/save';
 
 function swiftTimestamp(): number {
@@ -61,6 +62,143 @@ function getResponseForQuestion(scan: Scan, questionID: string): ScanQuestionRes
 }
 
 // ---------------------------------------------------------------------------
+// Keyword Highlighting
+// ---------------------------------------------------------------------------
+
+interface KeywordMatchData {
+  keyword: string;
+  matchedString: string;
+  rangeLocation: number;
+  rangeLength: number;
+  isFuzzy: boolean;
+  isContextual: boolean;
+  score: number | null;
+}
+
+type MatchType = 'question' | 'assignment' | 'contextual';
+
+interface HighlightSpan {
+  start: number;
+  end: number;
+  type: MatchType;
+  isFuzzy: boolean;
+  score: number | null;
+  keyword: string;
+}
+
+const MATCH_COLORS: Record<MatchType, string> = {
+  question: '255, 193, 7',     // Yellow
+  assignment: '0, 107, 166',   // Blue
+  contextual: '24, 160, 160',  // Teal
+};
+
+function parseKeywordMatches(raw: unknown): KeywordMatchData[] {
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((m): m is KeywordMatchData =>
+    m && typeof m === 'object' &&
+    typeof m.rangeLocation === 'number' &&
+    typeof m.rangeLength === 'number'
+  );
+}
+
+function buildHighlightSpans(response: ScanQuestionResponse, transcription: string): HighlightSpan[] {
+  const questionMatches = parseKeywordMatches(response.questionKeywordMatches);
+  const assignmentMatches = parseKeywordMatches(response.assignmentKeywordMatches);
+
+  const spans: HighlightSpan[] = [];
+
+  for (const m of questionMatches) {
+    spans.push({
+      start: m.rangeLocation,
+      end: m.rangeLocation + m.rangeLength,
+      type: 'question',
+      isFuzzy: m.isFuzzy,
+      score: m.score,
+      keyword: m.keyword,
+    });
+  }
+
+  for (const m of assignmentMatches) {
+    spans.push({
+      start: m.rangeLocation,
+      end: m.rangeLocation + m.rangeLength,
+      type: 'assignment',
+      isFuzzy: m.isFuzzy,
+      score: m.score,
+      keyword: m.keyword,
+    });
+  }
+
+  // Contextual matches use phrase-based location finding
+  const contextualRaw = response.contextualMatches as Array<{ keyword: string; phrase: string; confidence: number }> | undefined;
+  if (Array.isArray(contextualRaw)) {
+    for (const cm of contextualRaw) {
+      if (!cm.phrase) continue;
+      const idx = transcription.toLowerCase().indexOf(cm.phrase.toLowerCase());
+      if (idx >= 0) {
+        spans.push({
+          start: idx,
+          end: idx + cm.phrase.length,
+          type: 'contextual',
+          isFuzzy: false,
+          score: cm.confidence,
+          keyword: cm.keyword,
+        });
+      }
+    }
+  }
+
+  // Sort by start position, then by priority (question > assignment > contextual)
+  const priority: Record<MatchType, number> = { question: 0, assignment: 1, contextual: 2 };
+  spans.sort((a, b) => a.start - b.start || priority[a.type] - priority[b.type]);
+
+  // Remove overlaps — higher priority wins
+  const resolved: HighlightSpan[] = [];
+  for (const span of spans) {
+    const overlaps = resolved.some(
+      (r) => span.start < r.end && span.end > r.start
+    );
+    if (!overlaps) resolved.push(span);
+  }
+
+  return resolved;
+}
+
+function HighlightedTranscription({ text, spans }: { text: string; spans: HighlightSpan[] }) {
+  if (spans.length === 0) return <>{text}</>;
+
+  const parts: React.ReactNode[] = [];
+  let cursor = 0;
+
+  for (const span of spans) {
+    if (span.start > cursor) {
+      parts.push(<span key={`t-${cursor}`}>{text.slice(cursor, span.start)}</span>);
+    }
+    const opacity = span.isFuzzy && span.score != null ? Math.max(0.15, span.score * 0.3) : 0.3;
+    parts.push(
+      <span
+        key={`h-${span.start}`}
+        className="kw-highlight"
+        style={{
+          backgroundColor: `rgba(${MATCH_COLORS[span.type]}, ${opacity})`,
+          borderBottom: `2px solid rgba(${MATCH_COLORS[span.type]}, 0.6)`,
+        }}
+        title={`${span.type === 'question' ? 'Question' : span.type === 'assignment' ? 'Assignment' : 'Contextual'} keyword: "${span.keyword}"${span.isFuzzy ? ' (fuzzy)' : ''}${span.score != null ? ` ${Math.round(span.score * 100)}%` : ''}`}
+      >
+        {text.slice(span.start, span.end)}
+      </span>
+    );
+    cursor = span.end;
+  }
+
+  if (cursor < text.length) {
+    parts.push(<span key={`t-${cursor}`}>{text.slice(cursor)}</span>);
+  }
+
+  return <>{parts}</>;
+}
+
+// ---------------------------------------------------------------------------
 // Quick Feedback — helpers
 // ---------------------------------------------------------------------------
 
@@ -85,6 +223,9 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
   const [filter, setFilter] = useState<GradingFilter>('all');
   const [scansDict, setScansDict] = useState<Map<string, Scan>>(new Map());
   const [showMissingScans, setShowMissingScans] = useState(false);
+  const [showStudentJump, setShowStudentJump] = useState(false);
+  const [hideStudentNames, setHideStudentNames] = useState(false);
+  const [isColorInverted, setIsColorInverted] = useState(false);
 
   const questions = assignment.questions;
   const currentQuestion = questions[selectedQuestionIndex] ?? null;
@@ -203,11 +344,22 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
       if (e.key === 'ArrowRight') { e.preventDefault(); handleNextStudent(); }
       if (e.key === 'ArrowUp') { e.preventDefault(); handlePrevQuestion(); }
       if (e.key === 'ArrowDown') { e.preventDefault(); handleNextQuestion(); }
-      if (e.key === 'Escape') { e.preventDefault(); onBack(); }
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        if (showStudentJump) setShowStudentJump(false);
+        else onBack();
+      }
+      if (e.key === 'j' || e.key === 'J') { e.preventDefault(); setShowStudentJump(true); }
     }
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [handlePrevStudent, handleNextStudent, handlePrevQuestion, handleNextQuestion, onBack]);
+  }, [handlePrevStudent, handleNextStudent, handlePrevQuestion, handleNextQuestion, onBack, showStudentJump]);
+
+  // Jump to a specific student by index
+  const handleStudentJump = useCallback((index: number) => {
+    setCurrentStudentIndex(index);
+    setShowStudentJump(false);
+  }, []);
 
   // Update scansDict optimistically after grading
   const handleScanUpdated = useCallback((updatedScan: Scan) => {
@@ -220,7 +372,7 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
 
   // Bulk grade all ungraded for current question
   const handleBulkGrade = useCallback(async (points: number) => {
-    if (!currentQuestion) return;
+    if (!currentQuestion || !isAssignmentEditable(assignment)) return;
     const toGrade: { entry: StudentScanEntry; scan: Scan }[] = [];
     for (const entry of filteredEntries) {
       const scan = scansDict.get(entry.scan.id) ?? entry.scan;
@@ -333,6 +485,22 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
             BULK GRADE
           </button>
           <button className="btn-secondary btn-sm" onClick={handleClearAll}>CLEAR ALL</button>
+          <button
+            className={`btn-secondary btn-sm ${hideStudentNames ? 'gbq-toggle-active' : ''}`}
+            style={hideStudentNames ? { '--toggle-color': chipColor } as React.CSSProperties : undefined}
+            onClick={() => setHideStudentNames(!hideStudentNames)}
+            title={hideStudentNames ? 'Show student names' : 'Hide student names for blind grading'}
+          >
+            {hideStudentNames ? 'SHOW NAMES' : 'BLIND'}
+          </button>
+          <button
+            className={`btn-secondary btn-sm ${isColorInverted ? 'gbq-toggle-active' : ''}`}
+            style={isColorInverted ? { '--toggle-color': chipColor } as React.CSSProperties : undefined}
+            onClick={() => setIsColorInverted(!isColorInverted)}
+            title={isColorInverted ? 'Normal colors' : 'Invert scan image colors'}
+          >
+            {isColorInverted ? 'NORMAL' : 'INVERT'}
+          </button>
           <button onClick={refresh} className="btn-icon" title="Refresh">&#x21bb;</button>
         </div>
       </div>
@@ -413,6 +581,9 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
               onPrev={handlePrevStudent}
               onNext={handleNextStudent}
               onScanUpdated={handleScanUpdated}
+              hideStudentNames={hideStudentNames}
+              isColorInverted={isColorInverted}
+              onStudentNameClick={() => setShowStudentJump(true)}
             />
           ) : (
             <div className="list-empty">
@@ -425,8 +596,143 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
           )}
         </div>
       </div>
+
+      {/* Student Jump Selector Modal */}
+      {showStudentJump && currentQuestion && (
+        <StudentJumpSelector
+          entries={filteredEntries}
+          scansDict={scansDict}
+          questionID={currentQuestion.id}
+          maxPoints={currentQuestion.pointValue}
+          currentIndex={currentStudentIndex}
+          chipColor={chipColor}
+          hideStudentNames={hideStudentNames}
+          onSelect={handleStudentJump}
+          onClose={() => setShowStudentJump(false)}
+        />
+      )}
     </div>
   );
+}
+
+// ---------------------------------------------------------------------------
+// Student Jump Selector
+// ---------------------------------------------------------------------------
+
+interface StudentJumpSelectorProps {
+  entries: StudentScanEntry[];
+  scansDict: Map<string, Scan>;
+  questionID: string;
+  maxPoints: number;
+  currentIndex: number;
+  chipColor: string;
+  hideStudentNames: boolean;
+  onSelect: (index: number) => void;
+  onClose: () => void;
+}
+
+function StudentJumpSelector({
+  entries,
+  scansDict,
+  questionID,
+  maxPoints,
+  currentIndex,
+  chipColor,
+  hideStudentNames,
+  onSelect,
+  onClose,
+}: StudentJumpSelectorProps) {
+  const [search, setSearch] = useState('');
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    searchRef.current?.focus();
+  }, []);
+
+  const filteredStudents = useMemo(() => {
+    if (!search.trim()) return entries.map((e, i) => ({ entry: e, originalIndex: i }));
+    const query = search.toLowerCase();
+    return entries
+      .map((e, i) => ({ entry: e, originalIndex: i }))
+      .filter(({ entry }) => {
+        const name = entry.student?.name ?? 'Unknown Student';
+        return name.toLowerCase().includes(query);
+      });
+  }, [entries, search]);
+
+  return (
+    <div className="jump-overlay" onClick={onClose}>
+      <div className="jump-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="jump-header">
+          <span className="jump-title">Select Student</span>
+          <button className="jump-cancel" onClick={onClose}>Cancel</button>
+        </div>
+        <div className="jump-search">
+          <input
+            ref={searchRef}
+            type="text"
+            className="jump-search-input"
+            placeholder="Search students..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') onClose();
+              if (e.key === 'Enter' && filteredStudents.length === 1) {
+                onSelect(filteredStudents[0].originalIndex);
+              }
+            }}
+          />
+        </div>
+        <div className="jump-list">
+          {filteredStudents.length === 0 ? (
+            <div className="jump-empty">
+              <span className="jump-empty-icon">&#x1F50D;</span>
+              <span className="jump-empty-text">No students found</span>
+              <span className="jump-empty-hint">Try a different search term</span>
+            </div>
+          ) : (
+            filteredStudents.map(({ entry, originalIndex }) => {
+              const scan = scansDict.get(entry.scan.id) ?? entry.scan;
+              const resp = getResponseForQuestion(scan, questionID);
+              const isCurrent = originalIndex === currentIndex;
+              const isGraded = resp?.pointsEarned != null;
+              const displayName = hideStudentNames
+                ? `Student ${originalIndex + 1}`
+                : (entry.student?.name ?? 'Unknown Student');
+
+              return (
+                <button
+                  key={entry.scan.id}
+                  className={`jump-row ${isCurrent ? 'jump-row-current' : ''}`}
+                  onClick={() => onSelect(originalIndex)}
+                >
+                  <span className={`jump-status ${isCurrent ? 'jump-status-current' : isGraded ? 'jump-status-graded' : 'jump-status-ungraded'}`}>
+                    {isCurrent ? '→' : isGraded ? '✓' : '○'}
+                  </span>
+                  <span className="jump-name">{displayName}</span>
+                  <span className="jump-right">
+                    {isCurrent ? (
+                      <span className="jump-badge" style={{ background: `color-mix(in srgb, ${chipColor} 15%, transparent)`, color: chipColor }}>Current</span>
+                    ) : isGraded ? (
+                      <span className="jump-score">
+                        {formatScore(resp!.pointsEarned!)}/{formatScore(maxPoints)}
+                      </span>
+                    ) : (
+                      <span className="jump-ungraded">Not graded</span>
+                    )}
+                  </span>
+                </button>
+              );
+            })
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function formatScore(value: number): string {
+  return Number.isInteger(value) ? value.toString() : value.toFixed(1);
 }
 
 // ---------------------------------------------------------------------------
@@ -483,6 +789,9 @@ interface StudentQuestionCardProps {
   onPrev: () => void;
   onNext: () => void;
   onScanUpdated: (scan: Scan) => void;
+  hideStudentNames: boolean;
+  isColorInverted: boolean;
+  onStudentNameClick: () => void;
 }
 
 function StudentQuestionCard({
@@ -498,34 +807,47 @@ function StudentQuestionCard({
   onPrev,
   onNext,
   onScanUpdated,
+  hideStudentNames,
+  isColorInverted,
+  onStudentNameClick,
 }: StudentQuestionCardProps) {
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
   const [saveError, setSaveError] = useState<string | null>(null);
   const [fullPointsOnly, setFullPointsOnly] = useState(true);
   const [localFeedback, setLocalFeedback] = useState('');
   const [imgFailed, setImgFailed] = useState(false);
+  const [showZoom, setShowZoom] = useState(false);
+  const [manualPageIndex, setManualPageIndex] = useState<number | null>(null);
   const [quickFeedbackItems, setQuickFeedbackItems] = useState<QuickFeedbackItem[]>([]);
   const changeTagRef = useRef(scan.recordChangeTag);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const response = getResponseForQuestion(scan, question.id);
-  const studentName = entry.student?.name ?? 'Unknown Student';
+  const studentName = hideStudentNames
+    ? `Student ${studentIndex + 1}`
+    : (entry.student?.name ?? 'Unknown Student');
 
   // Load scan pages for this student's scan
   const { pages } = useScanPages(scan.id);
 
-  // Determine which page to show based on question's templatePageNumber
-  const relevantPage: ScanPage | null = useMemo(() => {
-    if (pages.length === 0) return null;
-    // templatePageNumber is 0-indexed in the model, pages are 1-indexed
+  // Sort pages by pageNumber for consistent ordering
+  const sortedPages = useMemo(() => {
+    return [...pages].sort((a, b) => a.pageNumber - b.pageNumber);
+  }, [pages]);
+
+  // Determine which page to show — manual override or template-based
+  const defaultPageIndex = useMemo(() => {
+    if (sortedPages.length === 0) return 0;
     if (question.templatePageNumber != null) {
-      const targetPageNum = question.templatePageNumber + 1; // convert to 1-indexed
-      const match = pages.find((p) => p.pageNumber === targetPageNum);
-      if (match) return match;
+      const targetPageNum = question.templatePageNumber + 1;
+      const idx = sortedPages.findIndex((p) => p.pageNumber === targetPageNum);
+      if (idx >= 0) return idx;
     }
-    // Fallback: first page
-    return pages[0] ?? null;
-  }, [pages, question.templatePageNumber]);
+    return 0;
+  }, [sortedPages, question.templatePageNumber]);
+
+  const currentPageIndex = manualPageIndex ?? defaultPageIndex;
+  const relevantPage: ScanPage | null = sortedPages[currentPageIndex] ?? null;
 
   // Prefetch adjacent students' scan pages
   useEffect(() => {
@@ -544,6 +866,8 @@ function StudentQuestionCard({
     setSaveStatus('idle');
     setSaveError(null);
     setImgFailed(false);
+    setShowZoom(false);
+    setManualPageIndex(null);
   }, [scan.id, question.id]);
 
   // Sync feedback from response (after save updates scan)
@@ -693,6 +1017,11 @@ function StudentQuestionCard({
     .filter(Boolean)
     .join(' ') || null;
 
+  const highlightSpans = useMemo(() => {
+    if (!transcription || !response) return [];
+    return buildHighlightSpans(response, transcription);
+  }, [transcription, response]);
+
   const ai = response?.aiEvaluation;
   const showAI = ai && ai.confidence >= AI_CONFIDENCE_THRESHOLD;
 
@@ -705,10 +1034,12 @@ function StudentQuestionCard({
         </button>
         <div className="nav-center">
           <div className="student-avatar" style={{ background: chipColor }}>
-            {initial(entry.student?.name)}
+            {hideStudentNames ? '#' : initial(entry.student?.name)}
           </div>
-          <span className="nav-name">{studentName}</span>
-          <span className="nav-pos">{studentIndex + 1} / {totalStudents}</span>
+          <button className="nav-name-btn" onClick={onStudentNameClick} title="Jump to student (J)">
+            <span className="nav-name">{studentName}</span>
+            <span className="nav-pos">{studentIndex + 1} / {totalStudents}</span>
+          </button>
           <span className="nav-score">
             {response?.pointsEarned != null ? response.pointsEarned : '—'} / {question.pointValue} PTS
           </span>
@@ -727,16 +1058,38 @@ function StudentQuestionCard({
             <div className="grade-card-header">
               <span className="grade-card-q">STUDENT</span>
               <span className="grade-card-header-spacer" />
-              <span className="grade-card-pts">
-                {relevantPage ? `PAGE ${relevantPage.pageNumber}` : 'IMAGE'}
-              </span>
+              {sortedPages.length > 1 ? (
+                <div className="page-nav">
+                  <button
+                    className="page-nav-btn"
+                    disabled={currentPageIndex <= 0}
+                    onClick={() => { setManualPageIndex(Math.max(0, currentPageIndex - 1)); setImgFailed(false); }}
+                  >
+                    &lsaquo;
+                  </button>
+                  <span className="page-nav-label">PAGE {currentPageIndex + 1} / {sortedPages.length}</span>
+                  <button
+                    className="page-nav-btn"
+                    disabled={currentPageIndex >= sortedPages.length - 1}
+                    onClick={() => { setManualPageIndex(Math.min(sortedPages.length - 1, currentPageIndex + 1)); setImgFailed(false); }}
+                  >
+                    &rsaquo;
+                  </button>
+                </div>
+              ) : (
+                <span className="grade-card-pts">
+                  {relevantPage ? `PAGE ${relevantPage.pageNumber}` : 'IMAGE'}
+                </span>
+              )}
             </div>
             <div className="gbq-image-body">
               {relevantPage?.imageUrl && !imgFailed ? (
                 <img
                   src={relevantPage.imageUrl}
                   alt={`Page ${relevantPage.pageNumber}`}
-                  className="scan-image"
+                  className="scan-image scan-image-clickable"
+                  style={isColorInverted ? { filter: 'invert(1)' } : undefined}
+                  onClick={() => setShowZoom(true)}
                   onError={() => setImgFailed(true)}
                 />
               ) : relevantPage?.transcript ? (
@@ -808,7 +1161,9 @@ function StudentQuestionCard({
                     <span className="voice-pill" style={{ background: chipColor }}>STUDENT</span>
                     <span className="voice-label" style={{ color: chipColor }}>Transcription</span>
                   </div>
-                  <div className="voice-body">{transcription}</div>
+                  <div className="voice-body">
+                    <HighlightedTranscription text={transcription} spans={highlightSpans} />
+                  </div>
                 </>
               )}
 
@@ -904,6 +1259,23 @@ function StudentQuestionCard({
           </div>
         </div>
       </div>
+
+      {/* Image Zoom Overlay */}
+      {showZoom && relevantPage?.imageUrl && (
+        <div className="zoom-overlay" onClick={() => setShowZoom(false)}>
+          <div className="zoom-controls">
+            <span className="zoom-page-label">Page {relevantPage.pageNumber}</span>
+            <button className="zoom-close" onClick={() => setShowZoom(false)}>&times;</button>
+          </div>
+          <img
+            src={relevantPage.imageUrl}
+            alt={`Page ${relevantPage.pageNumber} (zoomed)`}
+            className="zoom-image"
+            style={isColorInverted ? { filter: 'invert(1)' } : undefined}
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </div>
   );
 }
