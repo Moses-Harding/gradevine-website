@@ -9,6 +9,7 @@ Six improvements to close feature gaps between iOS GradeByQuestionView and the w
 - **WEB-IMP-003**: Blind grading toggle — hide student names for fair grading
 - **WEB-IMP-004**: Scan image zoom — click-to-zoom lightbox overlay
 - **WEB-IMP-005**: Multi-page scan viewer — page prev/next controls
+- **WEB-IMP-006**: Collapsible sections — click headers to toggle Question, Transcription, Grading Key, AI Evaluation
 - **WEB-IMP-007**: Color invert toggle — CSS invert filter for faint pencil legibility
 
 Also: "Next" on last student advances to next question, keyboard shortcuts info icon, home refresh button.

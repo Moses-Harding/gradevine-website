@@ -25,6 +25,11 @@
 **Description**: Page prev/next navigation controls in the image panel header when a scan has multiple pages. Shows "PAGE X / Y" indicator. Defaults to template-matched page, allows manual override. Resets to default page on student/question change.
 **Files**: `GradeByQuestionView.tsx`, `dashboard.astro`
 
+## WEB-IMP-006: Collapsible Sections
+**Completed**: 2026-04-16
+**Description**: Question prompt, Transcription, Grading Key, and AI Evaluation sections in the grading panel are now collapsible via clickable headers with right-aligned rotating chevron (❯). Grading Key collapsed by default; others expanded. Reduces visual noise when grading quickly.
+**Files**: `GradeByQuestionView.tsx`, `dashboard.astro`
+
 ## WEB-IMP-007: Color Invert Toggle
 **Completed**: 2026-04-16
 **Description**: "INVERT" / "NORMAL" toggle in GradeByQuestion top bar. Applies CSS `filter: invert(1)` to scan images for improved legibility of faint pencil writing. Also applies in zoom lightbox.
