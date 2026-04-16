@@ -1212,8 +1212,8 @@ function StudentQuestionCard({
             <div className="grade-card-body">
               {/* Question prompt — collapsible */}
               <button className="collapse-header" onClick={() => setQuestionExpanded(!questionExpanded)}>
-                <span className={`collapse-chevron ${questionExpanded ? 'collapse-open' : ''}`}>&#x25B8;</span>
                 <span className="collapse-title">Question</span>
+                <span className={`collapse-chevron ${questionExpanded ? 'collapse-open' : ''}`}>&#x25B8;</span>
               </button>
               {questionExpanded && (
                 <div className="grade-card-prompt">{question.prompt}</div>
@@ -1252,9 +1252,9 @@ function StudentQuestionCard({
                 <>
                   <div className="grade-card-divider" />
                   <button className="voice-row voice-row-collapsible" onClick={() => setTranscriptionExpanded(!transcriptionExpanded)}>
-                    <span className={`collapse-chevron ${transcriptionExpanded ? 'collapse-open' : ''}`}>&#x25B8;</span>
                     <span className="voice-pill" style={{ background: chipColor }}>STUDENT</span>
                     <span className="voice-label" style={{ color: chipColor }}>Transcription</span>
+                    <span className={`collapse-chevron ${transcriptionExpanded ? 'collapse-open' : ''}`}>&#x25B8;</span>
                   </button>
                   {transcriptionExpanded && (
                     <div className="voice-body">
@@ -1269,9 +1269,9 @@ function StudentQuestionCard({
                 <>
                   <div className="grade-card-divider" />
                   <button className="voice-row voice-row-collapsible" onClick={() => setGradingKeyExpanded(!gradingKeyExpanded)}>
-                    <span className={`collapse-chevron ${gradingKeyExpanded ? 'collapse-open' : ''}`}>&#x25B8;</span>
                     <span className="voice-pill voice-pill-teacher">TEACHER</span>
                     <span className="voice-label voice-label-teacher">Grading Key</span>
+                    <span className={`collapse-chevron ${gradingKeyExpanded ? 'collapse-open' : ''}`}>&#x25B8;</span>
                   </button>
                   {gradingKeyExpanded && (
                     <div className="voice-body voice-body-italic">{question.gradingKey}</div>
@@ -1284,7 +1284,6 @@ function StudentQuestionCard({
                 <>
                   <div className="grade-card-divider" />
                   <button className="voice-row voice-row-collapsible" onClick={() => setAiExpanded(!aiExpanded)}>
-                    <span className={`collapse-chevron ${aiExpanded ? 'collapse-open' : ''}`}>&#x25B8;</span>
                     <span className="voice-pill voice-pill-ai">AI</span>
                     <span className="voice-label voice-label-ai">Evaluation</span>
                     <span
@@ -1296,6 +1295,7 @@ function StudentQuestionCard({
                     >
                       {aiStatusLabel(ai!.status)}
                     </span>
+                    <span className={`collapse-chevron ${aiExpanded ? 'collapse-open' : ''}`}>&#x25B8;</span>
                   </button>
                   {aiExpanded && (
                     <div className="voice-body">
