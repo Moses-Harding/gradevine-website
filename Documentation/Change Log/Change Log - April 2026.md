@@ -1,5 +1,22 @@
 # Change Log - April 2026
 
+### GradeByQuestion iOS Parity (2026-04-16)
+
+Six improvements to close feature gaps between iOS GradeByQuestionView and the web dashboard:
+
+- **WEB-IMP-001**: Student jump selector — searchable modal (click name or press J) with grade status per student
+- **WEB-IMP-002**: Keyword highlighting — yellow for question keywords, blue text for AI contextual matches, hover popovers with confidence
+- **WEB-IMP-003**: Blind grading toggle — hide student names for fair grading
+- **WEB-IMP-004**: Scan image zoom — click-to-zoom lightbox overlay
+- **WEB-IMP-005**: Multi-page scan viewer — page prev/next controls
+- **WEB-IMP-007**: Color invert toggle — CSS invert filter for faint pencil legibility
+
+Also: "Next" on last student advances to next question, keyboard shortcuts info icon, home refresh button.
+
+**Files modified:** `GradeByQuestionView.tsx` (+400 lines), `HomeView.tsx`, `dashboard.astro` (+350 lines CSS)
+
+---
+
 ### CourseDetailView Feature & Visual Overhaul (2026-04-14)
 
 Major enhancement of the CourseDetailView with 7 functional improvements and 6 visual polish changes, bringing it closer to iOS feature parity.
