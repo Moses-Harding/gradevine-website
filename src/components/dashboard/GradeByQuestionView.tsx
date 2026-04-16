@@ -75,7 +75,7 @@ interface KeywordMatchData {
   score: number | null;
 }
 
-type MatchSource = 'question' | 'assignment' | 'contextual';
+type MatchSource = 'keyword' | 'contextual';
 
 interface HighlightSpan {
   start: number;
@@ -86,11 +86,9 @@ interface HighlightSpan {
   keyword: string;
 }
 
-// iOS colors: .primaryYellow for question, .pillBlueDark/.secondaryBlue for assignment
 const SOURCE_COLORS: Record<MatchSource, string> = {
-  question: '255, 210, 76',   // #FFD24C — primaryYellow
-  assignment: '56, 128, 245', // #3880F5 — secondaryBlue/buttonBlue
-  contextual: '56, 128, 245', // #3880F5 — buttonBlue (contextual uses blue text on faint blue bg)
+  keyword: '255, 210, 76',    // #FFD24C — primaryYellow (all keywords are per-question after IMP-053)
+  contextual: '56, 128, 245', // #3880F5 — buttonBlue (AI contextual: blue text on faint blue bg)
 };
 
 function parseKeywordMatches(raw: unknown): KeywordMatchData[] {
@@ -103,27 +101,15 @@ function parseKeywordMatches(raw: unknown): KeywordMatchData[] {
 }
 
 function buildHighlightSpans(response: ScanQuestionResponse, transcription: string): HighlightSpan[] {
-  const questionMatches = parseKeywordMatches(response.questionKeywordMatches);
-  const assignmentMatches = parseKeywordMatches(response.assignmentKeywordMatches);
+  const keywordMatches = parseKeywordMatches(response.questionKeywordMatches);
 
   const spans: HighlightSpan[] = [];
 
-  for (const m of questionMatches) {
+  for (const m of keywordMatches) {
     spans.push({
       start: m.rangeLocation,
       end: m.rangeLocation + m.rangeLength,
-      source: 'question',
-      isFuzzy: m.isFuzzy,
-      score: m.score,
-      keyword: m.keyword,
-    });
-  }
-
-  for (const m of assignmentMatches) {
-    spans.push({
-      start: m.rangeLocation,
-      end: m.rangeLocation + m.rangeLength,
-      source: 'assignment',
+      source: 'keyword',
       isFuzzy: m.isFuzzy,
       score: m.score,
       keyword: m.keyword,
@@ -231,9 +217,7 @@ function HighlightedTranscription({ text, spans }: { text: string; spans: Highli
 
   const popoverLabel = popoverSpan?.span.source === 'contextual'
     ? 'AI Contextual Match'
-    : popoverSpan?.span.isFuzzy
-      ? `Fuzzy ${popoverSpan.span.source} keyword`
-      : `${popoverSpan?.span.source} keyword`;
+    : 'Fuzzy Keyword Match';
 
   return (
     <span className="kw-container">
