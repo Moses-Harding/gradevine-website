@@ -30,7 +30,7 @@ interface HomeViewProps {
 export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByStudent, onGradeByQuestion }: HomeViewProps) {
   const { auth } = useAuth();
   const { courses, isLoading: coursesLoading, error: coursesError, errorType, refresh: refreshCourses } = useCourses(auth.isSignedIn);
-  const { assignments, isLoading: assignmentsLoading, error: assignmentsError } = useAllAssignments(auth.isSignedIn);
+  const { assignments, isLoading: assignmentsLoading, error: assignmentsError, refresh: refreshAssignments } = useAllAssignments(auth.isSignedIn);
 
   // Build a course lookup map
   const courseMap = useMemo(() => {
@@ -88,10 +88,20 @@ export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByStudent,
     );
   }
 
+  const handleRefreshAll = () => {
+    refreshCourses();
+    refreshAssignments();
+  };
+
   return (
     <div className="home-layout">
       {/* Main column: courses table + recent assignments */}
       <div className="home-main">
+        <div className="home-refresh-bar">
+          <button onClick={handleRefreshAll} className="btn-icon home-refresh-btn" title="Refresh all data">
+            &#x21bb;
+          </button>
+        </div>
         <CoursesCards
           courses={courses}
           assignmentCounts={assignmentCounts}

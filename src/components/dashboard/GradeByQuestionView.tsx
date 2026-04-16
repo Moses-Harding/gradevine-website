@@ -75,21 +75,20 @@ interface KeywordMatchData {
   score: number | null;
 }
 
-type MatchType = 'question' | 'assignment' | 'contextual';
+type MatchType = 'exact' | 'fuzzy' | 'contextual';
 
 interface HighlightSpan {
   start: number;
   end: number;
   type: MatchType;
-  isFuzzy: boolean;
   score: number | null;
   keyword: string;
 }
 
 const MATCH_COLORS: Record<MatchType, string> = {
-  question: '255, 193, 7',     // Yellow
-  assignment: '0, 107, 166',   // Blue
-  contextual: '24, 160, 160',  // Teal
+  exact: '255, 193, 7',       // Yellow — exact keyword match
+  fuzzy: '255, 193, 7',       // Yellow (lighter opacity) — fuzzy keyword match
+  contextual: '24, 160, 160', // Teal — AI contextual match
 };
 
 function parseKeywordMatches(raw: unknown): KeywordMatchData[] {
@@ -107,23 +106,12 @@ function buildHighlightSpans(response: ScanQuestionResponse, transcription: stri
 
   const spans: HighlightSpan[] = [];
 
-  for (const m of questionMatches) {
+  // Both question and assignment keyword matches use exact/fuzzy distinction
+  for (const m of [...questionMatches, ...assignmentMatches]) {
     spans.push({
       start: m.rangeLocation,
       end: m.rangeLocation + m.rangeLength,
-      type: 'question',
-      isFuzzy: m.isFuzzy,
-      score: m.score,
-      keyword: m.keyword,
-    });
-  }
-
-  for (const m of assignmentMatches) {
-    spans.push({
-      start: m.rangeLocation,
-      end: m.rangeLocation + m.rangeLength,
-      type: 'assignment',
-      isFuzzy: m.isFuzzy,
+      type: m.isFuzzy ? 'fuzzy' : 'exact',
       score: m.score,
       keyword: m.keyword,
     });
@@ -140,7 +128,6 @@ function buildHighlightSpans(response: ScanQuestionResponse, transcription: stri
           start: idx,
           end: idx + cm.phrase.length,
           type: 'contextual',
-          isFuzzy: false,
           score: cm.confidence,
           keyword: cm.keyword,
         });
@@ -148,8 +135,8 @@ function buildHighlightSpans(response: ScanQuestionResponse, transcription: stri
     }
   }
 
-  // Sort by start position, then by priority (question > assignment > contextual)
-  const priority: Record<MatchType, number> = { question: 0, assignment: 1, contextual: 2 };
+  // Sort by start position, then by priority (exact > fuzzy > contextual)
+  const priority: Record<MatchType, number> = { exact: 0, fuzzy: 1, contextual: 2 };
   spans.sort((a, b) => a.start - b.start || priority[a.type] - priority[b.type]);
 
   // Remove overlaps — higher priority wins
@@ -165,6 +152,8 @@ function buildHighlightSpans(response: ScanQuestionResponse, transcription: stri
 }
 
 function HighlightedTranscription({ text, spans }: { text: string; spans: HighlightSpan[] }) {
+  const [popoverSpan, setPopoverSpan] = useState<{ span: HighlightSpan; rect: DOMRect } | null>(null);
+
   if (spans.length === 0) return <>{text}</>;
 
   const parts: React.ReactNode[] = [];
@@ -174,16 +163,25 @@ function HighlightedTranscription({ text, spans }: { text: string; spans: Highli
     if (span.start > cursor) {
       parts.push(<span key={`t-${cursor}`}>{text.slice(cursor, span.start)}</span>);
     }
-    const opacity = span.isFuzzy && span.score != null ? Math.max(0.15, span.score * 0.3) : 0.3;
+    const opacity = span.type === 'fuzzy' && span.score != null
+      ? Math.max(0.15, span.score * 0.3)
+      : 0.3;
+    const isContextual = span.type === 'contextual';
+    const isFuzzy = span.type === 'fuzzy';
+    const hasPopover = isContextual || isFuzzy;
     parts.push(
       <span
         key={`h-${span.start}`}
-        className="kw-highlight"
+        className={`kw-highlight ${hasPopover ? 'kw-highlight-interactive' : ''}`}
         style={{
           backgroundColor: `rgba(${MATCH_COLORS[span.type]}, ${opacity})`,
           borderBottom: `2px solid rgba(${MATCH_COLORS[span.type]}, 0.6)`,
         }}
-        title={`${span.type === 'question' ? 'Question' : span.type === 'assignment' ? 'Assignment' : 'Contextual'} keyword: "${span.keyword}"${span.isFuzzy ? ' (fuzzy)' : ''}${span.score != null ? ` ${Math.round(span.score * 100)}%` : ''}`}
+        onMouseEnter={hasPopover ? (e) => {
+          const rect = (e.target as HTMLElement).getBoundingClientRect();
+          setPopoverSpan({ span, rect });
+        } : undefined}
+        onMouseLeave={hasPopover ? () => setPopoverSpan(null) : undefined}
       >
         {text.slice(span.start, span.end)}
       </span>
@@ -195,7 +193,33 @@ function HighlightedTranscription({ text, spans }: { text: string; spans: Highli
     parts.push(<span key={`t-${cursor}`}>{text.slice(cursor)}</span>);
   }
 
-  return <>{parts}</>;
+  return (
+    <span className="kw-container">
+      {parts}
+      {popoverSpan && (
+        <div
+          className="kw-popover"
+          style={{
+            position: 'fixed',
+            left: popoverSpan.rect.left + popoverSpan.rect.width / 2,
+            top: popoverSpan.rect.top - 8,
+          }}
+        >
+          <div className="kw-popover-type">
+            {popoverSpan.span.type === 'contextual' ? 'AI Contextual Match' : 'Fuzzy Match'}
+          </div>
+          <div className="kw-popover-keyword">
+            Keyword: &ldquo;{popoverSpan.span.keyword}&rdquo;
+          </div>
+          {popoverSpan.span.score != null && (
+            <div className="kw-popover-confidence">
+              Confidence: {Math.round(popoverSpan.span.score * 100)}%
+            </div>
+          )}
+        </div>
+      )}
+    </span>
+  );
 }
 
 // ---------------------------------------------------------------------------
@@ -226,6 +250,7 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
   const [showStudentJump, setShowStudentJump] = useState(false);
   const [hideStudentNames, setHideStudentNames] = useState(false);
   const [isColorInverted, setIsColorInverted] = useState(false);
+  const [showShortcuts, setShowShortcuts] = useState(false);
 
   const questions = assignment.questions;
   const currentQuestion = questions[selectedQuestionIndex] ?? null;
@@ -325,8 +350,18 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
   }, []);
 
   const handleNextStudent = useCallback(() => {
-    setCurrentStudentIndex((i) => Math.min(filteredEntries.length - 1, i + 1));
-  }, [filteredEntries.length]);
+    setCurrentStudentIndex((prev) => {
+      if (prev >= filteredEntries.length - 1) {
+        // At last student — advance to next question if available
+        if (selectedQuestionIndex < questions.length - 1) {
+          setSelectedQuestionIndex(selectedQuestionIndex + 1);
+          // Jump-to-first-ungraded effect will set student index via useEffect
+        }
+        return prev;
+      }
+      return prev + 1;
+    });
+  }, [filteredEntries.length, selectedQuestionIndex, questions.length]);
 
   const handlePrevQuestion = useCallback(() => {
     setSelectedQuestionIndex((i) => Math.max(0, i - 1));
@@ -445,7 +480,9 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
   const currentScan = currentEntry ? (scansDict.get(currentEntry.scan.id) ?? currentEntry.scan) : null;
   const stats = currentQuestion ? questionStats.get(currentQuestion.id) : null;
   const hasPrev = currentStudentIndex > 0;
-  const hasNext = currentStudentIndex < filteredEntries.length - 1;
+  const isLastStudent = currentStudentIndex >= filteredEntries.length - 1;
+  const hasNextQuestion = selectedQuestionIndex < questions.length - 1;
+  const hasNext = !isLastStudent || hasNextQuestion;
 
   return (
     <div className="gbq-container">
@@ -501,6 +538,26 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
           >
             {isColorInverted ? 'NORMAL' : 'INVERT'}
           </button>
+          <div className="gbq-shortcuts-wrapper">
+            <button
+              onClick={() => setShowShortcuts(!showShortcuts)}
+              className="btn-icon"
+              title="Keyboard shortcuts"
+            >
+              &#x2139;
+            </button>
+            {showShortcuts && (
+              <div className="gbq-shortcuts-popover">
+                <div className="gbq-shortcuts-title">Keyboard Shortcuts</div>
+                <div className="gbq-shortcut-row"><kbd>&larr;</kbd><span>Previous student</span></div>
+                <div className="gbq-shortcut-row"><kbd>&rarr;</kbd><span>Next student</span></div>
+                <div className="gbq-shortcut-row"><kbd>&uarr;</kbd><span>Previous question</span></div>
+                <div className="gbq-shortcut-row"><kbd>&darr;</kbd><span>Next question</span></div>
+                <div className="gbq-shortcut-row"><kbd>J</kbd><span>Jump to student</span></div>
+                <div className="gbq-shortcut-row"><kbd>Esc</kbd><span>Back / Close</span></div>
+              </div>
+            )}
+          </div>
           <button onClick={refresh} className="btn-icon" title="Refresh">&#x21bb;</button>
         </div>
       </div>
@@ -583,6 +640,7 @@ export function GradeByQuestionView({ assignment, courseColor, onBack }: GradeBy
               onScanUpdated={handleScanUpdated}
               hideStudentNames={hideStudentNames}
               isColorInverted={isColorInverted}
+              isLastStudentInQuestion={isLastStudent}
               onStudentNameClick={() => setShowStudentJump(true)}
             />
           ) : (
@@ -791,6 +849,7 @@ interface StudentQuestionCardProps {
   onScanUpdated: (scan: Scan) => void;
   hideStudentNames: boolean;
   isColorInverted: boolean;
+  isLastStudentInQuestion: boolean;
   onStudentNameClick: () => void;
 }
 
@@ -809,6 +868,7 @@ function StudentQuestionCard({
   onScanUpdated,
   hideStudentNames,
   isColorInverted,
+  isLastStudentInQuestion,
   onStudentNameClick,
 }: StudentQuestionCardProps) {
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('idle');
@@ -1046,7 +1106,7 @@ function StudentQuestionCard({
           <NavSaveIndicator status={saveStatus} error={saveError} />
         </div>
         <button onClick={onNext} disabled={!hasNext} className="nav-btn">
-          NEXT &rarr;
+          {isLastStudentInQuestion && hasNext ? 'NEXT Q' : 'NEXT'} &rarr;
         </button>
       </div>
 
