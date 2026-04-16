@@ -97,15 +97,11 @@ export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByStudent,
     <div className="home-layout">
       {/* Main column: courses table + recent assignments */}
       <div className="home-main">
-        <div className="home-refresh-bar">
-          <button onClick={handleRefreshAll} className="btn-icon home-refresh-btn" title="Refresh all data">
-            &#x21bb;
-          </button>
-        </div>
         <CoursesCards
           courses={courses}
           assignmentCounts={assignmentCounts}
           onSelect={onSelectCourse}
+          onRefresh={handleRefreshAll}
         />
 
         <RecentAssignments
@@ -143,14 +139,19 @@ function CoursesCards({
   courses,
   assignmentCounts,
   onSelect,
+  onRefresh,
 }: {
   courses: Course[];
   assignmentCounts: Map<string, number>;
   onSelect: (course: Course) => void;
+  onRefresh: () => void;
 }) {
   return (
     <div className="home-courses-section">
-      <div className="home-section-bar">CLASSES</div>
+      <div className="home-section-bar">
+        CLASSES
+        <button onClick={onRefresh} className="home-section-refresh" title="Refresh all data">&#x21bb;</button>
+      </div>
       <div className="home-courses-grid">
         {courses.map((course) => {
           const color = courseColor(course.colorHex);
