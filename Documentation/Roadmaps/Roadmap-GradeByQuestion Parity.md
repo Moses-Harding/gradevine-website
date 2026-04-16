@@ -6,7 +6,7 @@ Closes the feature gaps between the iOS GradeByQuestionView and the web dashboar
 
 ### WEB-IMP-006: Collapsible Sections
 **Priority**: Low
-**Status**: Not Started
+**Status**: Complete
 **Description**: Make Question prompt, Transcription, Grading Key, and AI Evaluation sections collapsible (click header to toggle). Reduces visual noise when grading quickly. iOS uses DisclosureGroup for all sections.
 **iOS Reference**: `isQuestionExpanded`, `isTranscriptionExpanded`, etc. in `StudentResponseCard.swift`
 
