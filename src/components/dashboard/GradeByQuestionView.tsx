@@ -75,20 +75,22 @@ interface KeywordMatchData {
   score: number | null;
 }
 
-type MatchType = 'exact' | 'fuzzy' | 'contextual';
+type MatchSource = 'question' | 'assignment' | 'contextual';
 
 interface HighlightSpan {
   start: number;
   end: number;
-  type: MatchType;
+  source: MatchSource;
+  isFuzzy: boolean;
   score: number | null;
   keyword: string;
 }
 
-const MATCH_COLORS: Record<MatchType, string> = {
-  exact: '255, 193, 7',       // Yellow — exact keyword match
-  fuzzy: '255, 193, 7',       // Yellow (lighter opacity) — fuzzy keyword match
-  contextual: '24, 160, 160', // Teal — AI contextual match
+// iOS colors: .primaryYellow for question, .pillBlueDark/.secondaryBlue for assignment
+const SOURCE_COLORS: Record<MatchSource, string> = {
+  question: '255, 210, 76',   // #FFD24C — primaryYellow
+  assignment: '56, 128, 245', // #3880F5 — secondaryBlue/buttonBlue
+  contextual: '56, 128, 245', // #3880F5 — buttonBlue (contextual uses blue text on faint blue bg)
 };
 
 function parseKeywordMatches(raw: unknown): KeywordMatchData[] {
@@ -106,12 +108,23 @@ function buildHighlightSpans(response: ScanQuestionResponse, transcription: stri
 
   const spans: HighlightSpan[] = [];
 
-  // Both question and assignment keyword matches use exact/fuzzy distinction
-  for (const m of [...questionMatches, ...assignmentMatches]) {
+  for (const m of questionMatches) {
     spans.push({
       start: m.rangeLocation,
       end: m.rangeLocation + m.rangeLength,
-      type: m.isFuzzy ? 'fuzzy' : 'exact',
+      source: 'question',
+      isFuzzy: m.isFuzzy,
+      score: m.score,
+      keyword: m.keyword,
+    });
+  }
+
+  for (const m of assignmentMatches) {
+    spans.push({
+      start: m.rangeLocation,
+      end: m.rangeLocation + m.rangeLength,
+      source: 'assignment',
+      isFuzzy: m.isFuzzy,
       score: m.score,
       keyword: m.keyword,
     });
@@ -127,7 +140,8 @@ function buildHighlightSpans(response: ScanQuestionResponse, transcription: stri
         spans.push({
           start: idx,
           end: idx + cm.phrase.length,
-          type: 'contextual',
+          source: 'contextual',
+          isFuzzy: false,
           score: cm.confidence,
           keyword: cm.keyword,
         });
@@ -135,9 +149,14 @@ function buildHighlightSpans(response: ScanQuestionResponse, transcription: stri
     }
   }
 
-  // Sort by start position, then by priority (exact > fuzzy > contextual)
-  const priority: Record<MatchType, number> = { exact: 0, fuzzy: 1, contextual: 2 };
-  spans.sort((a, b) => a.start - b.start || priority[a.type] - priority[b.type]);
+  // iOS priority: exact (3) > fuzzy (2) > contextual (1)
+  // Non-contextual exact matches win over fuzzy, fuzzy wins over contextual
+  function spanPriority(s: HighlightSpan): number {
+    if (s.source === 'contextual') return 1;
+    return s.isFuzzy ? 2 : 3;
+  }
+
+  spans.sort((a, b) => a.start - b.start || spanPriority(b) - spanPriority(a));
 
   // Remove overlaps — higher priority wins
   const resolved: HighlightSpan[] = [];
@@ -163,20 +182,37 @@ function HighlightedTranscription({ text, spans }: { text: string; spans: Highli
     if (span.start > cursor) {
       parts.push(<span key={`t-${cursor}`}>{text.slice(cursor, span.start)}</span>);
     }
-    const opacity = span.type === 'fuzzy' && span.score != null
-      ? Math.max(0.15, span.score * 0.3)
-      : 0.3;
-    const isContextual = span.type === 'contextual';
-    const isFuzzy = span.type === 'fuzzy';
-    const hasPopover = isContextual || isFuzzy;
+
+    const isContextual = span.source === 'contextual';
+    const hasPopover = isContextual || span.isFuzzy;
+    const rgb = SOURCE_COLORS[span.source];
+
+    // iOS styling:
+    // - Question/assignment: colored bg at 30% (fuzzy: score * 0.3)
+    // - Contextual: faint blue bg (8%), blue text at confidence opacity
+    let style: React.CSSProperties;
+    if (isContextual) {
+      const textOpacity = span.score != null ? span.score : 1.0;
+      style = {
+        backgroundColor: `rgba(${rgb}, 0.08)`,
+        color: `rgba(${rgb}, ${textOpacity})`,
+        borderBottom: `1px solid rgba(${rgb}, 0.2)`,
+      };
+    } else {
+      const bgOpacity = span.isFuzzy && span.score != null
+        ? Math.max(0.08, span.score * 0.3)
+        : 0.3;
+      style = {
+        backgroundColor: `rgba(${rgb}, ${bgOpacity})`,
+        borderBottom: `2px solid rgba(${rgb}, 0.6)`,
+      };
+    }
+
     parts.push(
       <span
         key={`h-${span.start}`}
         className={`kw-highlight ${hasPopover ? 'kw-highlight-interactive' : ''}`}
-        style={{
-          backgroundColor: `rgba(${MATCH_COLORS[span.type]}, ${opacity})`,
-          borderBottom: `2px solid rgba(${MATCH_COLORS[span.type]}, 0.6)`,
-        }}
+        style={style}
         onMouseEnter={hasPopover ? (e) => {
           const rect = (e.target as HTMLElement).getBoundingClientRect();
           setPopoverSpan({ span, rect });
@@ -193,6 +229,12 @@ function HighlightedTranscription({ text, spans }: { text: string; spans: Highli
     parts.push(<span key={`t-${cursor}`}>{text.slice(cursor)}</span>);
   }
 
+  const popoverLabel = popoverSpan?.span.source === 'contextual'
+    ? 'AI Contextual Match'
+    : popoverSpan?.span.isFuzzy
+      ? `Fuzzy ${popoverSpan.span.source} keyword`
+      : `${popoverSpan?.span.source} keyword`;
+
   return (
     <span className="kw-container">
       {parts}
@@ -205,9 +247,7 @@ function HighlightedTranscription({ text, spans }: { text: string; spans: Highli
             top: popoverSpan.rect.top - 8,
           }}
         >
-          <div className="kw-popover-type">
-            {popoverSpan.span.type === 'contextual' ? 'AI Contextual Match' : 'Fuzzy Match'}
-          </div>
+          <div className="kw-popover-type">{popoverLabel}</div>
           <div className="kw-popover-keyword">
             Keyword: &ldquo;{popoverSpan.span.keyword}&rdquo;
           </div>
