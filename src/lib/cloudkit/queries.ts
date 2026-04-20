@@ -34,6 +34,8 @@ function parseCourse(record: CKJSRecord): Course {
     archivedDate: timestampField(record, 'archivedDate'),
     hasImportedFromRoster: (numberField(record, 'hasImportedFromRoster') ?? 0) === 1,
     customSections: stringListField(record, 'customSections'),
+    createdDate: timestampField(record, 'createdDate') ?? new Date().toISOString(),
+    updatedDate: timestampField(record, 'updatedDate') ?? new Date().toISOString(),
   };
 }
 
@@ -54,6 +56,16 @@ function parseStudent(record: CKJSRecord): Student {
   };
 }
 
+function parseLifecycleStatus(record: CKJSRecord): QuestionAssignment['lifecycleStatus'] {
+  const raw = stringField(record, 'lifecycleStatus');
+  if (raw === 'active' || raw === 'optimized' || raw === 'imagesRemoved' || raw === 'completed' || raw === 'archived') {
+    return raw;
+  }
+  // Backwards compat: derive from isArchived flag when lifecycleStatus not set
+  const isArchived = (numberField(record, 'isArchived') ?? 0) === 1;
+  return isArchived ? 'archived' : 'active';
+}
+
 function parseAssignment(record: CKJSRecord): QuestionAssignment {
   return {
     id: record.recordName,
@@ -67,6 +79,8 @@ function parseAssignment(record: CKJSRecord): QuestionAssignment {
     templatePageCount: numberField(record, 'templatePageCount'),
     isArchived: (numberField(record, 'isArchived') ?? 0) === 1,
     archivedDate: timestampField(record, 'archivedDate'),
+    lifecycleStatus: parseLifecycleStatus(record),
+    completedDate: timestampField(record, 'completedDate'),
     createdDate: timestampField(record, 'createdDate') ?? new Date().toISOString(),
     updatedDate: timestampField(record, 'updatedDate') ?? new Date().toISOString(),
     description: stringField(record, 'description'),
@@ -229,7 +243,7 @@ export async function fetchAllAssignments(forceRefresh = false): Promise<Questio
   }
 
   const records = await queryRecords(RecordTypes.Assignment);
-  const assignments = records.map(parseAssignment).filter((a) => !a.isArchived);
+  const assignments = records.map(parseAssignment);
   setCache(cacheKey, assignments);
   return assignments;
 }
@@ -256,7 +270,7 @@ export async function fetchAssignmentsForCourse(
   ];
 
   const records = await queryRecords(RecordTypes.Assignment, filters);
-  const assignments = records.map(parseAssignment).filter((a) => !a.isArchived);
+  const assignments = records.map(parseAssignment);
   setCache(cacheKey, assignments);
   return assignments;
 }

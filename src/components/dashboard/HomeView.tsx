@@ -4,7 +4,7 @@ import { useAllAssignments } from '../../hooks/useAllAssignments';
 import { useAuth } from '../../hooks/useAuth';
 import { useAssignmentGradingStatuses } from '../../hooks/useAssignmentGradingStatuses';
 import { StatusBadge } from './CourseDetailView';
-import type { Course, QuestionAssignment } from '../../types/cloudkit';
+import { isAssignmentEditable, type Course, type QuestionAssignment } from '../../types/cloudkit';
 
 function courseColor(colorHex: string | null): string {
   if (!colorHex) return '#5002F7';
@@ -39,24 +39,27 @@ export function HomeView({ onSelectCourse, onSelectAssignment, onGradeByStudent,
     return map;
   }, [courses]);
 
+  // Only show active (editable) assignments in home view
+  const activeAssignments = useMemo(() => assignments.filter(isAssignmentEditable), [assignments]);
+
   // Sort assignments by updatedDate descending, limit to 10
   const recentAssignments = useMemo(() => {
-    return [...assignments]
+    return [...activeAssignments]
       .sort((a, b) => new Date(b.updatedDate).getTime() - new Date(a.updatedDate).getTime())
       .slice(0, 10);
-  }, [assignments]);
+  }, [activeAssignments]);
 
   // Load grading status for the recent assignments list
   const gradingStatuses = useAssignmentGradingStatuses(recentAssignments);
 
-  // Count assignments per course
+  // Count assignments per course (active only)
   const assignmentCounts = useMemo(() => {
     const counts = new Map<string, number>();
-    for (const a of assignments) {
+    for (const a of activeAssignments) {
       if (a.courseID) counts.set(a.courseID, (counts.get(a.courseID) ?? 0) + 1);
     }
     return counts;
-  }, [assignments]);
+  }, [activeAssignments]);
 
   if (coursesLoading) {
     return (

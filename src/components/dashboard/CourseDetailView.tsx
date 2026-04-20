@@ -11,7 +11,7 @@ import {
   type RiskSeverity,
   type TrendDirection,
 } from '../../hooks/useCourseAnalytics';
-import type { QuestionAssignment, Course, Student } from '../../types/cloudkit';
+import { isAssignmentEditable, type QuestionAssignment, type Course, type Student } from '../../types/cloudkit';
 
 interface CourseDetailViewProps {
   course: Course;
@@ -91,10 +91,27 @@ export function CourseDetailView({
     return counts;
   }, [students, courseScanIDSet]);
 
-  // Basic counts
-  const totalScans = useMemo(
-    () => assignments.reduce((sum, a) => sum + a.scanIDs.length, 0),
+  // Split assignments by lifecycle status
+  const activeAssignments = useMemo(() => assignments.filter(isAssignmentEditable), [assignments]);
+  const completedAssignments = useMemo(
+    () => assignments.filter((a) => a.lifecycleStatus === 'completed')
+      .sort((a, b) => new Date(b.completedDate ?? b.updatedDate).getTime() - new Date(a.completedDate ?? a.updatedDate).getTime()),
     [assignments],
+  );
+  const archivedAssignments = useMemo(
+    () => assignments.filter((a) => a.lifecycleStatus === 'archived')
+      .sort((a, b) => new Date(b.archivedDate ?? b.updatedDate).getTime() - new Date(a.archivedDate ?? a.updatedDate).getTime()),
+    [assignments],
+  );
+
+  // Collapsible state for completed/archived sections (collapsed by default, matching iOS)
+  const [completedExpanded, setCompletedExpanded] = useState(false);
+  const [archivedExpanded, setArchivedExpanded] = useState(false);
+
+  // Basic counts (active assignments only)
+  const totalScans = useMemo(
+    () => activeAssignments.reduce((sum, a) => sum + a.scanIDs.length, 0),
+    [activeAssignments],
   );
 
   const sectionCounts = useMemo(() => {
@@ -108,23 +125,25 @@ export function CourseDetailView({
 
   const statusCounts = useMemo(() => {
     const c = { done: 0, progress: 0, new: 0 };
-    for (const a of assignments) {
+    for (const a of activeAssignments) {
       const status = gradingStatuses.get(a.id);
       if (status === 'done') c.done++;
       else if (status === 'progress') c.progress++;
       else c.new++;
     }
     return c;
-  }, [assignments, gradingStatuses]);
+  }, [activeAssignments, gradingStatuses]);
 
-  // Assignments sorted newest first (for display list) and chronologically (for timeline)
+  // Header style — color dot with white card + underline
+
+  // Active assignments sorted newest first (for display list) and chronologically (for timeline)
   const sortedAssignmentsNewest = useMemo(
-    () => [...assignments].sort((a, b) => new Date(b.updatedDate).getTime() - new Date(a.updatedDate).getTime()),
-    [assignments],
+    () => [...activeAssignments].sort((a, b) => new Date(b.updatedDate).getTime() - new Date(a.updatedDate).getTime()),
+    [activeAssignments],
   );
   const sortedAssignmentsChronological = useMemo(
-    () => [...assignments].sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime()),
-    [assignments],
+    () => [...activeAssignments].sort((a, b) => new Date(a.createdDate).getTime() - new Date(b.createdDate).getTime()),
+    [activeAssignments],
   );
 
   const hasSections = sortedSections.length > 1 || (sortedSections.length === 1 && sortedSections[0] !== 'No Section');
@@ -151,26 +170,24 @@ export function CourseDetailView({
     <div className="adv-container" style={{ '--cc': color } as React.CSSProperties}>
       {/* Header */}
       <div className="adv-header">
-        <div className="adv-header-accent" />
+        <div className="adv-header-dot" />
         <div className="adv-header-content">
-          <div className="adv-header-top">
-            <div className="adv-header-meta">
-              <span className="adv-meta-item">{students.length} student{students.length !== 1 ? 's' : ''}</span>
+          <div className="adv-header-title-row">
+            <h1 className="adv-title">{course.name}</h1>
+            <div className="adv-header-dates">
+              <span>Created {formatDate(course.createdDate)}</span>
               <span className="adv-meta-sep">·</span>
-              <span className="adv-meta-item">{assignments.length} assignment{assignments.length !== 1 ? 's' : ''}</span>
-              <span className="adv-meta-sep">·</span>
-              <span className="adv-meta-item">{totalScans} scan{totalScans !== 1 ? 's' : ''}</span>
+              <span>Modified {formatDate(course.updatedDate)}</span>
+              {courseAnalytics?.trendDelta != null && (
+                <>
+                  <span className="adv-meta-sep">·</span>
+                  <span className={`cd-trend-indicator ${trendClass(courseAnalytics.trendDelta)}`}>
+                    {trendArrow(courseAnalytics.trendDelta)} {Math.abs(courseAnalytics.trendDelta).toFixed(1)}%
+                  </span>
+                </>
+              )}
             </div>
           </div>
-          <h1 className="adv-title">{course.name}</h1>
-          {/* Trend delta from analytics */}
-          {courseAnalytics?.trendDelta != null && (
-            <div className="adv-header-dates">
-              <span className={`cd-trend-indicator ${trendClass(courseAnalytics.trendDelta)}`}>
-                {trendArrow(courseAnalytics.trendDelta)} {Math.abs(courseAnalytics.trendDelta).toFixed(1)}% from last assignment
-              </span>
-            </div>
-          )}
         </div>
         <CourseToolbarMenu
           course={course}
@@ -180,89 +197,83 @@ export function CourseDetailView({
         />
       </div>
 
-      {/* Progress bar — class average, median, students, assignments */}
-      <div className="adv-progress-bar">
-        <div className="adv-progress-stat" style={{ '--stat-color': '#34C759' } as React.CSSProperties}>
-          <div className="adv-progress-stat-icon" style={{ background: 'rgba(52, 199, 89, 0.12)', color: '#34C759' }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 12l4-5 3 3 5-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </div>
-          <span className="adv-progress-value">
-            {courseAnalytics ? `${courseAnalytics.classAverage.toFixed(1)}%` : '—'}
-          </span>
-          <span className="adv-progress-label">CLASS AVERAGE</span>
+      {/* Stats */}
+      <Section title="STATS">
+        <div className="cd-stats-grid">
+          <StatCard
+          icon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 12l4-5 3 3 5-7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+          iconBg="rgba(52, 199, 89, 0.12)"
+          iconColor="#34C759"
+          value={courseAnalytics ? `${courseAnalytics.classAverage.toFixed(1)}%` : '—'}
+          label="CLASS AVERAGE"
+          accentColor="#34C759"
+        />
+        <StatCard
+          icon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 10h12M5 6h6M7 2h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>}
+          iconBg="rgba(0, 122, 255, 0.1)"
+          iconColor="#007AFF"
+          value={courseAnalytics ? `${courseAnalytics.classMedian.toFixed(0)}%` : '—'}
+          label="MEDIAN"
+          accentColor="#007AFF"
+        />
+        <StatCard
+          icon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5.5" r="2.5" stroke="currentColor" strokeWidth="1.5" /><path d="M3 14c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>}
+          iconBg={`color-mix(in srgb, ${color} 12%, transparent)`}
+          iconColor={color}
+          value={String(students.length)}
+          label="STUDENTS"
+          accentColor={color}
+        />
+        <StatCard
+          icon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="2" width="10" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.5" /><line x1="6" y1="5.5" x2="10" y2="5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /><line x1="6" y1="8.5" x2="9" y2="8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>}
+          iconBg="rgba(255, 149, 0, 0.1)"
+          iconColor="#FF9500"
+          value={String(activeAssignments.length)}
+          label="ASSIGNMENTS"
+          accentColor="#FF9500"
+        />
+        <StatCard
+          icon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M4 8.5l3 3 5-5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+          iconBg="rgba(52, 199, 89, 0.12)"
+          iconColor="#34C759"
+          value={String(statusCounts.done)}
+          label="COMPLETE"
+          accentColor="#34C759"
+        />
+        <StatCard
+          icon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.5" /><path d="M8 5v3.5l2.5 1.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+          iconBg="rgba(255, 149, 0, 0.1)"
+          iconColor="#FF9500"
+          value={String(statusCounts.progress)}
+          label="IN PROGRESS"
+          accentColor="#FF9500"
+        />
+        <StatCard
+          icon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" strokeWidth="1.5" /><line x1="6" y1="8" x2="10" y2="8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>}
+          iconBg="rgba(199, 199, 204, 0.2)"
+          iconColor="#c7c7cc"
+          value={String(statusCounts.new)}
+          label="NOT STARTED"
+          accentColor="#c7c7cc"
+        />
+        <StatCard
+          icon={<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><rect x="3" y="4" width="10" height="8" rx="1.5" stroke="currentColor" strokeWidth="1.5" /><path d="M5 4V3a3 3 0 0 1 6 0v1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>}
+          iconBg="rgba(142, 142, 147, 0.12)"
+          iconColor="#8E8E93"
+          value={String(archivedAssignments.length)}
+          label="ARCHIVED"
+          accentColor="#8E8E93"
+        />
         </div>
-        <div className="adv-progress-stat" style={{ '--stat-color': '#007AFF' } as React.CSSProperties}>
-          <div className="adv-progress-stat-icon" style={{ background: 'rgba(0, 122, 255, 0.1)', color: '#007AFF' }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path d="M2 10h12M5 6h6M7 2h2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </div>
-          <span className="adv-progress-value">
-            {courseAnalytics ? `${courseAnalytics.classMedian.toFixed(0)}%` : '—'}
-          </span>
-          <span className="adv-progress-label">MEDIAN</span>
-        </div>
-        <div className="adv-progress-stat" style={{ '--stat-color': color } as React.CSSProperties}>
-          <div className="adv-progress-stat-icon" style={{ background: `color-mix(in srgb, ${color} 12%, transparent)`, color }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <circle cx="8" cy="5.5" r="2.5" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M3 14c0-2.761 2.239-5 5-5s5 2.239 5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </div>
-          <span className="adv-progress-value">{students.length}</span>
-          <span className="adv-progress-label">STUDENTS</span>
-        </div>
-        <div className="adv-progress-stat" style={{ '--stat-color': '#FF9500' } as React.CSSProperties}>
-          <div className="adv-progress-stat-icon" style={{ background: 'rgba(255, 149, 0, 0.1)', color: '#FF9500' }}>
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="3" y="2" width="10" height="12" rx="1.5" stroke="currentColor" strokeWidth="1.5" />
-              <line x1="6" y1="5.5" x2="10" y2="5.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-              <line x1="6" y1="8.5" x2="9" y2="8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-            </svg>
-          </div>
-          <span className="adv-progress-value">{assignments.length}</span>
-          <span className="adv-progress-label">ASSIGNMENTS</span>
-        </div>
-      </div>
+      </Section>
 
-      {/* Row 1: Needs Attention + Grading Progress */}
-      {/* Row 1: Grading Progress + Needs Attention (side by side) */}
-      {assignments.length > 0 && (
-        <div className="adv-widget-row">
-          <Section title="GRADING PROGRESS">
-            <div className="cd-analytics-progress">
-              <ProgressRow label="Complete" count={statusCounts.done} total={assignments.length} barColor="#34C759" />
-              <ProgressRow label="In Progress" count={statusCounts.progress} total={assignments.length} barColor="#FF9500" />
-              <ProgressRow label="Not Started" count={statusCounts.new} total={assignments.length} barColor="#c7c7cc" />
-            </div>
-          </Section>
-
-          {(courseAnalytics?.atRiskStudents.length ?? 0) > 0 ? (
-            <NeedsAttentionSection
-              atRiskStudents={courseAnalytics!.atRiskStudents}
-            />
-          ) : hasSections ? (
-            <Section title="STUDENTS BY SECTION">
-              <div className="cd-analytics-progress">
-                {Array.from(sectionCounts.entries())
-                  .sort(([a], [b]) => {
-                    if (a === 'No Section') return 1;
-                    if (b === 'No Section') return -1;
-                    return a.localeCompare(b);
-                  })
-                  .map(([section, count]) => (
-                    <ProgressRow key={section} label={section} count={count} total={students.length} barColor={color} />
-                  ))}
-              </div>
-            </Section>
-          ) : null}
-        </div>
+      {/* Needs Attention */}
+      {(courseAnalytics?.atRiskStudents.length ?? 0) > 0 && (
+        <NeedsAttentionSection atRiskStudents={courseAnalytics!.atRiskStudents} />
       )}
 
-      {/* Students by Section (if Needs Attention took the right slot and sections exist) */}
-      {assignments.length > 0 && (courseAnalytics?.atRiskStudents.length ?? 0) > 0 && hasSections && (
+      {/* Students by Section */}
+      {hasSections && (
         <Section title="STUDENTS BY SECTION">
           <div className="cd-analytics-progress">
             {Array.from(sectionCounts.entries())
@@ -424,6 +435,35 @@ export function CourseDetailView({
             })}
           </div>
         </Section>
+      )}
+
+      {/* Completed Assignments (collapsible) */}
+      {completedAssignments.length > 0 && (
+        <CollapsibleAssignmentSection
+          title="COMPLETED"
+          badgeColor="#34C759"
+          count={completedAssignments.length}
+          expanded={completedExpanded}
+          onToggle={() => setCompletedExpanded((v) => !v)}
+          assignments={completedAssignments}
+          color={color}
+          onSelectAssignment={onSelectAssignment}
+        />
+      )}
+
+      {/* Archived Assignments (collapsible, at the very bottom) */}
+      {archivedAssignments.length > 0 && (
+        <CollapsibleAssignmentSection
+          title="ARCHIVED"
+          badgeColor="#8E8E93"
+          count={archivedAssignments.length}
+          expanded={archivedExpanded}
+          onToggle={() => setArchivedExpanded((v) => !v)}
+          assignments={archivedAssignments}
+          color={color}
+          onSelectAssignment={onSelectAssignment}
+          dimCards
+        />
       )}
     </div>
   );
@@ -1363,6 +1403,124 @@ function trendLabel(direction: TrendDirection): string {
     case 'declining': return 'Declining';
     case 'stable': return 'Stable';
   }
+}
+
+// ---------------------------------------------------------------------------
+// Stat Card (individual card in stats grid)
+// ---------------------------------------------------------------------------
+
+function StatCard({
+  icon,
+  iconBg,
+  iconColor,
+  value,
+  label,
+  accentColor,
+}: {
+  icon: React.ReactNode;
+  iconBg: string;
+  iconColor: string;
+  value: string;
+  label: string;
+  accentColor: string;
+}) {
+  return (
+    <div className="cd-stat-card" style={{ '--stat-color': accentColor } as React.CSSProperties}>
+      <div className="cd-stat-card-icon" style={{ background: iconBg, color: iconColor }}>
+        {icon}
+      </div>
+      <span className="cd-stat-card-value">{value}</span>
+      <span className="cd-stat-card-label">{label}</span>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Collapsible Assignment Section (Completed / Archived)
+// ---------------------------------------------------------------------------
+
+function CollapsibleAssignmentSection({
+  title,
+  badgeColor,
+  count,
+  expanded,
+  onToggle,
+  assignments,
+  color,
+  onSelectAssignment,
+  dimCards,
+}: {
+  title: string;
+  badgeColor: string;
+  count: number;
+  expanded: boolean;
+  onToggle: () => void;
+  assignments: QuestionAssignment[];
+  color: string;
+  onSelectAssignment: (a: QuestionAssignment) => void;
+  dimCards?: boolean;
+}) {
+  return (
+    <div className="adv-section">
+      <button className="cd-collapsible-header" onClick={onToggle}>
+        <span className="cd-collapsible-label">{title}</span>
+        <div className="cd-collapsible-trailing">
+          <span className="cd-collapsible-count" style={{ background: badgeColor }}>{count}</span>
+          <span className={`cd-collapsible-chevron ${expanded ? 'cd-collapsible-chevron-open' : ''}`}>›</span>
+        </div>
+      </button>
+      {expanded && (
+        <div className={`adv-section-body ${dimCards ? 'cd-dimmed-cards' : ''}`}>
+          <div className="acard-list">
+            {assignments.map((a) => {
+              const scanCount = a.scanIDs.length;
+              const questionCount = a.questions.length;
+              return (
+                <div
+                  key={a.id}
+                  className="acard acard-clickable"
+                  style={{ '--cc': color } as React.CSSProperties}
+                  onClick={() => onSelectAssignment(a)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onSelectAssignment(a);
+                    }
+                  }}
+                >
+                  <div className="acard-row-top">
+                    <div className="acard-accent" />
+                    <div className="acard-top-content">
+                      <div className="acard-top-line1">
+                        <span className="acard-name">{a.title}</span>
+                        <div className="acard-top-meta">
+                          <span className="acard-meta-item">{scanCount} scan{scanCount !== 1 ? 's' : ''}</span>
+                          <span className="acard-meta-item">Created {formatDate(a.createdDate)}</span>
+                        </div>
+                      </div>
+                      <div className="acard-top-line2">
+                        <span className="acard-course-name">{a.courseName}</span>
+                        <span className="acard-meta-item">{questionCount} question{questionCount !== 1 ? 's' : ''}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="acard-row-bottom">
+                    <div className="acard-status-area">
+                      <span className={`cd-lifecycle-badge cd-lifecycle-${title.toLowerCase()}`}>
+                        {title === 'COMPLETED' ? 'Completed' : 'Archived'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 // ---------------------------------------------------------------------------

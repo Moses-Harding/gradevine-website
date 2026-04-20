@@ -1329,6 +1329,143 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     font-weight: 500;
   }
 
+  /* ------------------------------------------------------------------ */
+  /* Stats Grid — Compact Stacked                                       */
+  /* ------------------------------------------------------------------ */
+
+  .cd-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .cd-stat-card {
+    background: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    box-shadow: none;
+    border: 1px solid #e8e8ed;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cd-stat-card-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .cd-stat-card-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #212121;
+    font-variant-numeric: tabular-nums;
+    line-height: 1;
+    flex: 1;
+    text-align: left;
+  }
+
+  .cd-stat-card-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #666;
+    width: 100%;
+    text-align: left;
+    padding-left: 40px;
+    margin-top: -4px;
+  }
+
+  @media (max-width: 900px) {
+    .cd-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ------------------------------------------------------------------ */
+  /* Collapsible Assignment Sections (Completed / Archived)             */
+  /* ------------------------------------------------------------------ */
+
+  .cd-collapsible-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 0 16px 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+  }
+
+  .cd-collapsible-label {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212121;
+    letter-spacing: -0.2px;
+  }
+
+  .cd-collapsible-trailing {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cd-collapsible-count {
+    font-size: 10px;
+    font-weight: 700;
+    color: #fff;
+    min-width: 20px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    padding: 0 6px;
+  }
+
+  .cd-collapsible-chevron {
+    font-size: 18px;
+    font-weight: 600;
+    color: #999;
+    transition: transform 0.2s ease;
+    transform: rotate(0deg);
+  }
+
+  .cd-collapsible-chevron-open {
+    transform: rotate(90deg);
+  }
+
+  .cd-dimmed-cards .acard {
+    opacity: 0.7;
+  }
+
+  .cd-lifecycle-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    line-height: 1;
+  }
+
+  .cd-lifecycle-completed {
+    color: #34C759;
+    background: rgba(52, 199, 89, 0.12);
+    border: 1px solid rgba(52, 199, 89, 0.3);
+  }
+
+  .cd-lifecycle-archived {
+    color: #8E8E93;
+    background: rgba(142, 142, 147, 0.12);
+    border: 1px solid rgba(142, 142, 147, 0.25);
+  }
+
   /* Course Toolbar Menu */
   .cd-toolbar-menu {
     position: relative;
@@ -1702,21 +1839,45 @@ import { DashboardApp } from '../components/dashboard/DashboardApp';
     gap: 24px;
   }
 
+  /* Header */
   .adv-header {
     display: flex;
-    gap: 16px;
-    padding: 24px 28px;
     background: white;
-    border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
-    align-items: flex-start;
+    border-radius: 14px 14px 0 0;
+    border-bottom: 3px solid var(--cc);
+    padding: 20px 24px;
+    align-items: center;
+    gap: 12px;
   }
 
-  .adv-header-accent {
-    width: 4px;
-    align-self: stretch;
-    border-radius: 2px;
+  .adv-header-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
     background: var(--cc);
+    flex-shrink: 0;
+  }
+
+  .adv-header .adv-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a1a;
+    letter-spacing: -0.4px;
+  }
+
+  .adv-header-title-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .adv-header .adv-header-dates {
+    font-size: 12px;
+    color: #999;
+    white-space: nowrap;
+    margin-left: auto;
   }
 
   .adv-header-content {

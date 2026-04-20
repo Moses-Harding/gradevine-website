@@ -22,6 +22,8 @@ export interface Course {
   archivedDate: string | null; // ISO 8601
   hasImportedFromRoster: boolean;
   customSections: string[];
+  createdDate: string;
+  updatedDate: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -66,6 +68,14 @@ export interface QuickFeedbackItem {
   lastUsedDate: string | null;
 }
 
+/** Mirrors iOS `AssignmentLifecycleStatus` enum (raw value = String, Codable). */
+export type AssignmentLifecycleStatus =
+  | 'active'
+  | 'optimized'
+  | 'imagesRemoved'
+  | 'completed'
+  | 'archived';
+
 export interface QuestionAssignment {
   id: string;
   title: string;
@@ -78,6 +88,8 @@ export interface QuestionAssignment {
   templatePageCount: number | null;
   isArchived: boolean;
   archivedDate: string | null;
+  lifecycleStatus: AssignmentLifecycleStatus;
+  completedDate: string | null;
   createdDate: string;
   updatedDate: string;
   description: string | null;
@@ -86,9 +98,11 @@ export interface QuestionAssignment {
   recordChangeTag: string;
 }
 
-/** An assignment is editable when it is not archived (or completed, once lifecycleStatus is synced). */
+/** Whether the assignment is still editable (active/optimized/imagesRemoved). */
 export function isAssignmentEditable(assignment: QuestionAssignment): boolean {
-  return !assignment.isArchived;
+  return assignment.lifecycleStatus === 'active'
+    || assignment.lifecycleStatus === 'optimized'
+    || assignment.lifecycleStatus === 'imagesRemoved';
 }
 
 // ---------------------------------------------------------------------------
