@@ -15,7 +15,7 @@ export const CLOUDKIT_ZONE = 'GradeVineSync';
 export const CLOUDKIT_ENVIRONMENT: 'production' | 'development' = 'development';
 
 // TODO: Replace with your actual API token from CloudKit Dashboard
-export const CLOUDKIT_API_TOKEN = 'e416d888128cdafb2b1f72c87eab97e482a7da17feb5c8d731dbbbd0cc4dd761';
+export const CLOUDKIT_API_TOKEN = '4fa46af67d582bb0a241c62f87e5e6ef86df76c0b691e23dfc8477719d79c814';
 
 /**
  * CloudKit REST API base URL.

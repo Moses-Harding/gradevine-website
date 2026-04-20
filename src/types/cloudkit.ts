@@ -86,6 +86,11 @@ export interface QuestionAssignment {
   recordChangeTag: string;
 }
 
+/** An assignment is editable when it is not archived (or completed, once lifecycleStatus is synced). */
+export function isAssignmentEditable(assignment: QuestionAssignment): boolean {
+  return !assignment.isArchived;
+}
+
 // ---------------------------------------------------------------------------
 // ScanQuestionResponse (nested in Scan)
 // ---------------------------------------------------------------------------
