@@ -47,7 +47,9 @@ export async function saveGrades(
     fields: {
       questionResponsesData: { value: responsesBase64, type: 'BYTES' },
       lastModifiedDate: { value: Date.now(), type: 'TIMESTAMP' },
-      ...(feedback !== undefined ? { feedback: { value: feedback, type: 'STRING' } } : {}),
+      // Only include feedback when non-empty — the field may not exist in the
+      // CloudKit schema yet (e.g. after a dev environment reset).
+      ...(feedback ? { feedback: { value: feedback, type: 'STRING' } } : {}),
     },
   };
 
@@ -57,13 +59,15 @@ export async function saveGrades(
     });
 
     if (response.hasErrors) {
-      const errorRecord = response.records.find((r) => r.serverErrorCode);
+      const errorRecord = response.records.find((r: CKJSRecord) => r.serverErrorCode);
       if (errorRecord) {
         if (errorRecord.serverErrorCode === 'CONFLICT') {
           return { success: false, error: 'Record was modified by another device. Refreshing...' };
         }
         return { success: false, error: errorRecord.reason ?? 'Save failed' };
       }
+      // CloudKit JS may report hasErrors with errors in _errors instead of records
+      return { success: false, error: 'Save failed' };
     }
 
     // Invalidate cached scans so next fetch gets fresh data
@@ -123,6 +127,8 @@ export async function saveAssignmentQuickFeedback(
       if (errorRecord) {
         return { success: false, error: errorRecord.reason ?? 'Save failed' };
       }
+      // CloudKit JS may report hasErrors with errors in _errors instead of records
+      return { success: false, error: 'Save failed' };
     }
 
     invalidateCachePrefix('assignments-');
