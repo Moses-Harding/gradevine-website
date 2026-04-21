@@ -1,5 +1,15 @@
 # Change Log - April 2026
 
+### Admin Console (2026-04-21)
+
+Added a developer-only admin console at `/admin`. Secured with Apple Sign-In + `userRecordName` whitelist (only the developer's Apple ID can access). Includes promo code management (create/view codes via Firebase Realtime Database, same `promo_codes/` node as iOS) and a placeholder analytics dashboard matching the iOS debug tab layout.
+
+**WEB-FEAT-001** — see `Documentation/Change Log/Completed Features.md`
+
+**Files created/modified:** `src/pages/admin.astro`, `src/components/admin/AdminApp.tsx`, `src/lib/firebase/config.ts`
+
+---
+
 ### Grade Save Fix & CloudKit Error Handling (2026-04-20)
 
 Fixed a silent grade save failure where grades appeared to save but were not persisted to CloudKit. Two issues: (1) sending `feedback: null` failed when the field didn't exist in the schema after a dev environment reset, and (2) CloudKit JS error handling fell through to success when errors were in `_errors` instead of `records`. Also added `isAssignmentEditable()` helper (was imported but missing, causing hydration crash) and updated the API token after dev environment reset.

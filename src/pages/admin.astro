@@ -1,0 +1,454 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { AdminApp } from '../components/admin/AdminApp';
+---
+
+<Layout
+  title="GradeVine — Admin"
+  description="GradeVine admin console."
+>
+  <!-- CloudKit JS for Apple ID authentication -->
+  <script is:inline src="https://cdn.apple-cloudkit.com/ck/2/cloudkit.js"></script>
+
+  <!-- Sign-in/out buttons live OUTSIDE React so reconciliation never touches them -->
+  <div id="apple-sign-in-button"></div>
+  <div id="apple-sign-out-button"></div>
+
+  <div id="admin-root">
+    <AdminApp client:only="react" />
+  </div>
+</Layout>
+
+<style is:global>
+  /* ================================================================== */
+  /* Admin Console Styles                                                */
+  /* ================================================================== */
+
+  #admin-root {
+    min-height: 100vh;
+    background: var(--color-gray-50);
+  }
+
+  /* ---- Login ---- */
+
+  .admin-login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gray-100);
+  }
+
+  .admin-login-card {
+    background: #fff;
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-card);
+    padding: 40px 32px;
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-shadow: var(--shadow-md);
+  }
+
+  .admin-login-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-gray-900);
+  }
+
+  .admin-login-subtitle {
+    font-size: 14px;
+    color: var(--color-gray-600);
+    margin-top: -8px;
+  }
+
+  .admin-login-input {
+    font-family: var(--font-family);
+    font-size: 15px;
+    padding: 10px 14px;
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .admin-login-input:focus {
+    border-color: var(--color-purple-deep);
+  }
+
+  .admin-login-input-error {
+    border-color: var(--color-red);
+  }
+
+  .admin-login-error {
+    font-size: 13px;
+    color: var(--color-red);
+    margin-top: -8px;
+  }
+
+  .admin-login-button {
+    font-family: var(--font-family);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 0;
+    background: var(--color-gray-900);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .admin-login-button:hover {
+    background: var(--color-gray-800);
+  }
+
+  .admin-apple-slot-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+  }
+
+  /* ---- Header ---- */
+
+  .admin-header {
+    background: #1a1a1a;
+    padding: 12px 24px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+
+  .admin-header-inner {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .admin-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .admin-logo {
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .admin-logo:hover {
+    text-decoration: none;
+    opacity: 0.85;
+  }
+
+  .admin-badge {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--color-purple-deep);
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .admin-header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .admin-user-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-gray-500);
+  }
+
+  .admin-sign-out:hover {
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+
+  /* ---- Main Content ---- */
+
+  .admin-main {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  .admin-page-title {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-gray-900);
+    margin-bottom: 24px;
+  }
+
+  /* ---- Sections ---- */
+
+  .admin-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .admin-section {
+    background: #fff;
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-card);
+    padding: 24px;
+  }
+
+  .admin-section-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--color-gray-900);
+    margin-bottom: 16px;
+  }
+
+  .admin-label {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-gray-600);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .admin-muted {
+    font-size: 13px;
+    color: var(--color-gray-500);
+    line-height: 1.5;
+  }
+
+  /* ---- Inputs & Buttons ---- */
+
+  .admin-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .admin-input {
+    font-family: var(--font-family);
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 2px solid var(--color-gray-200);
+    border-radius: 8px;
+    outline: none;
+    flex: 1;
+    min-width: 0;
+    transition: border-color 0.15s;
+  }
+
+  .admin-input:focus {
+    border-color: var(--color-purple-deep);
+  }
+
+  .admin-input-mono {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  .admin-button {
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .admin-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .admin-button-blue {
+    background: var(--color-blue);
+    color: #fff;
+  }
+
+  .admin-button-blue:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+
+  /* ---- Status messages ---- */
+
+  .admin-status {
+    font-size: 13px;
+    font-weight: 500;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+
+  .admin-status-success {
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+  }
+
+  .admin-status-error {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+  }
+
+  /* ---- Refresh button ---- */
+
+  .admin-refresh-btn {
+    font-family: var(--font-family);
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-blue);
+    background: rgba(56, 128, 245, 0.08);
+    border: none;
+    border-radius: 999px;
+    padding: 2px 10px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+
+  .admin-refresh-btn:hover:not(:disabled) {
+    opacity: 0.8;
+  }
+
+  .admin-refresh-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* ---- Table ---- */
+
+  .admin-table-wrap {
+    overflow-x: auto;
+    margin-top: 8px;
+  }
+
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .admin-table th {
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-gray-500);
+    padding: 8px 12px;
+    border-bottom: 2px solid var(--color-gray-200);
+  }
+
+  .admin-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--color-gray-100);
+    color: var(--color-gray-800);
+  }
+
+  .admin-table tbody tr:hover {
+    background: var(--color-gray-50);
+  }
+
+  .admin-mono {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+  }
+
+  .admin-tag {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .admin-tag-green {
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+  }
+
+  .admin-tag-gray {
+    background: var(--color-gray-100);
+    color: var(--color-gray-500);
+  }
+
+  /* ---- Promo Form ---- */
+
+  .admin-promo-form {
+    margin-bottom: 16px;
+  }
+
+  .admin-field {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .admin-field-narrow {
+    max-width: 100px;
+  }
+
+  .admin-field-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--color-gray-500);
+    letter-spacing: 0.02em;
+  }
+
+  /* ---- Metrics Grid ---- */
+
+  .admin-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .admin-metric-card {
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .admin-metric-value {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-gray-900);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .admin-metric-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+</style>
