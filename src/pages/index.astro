@@ -21,19 +21,30 @@ import Layout from '../layouts/Layout.astro';
   <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <h1>Grading software for <span class="highlight">paper-and-pencil classrooms.</span></h1>
-      <h2 class="hero-subtitle">Grade written responses on the go.</h2>
-      <div class="hero-cta">
-        <a href="https://apps.apple.com/app/id6755069483" class="btn btn-primary">Download on the App Store</a>
-        <p class="hero-microcopy">Free to try. 30 credits. No card required.</p>
+      <div class="hero-carousel" aria-label="App screenshots">
+        <div class="carousel-track">
+          <img src="/carousel/01_identity.png" alt="GradeVine classes and assignments view" />
+          <img src="/carousel/02_workflow.png" alt="Grading workflow with handwriting recognition" />
+          <img src="/carousel/03_insight.png" alt="Analytics dashboard with grade distributions" />
+          <img src="/carousel/04_quick_feedback.png" alt="Reusable feedback comments" />
+          <img src="/carousel/05_export.png" alt="Export options for graded work" />
+        </div>
+        <div class="carousel-dots">
+          <button class="carousel-dot active" aria-label="Slide 1"></button>
+          <button class="carousel-dot" aria-label="Slide 2"></button>
+          <button class="carousel-dot" aria-label="Slide 3"></button>
+          <button class="carousel-dot" aria-label="Slide 4"></button>
+          <button class="carousel-dot" aria-label="Slide 5"></button>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Speed claim -->
-  <section class="speed-claim">
-    <div class="container">
-      <p>Grade handwritten quizzes, tests, lab questions, problem sets, and free-response work in about a minute per student — from the phone or iPad you already carry.</p>
+      <div class="hero-text">
+        <h1>Grading software for <span class="highlight">paper-and-pencil classrooms.</span></h1>
+        <h2 class="hero-subtitle">Grade handwritten work in about a minute per student — from the phone or iPad you already carry.</h2>
+        <div class="hero-cta">
+          <a href="https://apps.apple.com/app/id6755069483" class="btn btn-primary">Download on the App Store</a>
+          <p class="hero-microcopy">Free to try. 30 credits. No card required.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -44,11 +55,11 @@ import Layout from '../layouts/Layout.astro';
 
       <div class="how-step">
         <div class="how-step-text">
-          <div class="how-step-header"><span class="how-step-number">1</span><h3>Get the work in.</h3></div>
+          <div class="how-step-header"><span class="how-step-number">1</span><h3>Upload the assignment.</h3></div>
           <p>Photograph each page or import a scanned PDF. GradeVine reads the handwriting and matches each page to the right student.</p>
         </div>
         <div class="how-step-visual">
-          <video autoplay muted loop playsinline>
+          <video autoplay muted loop playsinline preload="none" poster="/videos/3-upload-process-work-poster.jpg">
             <source src="/videos/3-upload-process-work.mp4" type="video/mp4" />
           </video>
         </div>
@@ -60,7 +71,7 @@ import Layout from '../layouts/Layout.astro';
           <p>Every student's answer to the same question, side by side. Or flip to one student's full assignment when you'd rather take it page by page. Tap to score, swipe to the next. Assign keywords per question and GradeVine matches both exact terms and semantic equivalents (H₂O counts as Water).</p>
         </div>
         <div class="how-step-visual">
-          <video autoplay muted loop playsinline>
+          <video autoplay muted loop playsinline preload="none" poster="/videos/4-grade-student-work-poster.jpg">
             <source src="/videos/4-grade-student-work.mp4" type="video/mp4" />
           </video>
         </div>
@@ -68,11 +79,11 @@ import Layout from '../layouts/Layout.astro';
 
       <div class="how-step">
         <div class="how-step-text">
-          <div class="how-step-header"><span class="how-step-number">3</span><h3>Bulk grade when it makes sense.</h3></div>
-          <p>Scroll through every response to a question. Fill the ungraded ones in a single tap.</p>
+          <div class="how-step-header"><span class="how-step-number">3</span><h3>Let Smart evaluation do the first pass.</h3></div>
+          <p>Turn it on and GradeVine suggests correct, partial, or incorrect for each answer — with a rationale. You review, adjust, and move on.</p>
         </div>
         <div class="how-step-visual">
-          <video autoplay muted loop playsinline>
+          <video autoplay muted loop playsinline preload="none" poster="/videos/2-confirm-questions-poster.jpg">
             <source src="/videos/2-confirm-questions.mp4" type="video/mp4" />
           </video>
         </div>
@@ -84,7 +95,7 @@ import Layout from '../layouts/Layout.astro';
           <p>Save the comments you write most often. Tap to apply on the next student.</p>
         </div>
         <div class="how-step-visual">
-          <video autoplay muted loop playsinline>
+          <video autoplay muted loop playsinline preload="none" poster="/videos/5-view-transcript-feedback-poster.jpg">
             <source src="/videos/5-view-transcript-feedback.mp4" type="video/mp4" />
           </video>
         </div>
@@ -96,7 +107,7 @@ import Layout from '../layouts/Layout.astro';
           <p>Class averages, distributions, and struggling-student alerts surface as you grade. Export to CSV, PDF, or Google Drive — where student work arrives as editable Google Docs, not images.</p>
         </div>
         <div class="how-step-visual">
-          <video autoplay muted loop playsinline>
+          <video autoplay muted loop playsinline preload="none" poster="/videos/6-view-analytics-poster.jpg">
             <source src="/videos/6-view-analytics.mp4" type="video/mp4" />
           </video>
         </div>
@@ -125,14 +136,14 @@ import Layout from '../layouts/Layout.astro';
         <div class="stat-block">
           <div class="stat-number">80%</div>
           <p class="stat-body">increase in blue-book sales at UC Berkeley over two academic years.</p>
-          <a href="https://www.insidehighered.com/news/deep-dives/2025/06/17/amid-ai-plagiarism-more-professors-turn-handwritten-work" class="stat-source" target="_blank" rel="noopener">Wall Street Journal, May 2025</a>
+          <a href="https://www.insidehighered.com/news/deep-dives/2025/06/17/amid-ai-plagiarism-more-professors-turn-handwritten-work" class="stat-source" target="_blank" rel="noopener">Inside Higher Ed, June 2025</a>
         </div>
       </div>
 
       <p class="trend-closing">GradeVine is built for handwritten quizzes, tests, and lab work.</p>
 
       <div class="as-reported">
-        <span class="as-reported-label">As reported in</span>
+        <span class="as-reported-label">The shift to handwritten work, covered in</span>
         <div class="as-reported-logos">
           <span>Education Week</span>
           <span>Wall Street Journal</span>
@@ -156,7 +167,7 @@ import Layout from '../layouts/Layout.astro';
   <section class="value-section alt">
     <div class="container">
       <h2>Feedback on every student, without writing every word.</h2>
-      <p class="value-body">Save the comments you write most often. Tap to apply on the next student. Detailed feedback on every paper — without writing every comment from scratch.</p>
+      <p class="value-body">Save the comments you write most often and tap to apply them on the next student — detailed feedback on every paper without starting from scratch each time.</p>
     </div>
   </section>
 
@@ -443,13 +454,68 @@ import Layout from '../layouts/Layout.astro';
   /* Hero */
   .hero {
     padding: 8rem 1.5rem 4rem;
-    text-align: center;
     background: #fff;
   }
 
   .hero-content {
     max-width: var(--max-width);
     margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    gap: 4rem;
+  }
+
+  .hero-carousel {
+    flex: 0 0 300px;
+  }
+
+  .carousel-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    border-radius: var(--radius-lg);
+  }
+
+  .carousel-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-track img {
+    flex: 0 0 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    scroll-snap-align: start;
+    border-radius: var(--radius-lg);
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: none;
+    background: var(--color-gray-300);
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+  }
+
+  .carousel-dot.active {
+    background: var(--color-purple-deep);
+  }
+
+  .hero-text {
+    flex: 1;
+    text-align: left;
   }
 
   .hero h1 {
@@ -483,31 +549,14 @@ import Layout from '../layouts/Layout.astro';
     margin-top: 2.5rem;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.75rem;
   }
 
   .hero-microcopy {
     font-size: 0.9rem;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     margin: 0;
-  }
-
-  /* Speed claim */
-  .speed-claim {
-    padding: 4rem 0;
-    background: var(--color-purple-50);
-    text-align: center;
-  }
-
-  .speed-claim p {
-    font-size: 1.6rem;
-    font-weight: 600;
-    line-height: 1.4;
-    color: var(--color-gray-900);
-    max-width: 900px;
-    margin: 0 auto;
-    letter-spacing: -0.01em;
   }
 
   /* How it works */
@@ -524,7 +573,7 @@ import Layout from '../layouts/Layout.astro';
 
   .how-step {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 4rem;
     margin-bottom: 4rem;
   }
@@ -886,7 +935,7 @@ import Layout from '../layouts/Layout.astro';
 
   .free-tier-hero .credits-note {
     font-size: 0.9rem;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     margin-bottom: 1.5rem;
     line-height: 1.4;
   }
@@ -909,7 +958,7 @@ import Layout from '../layouts/Layout.astro';
 
   .upgrade-divider span {
     font-size: 0.9rem;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     font-weight: 500;
     white-space: nowrap;
   }
@@ -1000,7 +1049,7 @@ import Layout from '../layouts/Layout.astro';
   .price span {
     font-size: 1rem;
     font-weight: 400;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
   }
 
   .annual-savings {
@@ -1019,7 +1068,7 @@ import Layout from '../layouts/Layout.astro';
 
   .pricing-card .credits-note {
     font-size: 0.8rem;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     margin-bottom: 1.5rem;
     line-height: 1.4;
   }
@@ -1055,7 +1104,7 @@ import Layout from '../layouts/Layout.astro';
 
   .credits-note {
     font-size: 0.8rem;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     margin-bottom: 1.5rem;
     line-height: 1.4;
   }
@@ -1206,7 +1255,7 @@ import Layout from '../layouts/Layout.astro';
 
   .calc-switch-label {
     font-size: 0.8rem;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     white-space: nowrap;
   }
 
@@ -1307,7 +1356,7 @@ import Layout from '../layouts/Layout.astro';
 
   .footer-brand p {
     margin-top: 0.5rem;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     font-size: 0.9rem;
   }
 
@@ -1327,7 +1376,7 @@ import Layout from '../layouts/Layout.astro';
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     margin-bottom: 0.25rem;
   }
 
@@ -1343,22 +1392,39 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .footer-bottom p {
-    color: var(--color-gray-500);
+    color: var(--color-gray-600);
     font-size: 0.85rem;
   }
 
   /* Responsive */
   @media (max-width: 768px) {
+    .hero-content {
+      flex-direction: column-reverse;
+      text-align: center;
+      gap: 2.5rem;
+    }
+
+    .hero-text {
+      text-align: center;
+    }
+
+    .hero-cta {
+      align-items: center;
+    }
+
+    .hero-carousel {
+      flex: none;
+      max-width: 260px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
     .hero h1 {
       font-size: 2.25rem;
     }
 
     .hero-subtitle {
       font-size: 1.15rem;
-    }
-
-    .speed-claim p {
-      font-size: 1.2rem;
     }
 
     .how-step,
@@ -1508,4 +1574,32 @@ import Layout from '../layouts/Layout.astro';
   });
 
   updateCalc();
+
+  // Respect reduced-motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.querySelectorAll('video').forEach(v => {
+      v.removeAttribute('autoplay');
+      v.pause();
+    });
+  }
+
+  // Carousel
+  const carouselTrack = document.querySelector('.carousel-track');
+  const carouselDots = document.querySelectorAll('.carousel-dot');
+
+  if (carouselTrack && carouselDots.length) {
+    // Update dots on scroll
+    carouselTrack.addEventListener('scroll', () => {
+      const index = Math.round(carouselTrack.scrollLeft / carouselTrack.offsetWidth);
+      carouselDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+    });
+
+    // Click dot to scroll
+    carouselDots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        carouselTrack.scrollTo({ left: i * carouselTrack.offsetWidth, behavior: 'smooth' });
+      });
+    });
+
+  }
 </script>
