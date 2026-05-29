@@ -467,28 +467,34 @@ import Layout from '../layouts/Layout.astro';
 
   .hero-carousel {
     flex: 0 0 300px;
+    touch-action: pan-y;
   }
 
   .carousel-track {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+    position: relative;
     border-radius: var(--radius-lg);
-  }
-
-  .carousel-track::-webkit-scrollbar {
-    display: none;
+    overflow: hidden;
   }
 
   .carousel-track img {
-    flex: 0 0 100%;
     width: 100%;
     height: auto;
     display: block;
-    scroll-snap-align: start;
     border-radius: var(--radius-lg);
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .carousel-track img:first-child {
+    position: relative;
+  }
+
+  .carousel-track img.carousel-active {
+    opacity: 1;
+    z-index: 1;
   }
 
   .carousel-dots {
@@ -1414,7 +1420,7 @@ import Layout from '../layouts/Layout.astro';
 
     .hero-carousel {
       flex: none;
-      max-width: 260px;
+      max-width: 240px;
       width: 100%;
       margin: 0 auto;
     }
@@ -1585,21 +1591,63 @@ import Layout from '../layouts/Layout.astro';
 
   // Carousel
   const carouselTrack = document.querySelector('.carousel-track');
+  const carouselImages = document.querySelectorAll('.carousel-track img');
   const carouselDots = document.querySelectorAll('.carousel-dot');
+  let currentSlide = 0;
 
-  if (carouselTrack && carouselDots.length) {
-    // Update dots on scroll
-    carouselTrack.addEventListener('scroll', () => {
-      const index = Math.round(carouselTrack.scrollLeft / carouselTrack.offsetWidth);
-      carouselDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+  function goToSlide(index) {
+    carouselImages.forEach(img => img.classList.remove('carousel-active'));
+    carouselDots.forEach(dot => dot.classList.remove('active'));
+    currentSlide = (index + carouselImages.length) % carouselImages.length;
+    carouselImages[currentSlide].classList.add('carousel-active');
+    carouselDots[currentSlide].classList.add('active');
+  }
+
+  // Initialize first slide
+  if (carouselImages.length) goToSlide(0);
+
+  // Click dots
+  carouselDots.forEach((dot, i) => {
+    dot.addEventListener('click', () => goToSlide(i));
+  });
+
+  // Swipe support
+  if (carouselTrack) {
+    let startX = 0;
+    let startY = 0;
+    let tracking = false;
+
+    carouselTrack.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      tracking = true;
+    }, { passive: true });
+
+    carouselTrack.addEventListener('touchend', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+        goToSlide(dx < 0 ? currentSlide + 1 : currentSlide - 1);
+      }
+    }, { passive: true });
+
+    // Mouse drag support for desktop
+    carouselTrack.addEventListener('mousedown', (e) => {
+      startX = e.clientX;
+      tracking = true;
+      carouselTrack.style.cursor = 'grabbing';
     });
 
-    // Click dot to scroll
-    carouselDots.forEach((dot, i) => {
-      dot.addEventListener('click', () => {
-        carouselTrack.scrollTo({ left: i * carouselTrack.offsetWidth, behavior: 'smooth' });
-      });
+    window.addEventListener('mouseup', (e) => {
+      if (!tracking) return;
+      tracking = false;
+      carouselTrack.style.cursor = '';
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 40) {
+        goToSlide(dx < 0 ? currentSlide + 1 : currentSlide - 1);
+      }
     });
-
   }
 </script>
