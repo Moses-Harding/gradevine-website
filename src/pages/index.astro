@@ -3,8 +3,8 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout
-  title="GradeVine - AI grading for teachers who still use paper."
-  description="GradeVine helps teachers digitize handwritten student assignments using AI-powered transcription, keyword matching, and smart grading tools."
+  title="GradeVine — Grading software for paper-and-pencil classrooms."
+  description="Grade handwritten quizzes, tests, lab questions, problem sets, and free-response work in about a minute per student — from the phone or iPad you already carry."
 >
   <!-- Header -->
   <header class="header">
@@ -13,10 +13,7 @@ import Layout from '../layouts/Layout.astro';
         <span class="logo-text">GradeVine</span>
       </div>
       <div class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#pricing">Pricing</a>
-        <a href="/dashboard?login=1" class="btn btn-nav">Log into web dashboard</a>
+        <a href="https://apps.apple.com/app/id6755069483" class="btn btn-nav">Download on the App Store</a>
       </div>
     </nav>
   </header>
@@ -24,194 +21,185 @@ import Layout from '../layouts/Layout.astro';
   <!-- Hero -->
   <section class="hero">
     <div class="hero-content">
-      <h1>AI grading for teachers<br /><span class="highlight">who still use paper.</span></h1>
-      <ul class="hero-bullets">
-        <li>Scan handwritten assignments from your iPhone</li>
-        <li>AI transcribes handwriting and auto-matches students</li>
-        <li>Tap to grade by question, and give rapid feedback with saved presets</li>
-        <li>Track class averages, grade distributions, and struggling students at a glance</li>
-        <li>Export results as a PDF or upload directly to Google Drive</li>
-      </ul>
+      <h1>Grading software for <span class="highlight">paper-and-pencil classrooms.</span></h1>
+      <h2 class="hero-subtitle">Grade written responses on the go.</h2>
       <div class="hero-cta">
-        <a href="https://apps.apple.com/app/id6755069483" class="btn btn-primary">Get Started for Free</a>
+        <a href="https://apps.apple.com/app/id6755069483" class="btn btn-primary">Download on the App Store</a>
+        <p class="hero-microcopy">Free to try. 30 credits. No card required.</p>
       </div>
-      <div class="hero-videos">
-        <h2 class="hero-videos-title">How it works</h2>
-        <div class="video-step">
-          <div class="video-step-text">
-            <div class="video-step-header"><span class="video-step-number">1</span><h3>Upload your assignment</h3></div>
-            <p>Snap a photo of your test, quiz, or assignment, or import a pdf. GradeVine's AI extracts the questions, point values, and structure automatically, and suggests a grading key and keywords to search for.</p>
-          </div>
-          <div class="video-item">
-            <video autoplay muted loop playsinline>
-              <source src="/videos/2-confirm-questions.mp4" type="video/mp4" />
-            </video>
-          </div>
+    </div>
+  </section>
+
+  <!-- Speed claim -->
+  <section class="speed-claim">
+    <div class="container">
+      <p>Grade handwritten quizzes, tests, lab questions, problem sets, and free-response work in about a minute per student — from the phone or iPad you already carry.</p>
+    </div>
+  </section>
+
+  <!-- How GradeVine works -->
+  <section id="how-it-works" class="how-it-works">
+    <div class="container">
+      <h2>How GradeVine works.</h2>
+
+      <div class="how-step">
+        <div class="how-step-text">
+          <div class="how-step-header"><span class="how-step-number">1</span><h3>Get the work in.</h3></div>
+          <p>Photograph each page or import a scanned PDF. GradeVine reads the handwriting and matches each page to the right student.</p>
         </div>
-        <div class="video-step reverse">
-          <div class="video-step-text">
-            <div class="video-step-header"><span class="video-step-number">2</span><h3>Grade by question or by student</h3></div>
-            <p>See every student's answer to the same question side by side. Tap to assign points, swipe to the next student. Save feedback that you can reuse for each question.</p>
-          </div>
-          <div class="video-item">
-            <video autoplay muted loop playsinline>
-              <source src="/videos/4-grade-student-work.mp4" type="video/mp4" />
-            </video>
-          </div>
+        <div class="how-step-visual">
+          <video autoplay muted loop playsinline>
+            <source src="/videos/3-upload-process-work.mp4" type="video/mp4" />
+          </video>
         </div>
-        <div class="video-step">
-          <div class="video-step-text">
-            <div class="video-step-header"><span class="video-step-number">3</span><h3>See who needs help</h3></div>
-            <p>Instantly view class averages, grade distributions, and which students are struggling — then export everything to your gradebook, Google Drive, or as a PDF.</p>
-          </div>
-          <div class="video-item">
-            <video autoplay muted loop playsinline>
-              <source src="/videos/6-view-analytics.mp4" type="video/mp4" />
-            </video>
-          </div>
+      </div>
+
+      <div class="how-step reverse">
+        <div class="how-step-text">
+          <div class="how-step-header"><span class="how-step-number">2</span><h3>Grade by question — or by student.</h3></div>
+          <p>Every student's answer to the same question, side by side. Or flip to one student's full assignment when you'd rather take it page by page. Tap to score, swipe to the next. Assign keywords per question and GradeVine matches both exact terms and semantic equivalents (H₂O counts as Water).</p>
+        </div>
+        <div class="how-step-visual">
+          <video autoplay muted loop playsinline>
+            <source src="/videos/4-grade-student-work.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step-text">
+          <div class="how-step-header"><span class="how-step-number">3</span><h3>Bulk grade when it makes sense.</h3></div>
+          <p>Scroll through every response to a question. Fill the ungraded ones in a single tap.</p>
+        </div>
+        <div class="how-step-visual">
+          <video autoplay muted loop playsinline>
+            <source src="/videos/2-confirm-questions.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
+      <div class="how-step reverse">
+        <div class="how-step-text">
+          <div class="how-step-header"><span class="how-step-number">4</span><h3>Apply reusable feedback.</h3></div>
+          <p>Save the comments you write most often. Tap to apply on the next student.</p>
+        </div>
+        <div class="how-step-visual">
+          <video autoplay muted loop playsinline>
+            <source src="/videos/5-view-transcript-feedback.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
+      <div class="how-step">
+        <div class="how-step-text">
+          <div class="how-step-header"><span class="how-step-number">5</span><h3>See what the class understood.</h3></div>
+          <p>Class averages, distributions, and struggling-student alerts surface as you grade. Export to CSV, PDF, or Google Drive — where student work arrives as editable Google Docs, not images.</p>
+        </div>
+        <div class="how-step-visual">
+          <video autoplay muted loop playsinline>
+            <source src="/videos/6-view-analytics.mp4" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+
+      <p class="how-also">Also: blind grading mode hides student names until you're done.</p>
+    </div>
+  </section>
+
+  <!-- Trend stat strip -->
+  <section class="trend-strip">
+    <div class="container">
+      <h2>Handwritten assignments are coming back.</h2>
+
+      <div class="stat-grid">
+        <div class="stat-block">
+          <div class="stat-number">66%</div>
+          <p class="stat-body">of high school and college teachers are rethinking assignments because of AI cheating.</p>
+          <a href="https://www.edweek.org/technology/teachers-turn-to-pen-and-paper-amid-ai-cheating-fears-survey-finds/2023/10" class="stat-source" target="_blank" rel="noopener">Education Week, October 2023</a>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number">76%</div>
+          <p class="stat-body">of those teachers are bringing handwritten work back into the classroom.</p>
+          <a href="https://www.edweek.org/technology/teachers-turn-to-pen-and-paper-amid-ai-cheating-fears-survey-finds/2023/10" class="stat-source" target="_blank" rel="noopener">Education Week, October 2023</a>
+        </div>
+        <div class="stat-block">
+          <div class="stat-number">80%</div>
+          <p class="stat-body">increase in blue-book sales at UC Berkeley over two academic years.</p>
+          <a href="https://www.insidehighered.com/news/deep-dives/2025/06/17/amid-ai-plagiarism-more-professors-turn-handwritten-work" class="stat-source" target="_blank" rel="noopener">Wall Street Journal, May 2025</a>
+        </div>
+      </div>
+
+      <p class="trend-closing">GradeVine is built for handwritten quizzes, tests, and lab work.</p>
+
+      <div class="as-reported">
+        <span class="as-reported-label">As reported in</span>
+        <div class="as-reported-logos">
+          <span>Education Week</span>
+          <span>Wall Street Journal</span>
+          <span>Inside Higher Ed</span>
+          <span>Axios</span>
+          <span>Fox News</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Privacy Banner -->
-  <section class="privacy-banner">
+  <!-- Analytics value -->
+  <section class="value-section">
     <div class="container">
-      <div class="privacy-content">
-        <svg class="privacy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-        </svg>
-        <p>Student data stays on your device and syncs privately via your personal iCloud account. Student work is never stored on our servers and is <strong>never used to train AI models</strong>.</p>
-      </div>
+      <h2>What a paper gradebook can't show you.</h2>
+      <p class="value-body">Class averages, grade distributions, per-question success rates, keyword coverage, and student trends across assignments.</p>
     </div>
   </section>
 
-  <!-- Features -->
-  <section id="features" class="features">
+  <!-- Feedback value -->
+  <section class="value-section alt">
     <div class="container">
-      <h2>Everything teachers need to grade faster</h2>
-      <div class="feature-grid">
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
-              <polyline points="14 2 14 8 20 8" />
-              <path d="M12 18v-6" /><path d="M9 15l3-3 3 3" />
-            </svg>
-          </div>
-          <h3>AI Transcription</h3>
-          <p>
-            GradeVine's AI recognizes handwriting and digitizes every student
-            response automatically — then matches each page to the right
-            student with 96% accuracy.
-          </p>
-        </div>
+      <h2>Feedback on every student, without writing every word.</h2>
+      <p class="value-body">Save the comments you write most often. Tap to apply on the next student. Detailed feedback on every paper — without writing every comment from scratch.</p>
+    </div>
+  </section>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-            </svg>
-          </div>
-          <h3>AI-Suggested Grading Key</h3>
-          <p>
-            Upload your assignment and GradeVine's AI suggests a grading key,
-            point values, and keywords to search for — so you can start grading
-            in seconds, not minutes.
-          </p>
-        </div>
+  <!-- Origin story -->
+  <section class="origin">
+    <div class="container">
+      <h3>Built for one teacher first.</h3>
+      <p>GradeVine was built by a developer for his teacher wife so he could spend a little more time with her. Made with her feedback every step of the way.</p>
+    </div>
+  </section>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-          </div>
-          <h3>AI Analysis</h3>
-          <p>
-            Ask GradeVine's AI to analyze student responses, identify common
-            misconceptions, and suggest targeted feedback — helping you focus
-            on what matters most.
-          </p>
-        </div>
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <h2>Common questions.</h2>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-            </svg>
-          </div>
-          <h3>Contextual Keywords</h3>
-          <p>
-            Define keywords per question and GradeVine highlights contextual
-            matches — even when students phrase answers differently. See at a
-            glance who hit the key concepts.
-          </p>
-        </div>
+      <details class="faq-item">
+        <summary>How accurate is the grading?</summary>
+        <p>When Smart evaluation is on, every score comes with a confidence rating. You can review and adjust any score. The final call is always yours.</p>
+      </details>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <path d="M7.5 8.5h0M12 11.5h0M16.5 8.5h0" stroke-width="3" stroke-linecap="round" />
-              <path d="M2 17l5-5 3 3 4-4 3 3 5-5" stroke-width="2" />
-            </svg>
-          </div>
-          <h3>Quick Feedback</h3>
-          <p>
-            Save common feedback phrases and apply them with a tap.
-            Give students detailed, consistent feedback in seconds.
-          </p>
-        </div>
+      <details class="faq-item">
+        <summary>Is Smart evaluation optional?</summary>
+        <p>Yes. Transcription and student matching run in the background. <em>Smart evaluation</em> — which suggests correct, partial, or incorrect with a rationale — is opt-in and Premium. You see the suggestion; you make the call.</p>
+      </details>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <rect x="3" y="3" width="7" height="7" /><rect x="14" y="3" width="7" height="7" />
-              <rect x="3" y="14" width="7" height="7" /><rect x="14" y="14" width="7" height="7" />
-            </svg>
-          </div>
-          <h3>Grade by Question</h3>
-          <p>
-            See every student's answer to the same question side by side.
-            Grade faster and more consistently than paper-by-paper review.
-          </p>
-        </div>
+      <details class="faq-item">
+        <summary>Where does student data go?</summary>
+        <p>On your device. Synced through your personal iCloud. Never stored on GradeVine servers. Never used to train AI models.</p>
+      </details>
 
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-              <polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" />
-            </svg>
-          </div>
-          <h3>Export Anywhere</h3>
-          <p>
-            Export grades and feedback as PDF, CSV, or directly to Google Drive.
-            Share results with students, parents, or your records system.
-          </p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="32" height="32">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-            </svg>
-          </div>
-          <h3>Private & Secure</h3>
-          <p>
-            Student data stays on your device and syncs privately via iCloud.
-            No third-party servers store your students' work.
-          </p>
-        </div>
-      </div>
+      <details class="faq-item">
+        <summary>What kinds of assessments work best?</summary>
+        <p>Short-answer questions, lab questions, problem sets, and free-response work — handwritten or otherwise. GradeVine isn't built for essay-primary courses where the work is multi-page open-ended writing.</p>
+      </details>
     </div>
   </section>
 
   <!-- Pricing -->
   <section id="pricing" class="pricing">
     <div class="container">
-      <h2>Simple, credit-based pricing</h2>
-      <p class="pricing-subtitle">Credits power AI transcription — 1 credit per page scanned, or 1.5 credits per page with AI-assisted grading. Paid plans add credit rollover and Google Drive export.</p>
+      <h2>Credit-based pricing.</h2>
+      <p class="pricing-subtitle">Credits cover transcription — 1 credit per page scanned, or 1.5 credits per page with Smart evaluation turned on. Paid plans add rollover credits and Google Drive export.</p>
 
       <!-- Free tier elevated -->
       <div class="free-tier-hero">
@@ -220,7 +208,7 @@ import Layout from '../layouts/Layout.astro';
           <div class="free-price">Free</div>
           <div class="credits">30 credits/month</div>
           <p class="credits-note">Enough for about 1 small class assignment. No credit card required.</p>
-          <a href="https://apps.apple.com/app/id6755069483" class="btn btn-primary">Get Started for Free</a>
+          <a href="https://apps.apple.com/app/id6755069483" class="btn btn-primary">Download on the App Store</a>
         </div>
       </div>
 
@@ -289,7 +277,7 @@ import Layout from '../layouts/Layout.astro';
             </div>
           </div>
           <div class="calc-field">
-            <label for="calc-ai">AI-assisted grading</label>
+            <label for="calc-ai">Smart evaluation</label>
             <div class="calc-switch-wrap">
               <button type="button" id="calc-ai" class="calc-switch active" aria-pressed="true">
                 <span class="calc-switch-knob"></span>
@@ -312,20 +300,29 @@ import Layout from '../layouts/Layout.astro';
     </div>
   </section>
 
+  <!-- Final CTA -->
+  <section class="final-cta">
+    <div class="container">
+      <h2>Try GradeVine.</h2>
+      <a href="https://apps.apple.com/app/id6755069483" class="btn btn-primary">Download on the App Store</a>
+      <p class="hero-microcopy">Free to try. 30 credits. No card required.</p>
+    </div>
+  </section>
+
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
       <div class="footer-content">
         <div class="footer-brand">
           <span class="logo-text">GradeVine</span>
-          <p>AI grading for teachers who still use paper.</p>
+          <p>Grading software for paper-and-pencil classrooms.</p>
         </div>
         <div class="footer-links">
           <div class="footer-col">
             <h4>Product</h4>
-            <a href="#features">Features</a>
+            <a href="#how-it-works">How it works</a>
             <a href="#pricing">Pricing</a>
-            <a href="#">Download</a>
+            <a href="https://apps.apple.com/app/id6755069483">Download</a>
           </div>
           <div class="footer-col">
             <h4>Legal</h4>
@@ -334,8 +331,9 @@ import Layout from '../layouts/Layout.astro';
           </div>
           <div class="footer-col">
             <h4>Support</h4>
-            <a href="/support">Help & FAQ</a>
+            <a href="/support">Help &amp; FAQ</a>
             <a href="mailto:moses.harding.dev@gmail.com">Contact</a>
+            <a href="/dashboard?login=1">Web dashboard</a>
           </div>
         </div>
       </div>
@@ -435,6 +433,13 @@ import Layout from '../layouts/Layout.astro';
     background: rgba(255, 255, 255, 0.3);
   }
 
+  /* Container */
+  .container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
   /* Hero */
   .hero {
     padding: 8rem 1.5rem 4rem;
@@ -468,122 +473,267 @@ import Layout from '../layouts/Layout.astro';
 
   .hero-subtitle {
     margin-top: 1.25rem;
-    font-size: 1.25rem;
-    color: var(--color-gray-600);
-    max-width: 580px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
-  }
-
-  .hero-bullets {
-    margin-top: 1.5rem;
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-  }
-
-  .hero-bullets li {
-    font-size: 1.1rem;
-    color: #000;
-    line-height: 1.5;
-    padding-left: 1.5rem;
-    position: relative;
-  }
-
-  .hero-bullets li::before {
-    content: '✓';
-    position: absolute;
-    left: 0;
-    font-weight: 700;
-    color: var(--color-purple-deep);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-gray-700);
+    line-height: 1.4;
   }
 
   .hero-cta {
-    margin-top: 2rem;
-  }
-
-  .hero-videos {
-    margin-top: 4rem;
+    margin-top: 2.5rem;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
+    align-items: center;
+    gap: 0.75rem;
   }
 
-  .hero-videos-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--color-gray-900);
+  .hero-microcopy {
+    font-size: 0.9rem;
+    color: var(--color-gray-500);
+    margin: 0;
+  }
+
+  /* Speed claim */
+  .speed-claim {
+    padding: 4rem 0;
+    background: var(--color-purple-50);
     text-align: center;
-    margin-bottom: 0;
   }
 
-  .video-step {
+  .speed-claim p {
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-gray-900);
+    max-width: 900px;
+    margin: 0 auto;
+    letter-spacing: -0.01em;
+  }
+
+  /* How it works */
+  .how-it-works {
+    padding: 5rem 0;
+  }
+
+  .how-it-works > .container > h2 {
+    text-align: center;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+  }
+
+  .how-step {
     display: flex;
-    align-items: flex-start;
-    gap: 3rem;
+    align-items: center;
+    gap: 4rem;
+    margin-bottom: 4rem;
   }
 
-  .video-step.reverse {
+  .how-step.reverse {
     flex-direction: row-reverse;
   }
 
-  .video-step-text {
+  .how-step-text {
     flex: 1;
-    text-align: left;
   }
 
-  .video-step-number {
+  .how-step-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .how-step-number {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 36px;
+    height: 36px;
     background: linear-gradient(135deg, var(--color-purple-deep), var(--color-purple));
     color: #fff;
     border-radius: 50%;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1rem;
     flex-shrink: 0;
   }
 
-  .video-step-header {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .video-step-text h3 {
-    font-size: 1.35rem;
+  .how-step-text h3 {
+    font-size: 1.5rem;
     font-weight: 700;
     color: var(--color-gray-900);
     margin: 0;
+    line-height: 1.3;
   }
 
-  .video-step-text p {
-    font-size: 1rem;
-    color: var(--color-gray-600);
+  .how-step-text p {
+    font-size: 1.05rem;
+    color: var(--color-gray-700);
     line-height: 1.6;
   }
 
-  .video-item {
-    flex: 0 0 280px;
+  .how-step-visual {
+    flex: 0 0 320px;
   }
 
-  .video-item video {
+  .how-step-visual video {
     width: 100%;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-lg);
     background: #000;
+  }
+
+  .how-also {
+    text-align: center;
+    color: var(--color-gray-600);
+    font-size: 1rem;
+    margin-top: 1rem;
+    font-style: italic;
+  }
+
+  /* Trend strip */
+  .trend-strip {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, var(--color-purple-deep), var(--color-purple));
+    color: #fff;
+  }
+
+  .trend-strip h2 {
+    text-align: center;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .stat-block {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 4.5rem;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    margin-bottom: 1rem;
+    letter-spacing: -0.03em;
+  }
+
+  .stat-body {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.92);
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .stat-source {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .stat-source:hover {
+    color: #fff;
+  }
+
+  .trend-closing {
+    text-align: center;
+    margin: 3rem auto 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.95);
+    max-width: 720px;
+    line-height: 1.5;
+  }
+
+  .as-reported {
+    margin-top: 3rem;
+    text-align: center;
+  }
+
+  .as-reported-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 1rem;
+  }
+
+  .as-reported-logos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .as-reported-logos span {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.85);
+    letter-spacing: 0.01em;
+  }
+
+  /* Value sections */
+  .value-section {
+    padding: 5rem 0;
+    background: #fff;
+    text-align: center;
+  }
+
+  .value-section.alt {
+    background: var(--color-gray-50);
+  }
+
+  .value-section h2 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--color-gray-900);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .value-body {
+    font-size: 1.15rem;
+    color: var(--color-gray-700);
+    line-height: 1.6;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* Origin story */
+  .origin {
+    padding: 4rem 0;
+    background: #fff;
+    text-align: center;
+  }
+
+  .origin h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: 1rem;
+  }
+
+  .origin p {
+    font-size: 1.1rem;
+    color: var(--color-gray-700);
+    line-height: 1.6;
+    max-width: 640px;
+    margin: 0 auto;
   }
 
   /* Privacy Banner */
@@ -591,7 +741,7 @@ import Layout from '../layouts/Layout.astro';
     background: var(--color-purple-50);
     border-top: 1px solid var(--color-purple-light);
     border-bottom: 1px solid var(--color-purple-light);
-    padding: 1rem 0;
+    padding: 1.25rem 0;
   }
 
   .privacy-content {
@@ -599,7 +749,7 @@ import Layout from '../layouts/Layout.astro';
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    max-width: 700px;
+    max-width: 760px;
     margin: 0 auto;
   }
 
@@ -609,83 +759,77 @@ import Layout from '../layouts/Layout.astro';
   }
 
   .privacy-content p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--color-gray-700);
     line-height: 1.5;
     margin: 0;
   }
 
-  /* Container */
-  .container {
-    max-width: var(--max-width);
-    margin: 0 auto;
-    padding: 0 1.5rem;
-  }
-
-  /* Section CTA */
-  .section-cta {
-    text-align: center;
-    margin-top: 3rem;
-  }
-
-  /* Features */
-  .features {
+  /* FAQ */
+  .faq {
     padding: 5rem 0;
+    background: #fff;
   }
 
-  .features h2 {
+  .faq h2 {
     text-align: center;
     font-size: 2.25rem;
     font-weight: 700;
     margin-bottom: 3rem;
   }
 
-  .feature-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
-  }
-
-  .feature-card {
-    padding: 2rem;
+  .faq-item {
+    max-width: 760px;
+    margin: 0 auto 1rem;
+    padding: 1.25rem 1.5rem;
     border-radius: var(--radius-card);
-    background: #fff;
     border: 1px solid var(--color-gray-200);
-    transition: box-shadow 0.2s, transform 0.2s;
+    background: #fff;
+    transition: box-shadow 0.2s;
   }
 
-  .feature-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+  .faq-item[open] {
+    box-shadow: var(--shadow-sm);
   }
 
-  .feature-icon {
-    width: 48px;
-    height: 48px;
-    background: var(--color-purple-light);
-    border-radius: var(--radius-button);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-purple-deep);
-    margin-bottom: 1rem;
-  }
-
-  .feature-card h3 {
-    font-size: 1.15rem;
+  .faq-item summary {
+    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    color: var(--color-gray-900);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .feature-card p {
-    font-size: 0.95rem;
-    color: var(--color-gray-600);
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq-item summary::after {
+    content: '+';
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--color-purple-deep);
+    transition: transform 0.2s;
+  }
+
+  .faq-item[open] summary::after {
+    transform: rotate(45deg);
+  }
+
+  .faq-item p {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--color-gray-700);
     line-height: 1.6;
   }
 
   /* Pricing */
   .pricing {
     padding: 5rem 0;
+    background: var(--color-gray-50);
   }
 
   .pricing h2 {
@@ -700,13 +844,12 @@ import Layout from '../layouts/Layout.astro';
     margin-top: 0.5rem;
     margin-bottom: 3rem;
     font-size: 1.05rem;
-    max-width: 640px;
+    max-width: 700px;
     margin-left: auto;
     margin-right: auto;
     line-height: 1.6;
   }
 
-  /* Free tier hero */
   .free-tier-hero {
     max-width: 480px;
     margin: 0 auto 2rem;
@@ -748,7 +891,6 @@ import Layout from '../layouts/Layout.astro';
     line-height: 1.4;
   }
 
-  /* Upgrade divider */
   .upgrade-divider {
     display: flex;
     align-items: center;
@@ -772,7 +914,6 @@ import Layout from '../layouts/Layout.astro';
     white-space: nowrap;
   }
 
-  /* Billing toggle */
   .billing-toggle {
     display: flex;
     justify-content: center;
@@ -817,6 +958,7 @@ import Layout from '../layouts/Layout.astro';
     padding: 2.5rem 2rem;
     border-radius: var(--radius-card);
     border: 1px solid var(--color-gray-200);
+    background: #fff;
     position: relative;
   }
 
@@ -1132,6 +1274,24 @@ import Layout from '../layouts/Layout.astro';
     color: #fff;
   }
 
+  /* Final CTA */
+  .final-cta {
+    padding: 5rem 0;
+    background: #fff;
+    text-align: center;
+  }
+
+  .final-cta h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: var(--color-gray-900);
+  }
+
+  .final-cta .hero-microcopy {
+    margin-top: 1rem;
+  }
+
   /* Footer */
   .footer {
     padding: 3rem 0 1.5rem;
@@ -1193,28 +1353,47 @@ import Layout from '../layouts/Layout.astro';
       font-size: 2.25rem;
     }
 
-    .hero-bullets li {
-      font-size: 1rem;
+    .hero-subtitle {
+      font-size: 1.15rem;
     }
 
-    .video-step,
-    .video-step.reverse {
+    .speed-claim p {
+      font-size: 1.2rem;
+    }
+
+    .how-step,
+    .how-step.reverse {
       flex-direction: column;
       text-align: center;
+      gap: 1.5rem;
     }
 
-    .video-step-text {
+    .how-step-text {
       text-align: center;
     }
 
-    .video-item {
-      flex: none;
-      max-width: 280px;
-      margin: 0 auto;
+    .how-step-header {
+      justify-content: center;
     }
 
-    .feature-grid {
-      grid-template-columns: 1fr 1fr;
+    .how-step-visual {
+      flex: none;
+      max-width: 320px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .stat-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .stat-number {
+      font-size: 3.75rem;
+    }
+
+    .as-reported-logos {
+      gap: 1.25rem;
     }
 
     .pricing-grid-paid {
@@ -1231,16 +1410,22 @@ import Layout from '../layouts/Layout.astro';
       padding: 1.5rem;
     }
 
-    .nav-links a:not(.btn) {
-      display: none;
-    }
-
     .footer-content {
       flex-direction: column;
     }
 
     .footer-links {
       gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .value-section h2,
+    .trend-strip h2,
+    .faq h2,
+    .pricing h2,
+    .final-cta h2,
+    .how-it-works > .container > h2 {
+      font-size: 1.75rem;
     }
   }
 </style>
